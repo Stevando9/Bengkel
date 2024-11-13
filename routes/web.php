@@ -11,10 +11,6 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 
-Route::get('/well', function () {
-    return view('pukay');
-});
-
 // admin
 // Route::get('/admin/dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
 
@@ -47,7 +43,7 @@ Route::get('/Admin/hapusMontir/{montir:id}', [MontirController::class, 'hapusMon
 
 //login regis
 
-Route::get('/home', function () {
+Route::get('/', function () {
     return view('home');
 })->name('home');
 
