@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 
 Route::get('/well', function () {
-    return view('welcome');
+    return view('pukay');
 });
 
 // admin
@@ -71,11 +71,11 @@ Route::get('/review_modal', function () {
     return view('review_modal', []);
 })->name('review_modal');
 
-Route::get('/pembayaran', function(){
+Route::get('/pembayaran', function () {
     return view('pembayaran');
 })->name('pembayaran');
 
-Route::get('/update', function(){
+Route::get('/update', function () {
     return view('pembayaran');
 })->name('pembayaran');
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
