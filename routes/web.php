@@ -4,6 +4,8 @@ use App\Http\Controllers\AuthControler;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\JasaController;
+use App\Http\Controllers\MontirController;
 use App\Http\Controllers\ProdukController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +30,14 @@ Route::get('/Admin/jasa', [AdminController::class, 'jasa'])->name('admin_jasa');
 Route::get('/Admin/user', [AdminController::class, 'daftarUser'])->name('admin_user');
 Route::get('/Admin/montir', [AdminController::class, 'montir'])->name('admin_montir');
 
+Route::post('/Admin/produk', [ProdukController::class, 'tambahProduk'])->name('tambahProduk');
+Route::get('/Admin/hapus/{produk:kode_produk}', [ProdukController::class, 'hapusProduk'])->name('hapusProduk');
+
+Route::post('/Admin/tambahJasa', [JasaController::class, 'tambahJasa'])->name('tambahJasa');
+Route::get('/Admin/hapusJasa/{jasa:kode_jasa}', [JasaController::class, 'hapusJasa'])->name('hapusJasa');
+
+Route::post('/Admin/tambahMontir', [MontirController::class, 'tambahMontir'])->name('tambahMontir');
+Route::get('/Admin/hapusMontir/{montir:id}', [MontirController::class, 'hapusMontir'])->name('hapusMontir');
 // Route::group(['middleware' => ['auth', 'tipe:user']], function () {
 //     Route::get('/home', [AuthControler::class, 'index'])->name('user.home');
 // });
@@ -49,6 +59,10 @@ Route::get('/keranjang', function () {
 Route::get('/produk', [ProdukController::class, 'index'])->name('produk');
 
 //jasa
+Route::get('/produk/detail_produk', function () {
+    return view('detail_produk', []);
+})->name('detail_produk');
+
 Route::get('/jasa', function () {
     return view('jasa', []);
 })->name('jasa');
@@ -57,4 +71,11 @@ Route::get('/review_modal', function () {
     return view('review_modal', []);
 })->name('review_modal');
 
+Route::get('/pembayaran', function(){
+    return view('pembayaran');
+})->name('pembayaran');
+
+Route::get('/update', function(){
+    return view('pembayaran');
+})->name('pembayaran');
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

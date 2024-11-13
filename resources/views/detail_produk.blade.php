@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produk</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Detail Produk</title>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     @vite('resources/css/app.css')
     <style>
         /* Header Style */
@@ -296,76 +298,54 @@
     </script>
     {{-- Header Stop --}}
 
-    {{-- produk Start --}}
-    <section id="produk" class="pb-16">
-        <div class="container mx-auto p-4">
-            <h1 class="text-2xl font-bold mb-4">Filter</h1>
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
-                <!-- Kategori dan Batas Harga -->
-                <div class="col-span-1 flex flex-col space-y-4 pt-12">
-                    {{-- <h2 class="text-lg font-bold text-white">FILTER</h2> --}}
-                    <div class="bg-white rounded-md shadow-md p-4">
-                        <h2 class="text-lg font-bold mb-2">Kategori</h2>
-                        <ul>
-                            {{-- <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                Otomotif
-                            </li> --}}
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Oli Mesin</li>
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Busi</li>
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Rantai</li>
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Kampas Rem</li>
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Ban</li>
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Aksesoris</li>
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Perawatan Kendaraan</li>
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Suku Cadang</li>
+    {{-- Konten Start --}}
+    <section class="pt-36 pb-16">
+        <div class="container mx-auto">
+            <div class="bg-second text-white rounded-md w-1/2 p-6 rounded-b-md mx-auto">
+                <div class="flex justify-center w-auto">
+                    <div class="mx-auto justify-start ">
+                        <!-- Product Image and Location -->
+                        <div class="flex justify-center">
+                            <img src="{{ asset('img/Ban Irc.jpeg') }}" alt="Ban Motor" class="w-60 h-60 object-cover mb-4 mt-5">
+                        </div>
+                        <div class="flex bg-gray-500 text-white mb-4 justify-center mx-auto py-1 rounded-md ">
+                            <i class="uil uil-location-pin-alt"></i>
+                            <span class="ml-1">Yogyakarta</span>
+                        </div>
+                    </div>
+                    
+                    <div class="justify-center w-1/2">
+                        <!-- Product Details -->
+                        <h2 class="text-lg font-semibold">Ban IRC 100/90-14 Ban Motor Tubeless</h2>
+                        <p class="text-gray-400">Terjual 296</p>
+                        <p class="text-2xl font-bold mt-10">Rp200.000</p>
+                
+                        <!-- Product Specifications -->
+                        <ul class="text-gray-400 mt-10 space-y-1">
+                            <li>Kondisi: Baru</li>
+                            <li>Berat Satuan: 1 Kg</li>
+                            <li>Etalase: Ban Motor</li>
                         </ul>
+                        <p class="text-blue-500 mt-2 cursor-pointer">Selengkapnya</p>
                     </div>
-                    <div class="bg-white rounded-md shadow-md p-4">
-                        <h2 class="text-lg font-bold mb-2">Batas Harga</h2>
-                        <div class="flex items-center space-x-2 mb-2">
-                            <input type="text" placeholder="Rp MIN" class="border border-gray-300 rounded-md p-2 w-1/2 text-center">
-                            <span class="text-gray-600">—</span>
-                            <input type="text" placeholder="Rp MAKS" class="border border-gray-300 rounded-md p-2 w-1/2 text-center">
-                        </div>
-                        <button class="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded-md w-full">Terapkan</button>
-                    </div>                    
                 </div>
-                <!-- Produk -->
-                <div class="col-span-3">
-                    <h1 class="text-2xl font-bold mb-4">Produk</h1>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div class="bg-white rounded-md shadow-md p-4">
-                            <img src="https://via.placeholder.com/150" alt="Product Image" class="w-full mb-2">
-                            <h2 class="text-lg font-bold mb-2">Oli Mesin</h2>
-                            <p class="text-sm text-gray-600">Rp 50.000</p>
-                            <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md">Beli</button>
-                        </div>
-                        <div class="bg-white rounded-md shadow-md p-4">
-                            <img src="https://via.placeholder.com/150" alt="Product Image" class="w-full mb-2">
-                            <h2 class="text-lg font-bold mb-2">Busi</h2>
-                            <p class="text-sm text-gray-600">Rp 20.000</p>
-                            <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md">Beli</button>
-                        </div>
-                        <div class="bg-white rounded-md shadow-md p-4">
-                            <img src="https://via.placeholder.com/150" alt="Product Image" class="w-full mb-2">
-                            <h2 class="text-lg font-bold mb-2">Rantai</h2>
-                            <p class="text-sm text-gray-600">Rp 30.000</p>
-                            <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md">Beli</button>
-                        </div>
-                        <!-- Tambahkan produk lainnya di sini -->
-                    </div>
-                    {{-- <div class="flex justify-between mb-4 mt-10">
-                        <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md">Sebelumnya</button>
-                        <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md">Berikutnya</button>
-                    </div> --}}
+                {{-- <!-- Free Shipping Badge -->
+                <div class="flex items-center bg-yellow-500 text-black mt-4 p-2 rounded-lg">
+                    <span class="font-semibold">GRATIS ONGKIR</span>
+                    <span class="ml-2 text-xs">Min. Belanja Mulai Rp0</span>
+                    <span class="ml-auto bg-gray-200 text-black rounded px-2 py-1 text-xs">BERLAKU 7 HARI</span>
+                    <button class="ml-2 bg-yellow-600 text-black rounded px-2 py-1 text-xs">PAKAI</button>
+                </div> --}}
+        
+                <!-- Action Buttons -->
+                <div class="flex mt-6 space-x-2 justify-between">
+                    <button class="w-32 bg-gray-300 hover:bg-gray-500 text-black font-semibold py-2 rounded-lg">+ Keranjang</button>
+                    <button class="w-32 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-2 rounded-lg">Beli</button>
                 </div>
             </div>
         </div>
-    </section>    
-    {{-- produk Start --}}
+    </section> 
+    {{-- Konten Stop --}}
 
     <!-- Footer Start -->
     <footer class="bg-gray-800 text-white py-6">

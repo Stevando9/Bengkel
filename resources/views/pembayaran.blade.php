@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produk</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pembayaran</title>
     @vite('resources/css/app.css')
-    <style>
+    <link href="{{ asset('css/header-footer-dll.css') }}" rel="stylesheet">
+    {{-- <style>
         /* Header Style */
         header {
             position: fixed;
@@ -190,11 +192,11 @@
             background-color: #218838;
         }
         /* end modal edit account */
-    </style>
+    </style> --}}
 </head>
 <body class="bg-black">
     {{-- Header Start --}}
-    <header class="bg-gray-800 text-white">
+    {{-- <header class="bg-gray-800 text-white">
         <div class="container mx-auto flex justify-between items-center py-4 px-6">
             <!-- Logo and Brand Name -->
             <div class="flex items-center">
@@ -206,9 +208,9 @@
             <!-- Navigation Links for Desktop -->
             <nav class="hidden md:flex space-x-8 ml-auto pr-10">
                 <a href="{{ route ('home') }}" class="text-white hover:text-primary">HOME</a>
-                <a href="{{ route ('produk') }}" class="text-primary hover:text-white">PRODUK</a>
+                <a href="{{ route ('produk') }}" class="text-white hover:text-primary">PRODUK</a>
                 <a href="{{ route ('jasa') }}" class="text-white hover:text-primary">JASA</a>
-                <a href="{{ route ('keranjang') }}" class="text-white hover:text-primary">KERANJANG</a>
+                <a href="{{ route ('keranjang') }}" class="text-primary hover:text-white">KERANJANG</a>
             </nav>
 
             <!-- Always Visible Hamburger Menu -->
@@ -260,7 +262,9 @@
                 Login
             </a>
         </div>
-    </header>
+    </header> --}}
+
+    @include('header')
 
     <script>
         // Toggle mobile menu
@@ -277,7 +281,7 @@
         window.onscroll = function () {
             const header = document.getElementById('header');
             if (window.scrollY > 50) {
-                header.classList.add('header-scrolled');
+                header.classList.add('header-scroll');
             } else {
                 header.classList.remove('header-scrolled');
             }
@@ -296,79 +300,149 @@
     </script>
     {{-- Header Stop --}}
 
-    {{-- produk Start --}}
-    <section id="produk" class="pb-16">
-        <div class="container mx-auto p-4">
-            <h1 class="text-2xl font-bold mb-4">Filter</h1>
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
-                <!-- Kategori dan Batas Harga -->
-                <div class="col-span-1 flex flex-col space-y-4 pt-12">
-                    {{-- <h2 class="text-lg font-bold text-white">FILTER</h2> --}}
-                    <div class="bg-white rounded-md shadow-md p-4">
-                        <h2 class="text-lg font-bold mb-2">Kategori</h2>
-                        <ul>
-                            {{-- <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                Otomotif
-                            </li> --}}
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Oli Mesin</li>
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Busi</li>
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Rantai</li>
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Kampas Rem</li>
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Ban</li>
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Aksesoris</li>
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Perawatan Kendaraan</li>
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Suku Cadang</li>
-                        </ul>
+    {{-- Konten Start --}}
+    <section class="pt-36 pb-16">
+        <div class="container mx-auto px-4">
+            <div class="text-white">
+                <div class="container mx-auto p-4 rounded-lg shadow-md bg-gray-800 w-1/2">
+                    <h2 class="text-center text-2xl font-bold mb-4">PEMBAYARAN</h2>
+                    
+                    <!-- Detail Pembayaran -->
+                    <div class="bg-gray-700 rounded-lg p-4 mb-4">
+                        <h3 class="text-center text-lg font-bold mb-4">Detail Pembayaran</h3>
+                        <div class="flex justify-between mb-2">
+                            <p class="text-sm font-medium">Produk</p>
+                            <p class="text-sm font-medium">Harga</p>
+                        </div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center">
+                                <img src="https://placehold.co/50x50" alt="Produk" class="rounded-md">
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium">Ban IRC 100/90-14 Ban Motor Tubeless</p>
+                                    <div class="flex items-center mt-1">
+                                        <button onclick="kurangiJumlah()" class="bg-gray-600 hover:bg-gray-500 text-sm font-medium px-2 py-1 rounded-md">-</button>
+                                        <span id="jumlahProduk" class="mx-2 text-sm">1</span>
+                                        <button onclick="tambahJumlah()" class="bg-gray-600 hover:bg-gray-500 text-sm font-medium px-2 py-1 rounded-md">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-sm font-medium">Rp 200.000</p>
+                        </div>
+                        <hr class="border-gray-600 mb-2">
+                        <div class="flex justify-between text-sm font-medium">
+                            <p>Sub Total :</p>
+                            <p>Rp 200.000</p>
+                        </div>
+                        <div class="flex justify-between text-sm font-medium">
+                            <p>Biaya Pengiriman :</p>
+                            <p>Rp 15.000</p>
+                        </div>
+                        <hr class="border-gray-600 mt-2 mb-2">
+                        <div class="flex justify-between text-sm font-medium mt-2">
+                            <p>Total :</p>
+                            <p>Rp 215.000</p>
+                        </div>
                     </div>
-                    <div class="bg-white rounded-md shadow-md p-4">
-                        <h2 class="text-lg font-bold mb-2">Batas Harga</h2>
-                        <div class="flex items-center space-x-2 mb-2">
-                            <input type="text" placeholder="Rp MIN" class="border border-gray-300 rounded-md p-2 w-1/2 text-center">
-                            <span class="text-gray-600">—</span>
-                            <input type="text" placeholder="Rp MAKS" class="border border-gray-300 rounded-md p-2 w-1/2 text-center">
+                    <div class="flex justify-between">
+                        <!-- Alamat -->
+                        <div class="bg-gray-700 rounded-lg p-4 mb-4 relative w-1/3">
+                            <h3 class="text-lg font-bold mb-2 text-center">Alamat</h3>
+                            <!-- Tombol Edit di kanan atas -->
+                            <button onclick="toggleEdit()" class="absolute top-2 right-2 bg-gray-600 hover:bg-gray-500 text-white font-bold py-1 px-2 rounded-md">
+                                Edit
+                            </button>
+                            
+                            <!-- Bagian tampilan alamat -->
+                            <div id="alamatDisplay">
+                                <p class="text-sm"><span class="font-medium">Nama :</span> <span id="namaDisplay">Yopan</span></p>
+                                <p class="text-sm"><span class="font-medium">Alamat :</span> <span id="alamatDisplay">Pinangan 12345</span></p>
+                                <p class="text-sm"><span class="font-medium">No Telp :</span> <span id="telpDisplay">6H64U6JR67TVsvR446lc</span></p>
+                            </div>
+                            
+                            <!-- Bagian form edit alamat, disembunyikan secara default -->
+                            <div id="alamatEdit" class="hidden">
+                                <input type="text" id="namaInput" placeholder="Nama" class="w-full mb-2 p-2 rounded bg-gray-800 text-white">
+                                <input type="text" id="alamatInput" placeholder="Alamat" class="w-full mb-2 p-2 rounded bg-gray-800 text-white">
+                                <input type="text" id="telpInput" placeholder="No Telp" class="w-full mb-2 p-2 rounded bg-gray-800 text-white">
+                                <button onclick="saveAlamat()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-1 px-2 rounded-md mt-2">
+                                    Simpan
+                                </button>
+                            </div>
                         </div>
-                        <button class="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded-md w-full">Terapkan</button>
-                    </div>                    
-                </div>
-                <!-- Produk -->
-                <div class="col-span-3">
-                    <h1 class="text-2xl font-bold mb-4">Produk</h1>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div class="bg-white rounded-md shadow-md p-4">
-                            <img src="https://via.placeholder.com/150" alt="Product Image" class="w-full mb-2">
-                            <h2 class="text-lg font-bold mb-2">Oli Mesin</h2>
-                            <p class="text-sm text-gray-600">Rp 50.000</p>
-                            <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md">Beli</button>
+                        
+                        <!-- Metode Pembayaran -->
+                        <div class="bg-gray-700 rounded-lg p-4 mb-4 w-1/2">
+                            <h3 class="text-lg font-bold mb-2 text-center">Metode Pembayaran</h3>
+                            <div class="flex flex-col gap-2">
+                                <label class="flex items-center text-sm">
+                                    <input type="radio" name="payment-method" class="form-radio text-blue-500 mr-2">
+                                    <span>QRIS</span>
+                                </label>
+                                <label class="flex items-center text-sm">
+                                    <input type="radio" name="payment-method" class="form-radio text-blue-500 mr-2">
+                                    <span>BCA</span>
+                                </label>
+                                <label class="flex items-center text-sm">
+                                    <input type="radio" name="payment-method" class="form-radio text-blue-500 mr-2">
+                                    <span>Mandiri</span>
+                                </label>
+                                <label class="flex items-center text-sm">
+                                    <input type="radio" name="payment-method" class="form-radio text-blue-500 mr-2">
+                                    <span>BRI</span>
+                                </label>
+                                <label class="flex items-center text-sm">
+                                    <input type="radio" name="payment-method" class="form-radio text-blue-500 mr-2">
+                                    <span>COD</span>
+                                </label>
+                            </div>
                         </div>
-                        <div class="bg-white rounded-md shadow-md p-4">
-                            <img src="https://via.placeholder.com/150" alt="Product Image" class="w-full mb-2">
-                            <h2 class="text-lg font-bold mb-2">Busi</h2>
-                            <p class="text-sm text-gray-600">Rp 20.000</p>
-                            <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md">Beli</button>
-                        </div>
-                        <div class="bg-white rounded-md shadow-md p-4">
-                            <img src="https://via.placeholder.com/150" alt="Product Image" class="w-full mb-2">
-                            <h2 class="text-lg font-bold mb-2">Rantai</h2>
-                            <p class="text-sm text-gray-600">Rp 30.000</p>
-                            <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md">Beli</button>
-                        </div>
-                        <!-- Tambahkan produk lainnya di sini -->
                     </div>
-                    {{-- <div class="flex justify-between mb-4 mt-10">
-                        <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md">Sebelumnya</button>
-                        <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md">Berikutnya</button>
-                    </div> --}}
+                    
+                    <!-- Tombol Kembali dan Bayar -->
+                    <div class="flex justify-between mt-4">
+                        <button class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-md">Kembali</button>
+                        <button class="bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2 px-4 rounded-md">Bayar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>    
-    {{-- produk Start --}}
+    </section>
+    
+    <script>
+        function toggleEdit() {
+            document.getElementById("alamatDisplay").classList.toggle("hidden");
+            document.getElementById("alamatEdit").classList.toggle("hidden");
+        }
+    
+        function saveAlamat() {
+            // Ambil nilai input dan tampilkan
+            const nama = document.getElementById("namaInput").value;
+            const alamat = document.getElementById("alamatInput").value;
+            const telp = document.getElementById("telpInput").value;
+            
+            document.getElementById("namaDisplay").innerText = nama;
+            document.getElementById("alamatDisplay").innerText = alamat;
+            document.getElementById("telpDisplay").innerText = telp;
+    
+            toggleEdit(); // Kembali ke tampilan normal
+        }
+    
+        function tambahJumlah() {
+            let jumlah = parseInt(document.getElementById("jumlahProduk").innerText);
+            document.getElementById("jumlahProduk").innerText = jumlah + 1;
+        }
+    
+        function kurangiJumlah() {
+            let jumlah = parseInt(document.getElementById("jumlahProduk").innerText);
+            if (jumlah > 1) {
+                document.getElementById("jumlahProduk").innerText = jumlah - 1;
+            }
+        }
+    </script>
+    {{-- Konten Stop --}}
 
     <!-- Footer Start -->
-    <footer class="bg-gray-800 text-white py-6">
+    {{-- <footer class="bg-gray-800 text-white py-6">
         <div class="container mx-auto text-center">
             <!-- Social Media Icons -->
             <div class="flex justify-center space-x-6 mb-4">
@@ -406,7 +480,10 @@
                 <h1 class="text-xl font-bold text-primary">CAHAYA <span class="text-white">GUNUNG LICIN</span></h1>
             </div>
         </div>
-    </footer>
+    </footer> --}}
+
+    @include('footer')
+
     <!-- Footer Stop -->
     
     {{-- Modal Ulasan Start--}}

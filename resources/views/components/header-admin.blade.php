@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard</title>
+    <title>{{ $slot }}</title>
 
     <!-- Custom fonts for this template-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet" type="text/css">
@@ -19,5 +19,6 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/admin/sb-admin-2.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('vendor/admin/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 
 </head>

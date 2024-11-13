@@ -1,4 +1,4 @@
-<x-header-admin></x-header-admin>
+<x-header-admin>User</x-header-admin>
 
 <body id="page-top">
 
@@ -61,30 +61,19 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                        @foreach ($users as $user)
                                         <tr>
-                                            <td>12342</td>
-                                            <td>Mansbawar</td>
-                                            <td>Mans@gmail.com</td>
-                                            <td>08754664323</td>
+                                            <td>{{$user['id']}}</td>
+                                            <td>{{$user['nama_lengkap']}}</td>
+                                            <td>{{$user['email']}}</td>
+                                            <td>{{$user['no_telpon']}}</td>
                                             <td>Jl. Jayapura, Kraton</td>
                                             <td>
                                                 <a href="#" class="btn btn-sm btn-warning shadow-sm">
                                                     <i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <tr>
-                                                <td>12342</td>
-                                                <td>Marty</td>
-                                                <td>Marty@gmail.com</td>
-                                                <td>08754664323</td>
-                                                <td>Jl. Jayapura, Kraton</td>
-                                                <td>
-                                                    <a href="#" class="btn btn-sm btn-warning shadow-sm">
-                                                        <i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
-                                                </td>
-                                            </tr>
-                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -141,6 +130,7 @@
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('vendor/admin/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/admin/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <link href="{{ asset('vendor/admin/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 
     <!-- Core plugin JavaScript-->
     <script src="{{ asset('vendor/admin/jquery-easing/jquery.easing.min.js') }}"></script>
@@ -149,11 +139,9 @@
     <script src="{{ asset('js/admin/sb-admin-2.min.js') }}"></script>
 
     <!-- Page level plugins -->
-    <script src="{{ asset('vendor/admin/chart.js/Chart.min.js') }}"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="{{ asset('js/admin/demo/chart-area-demo.js') }}"></script>
-    <script src="{{ asset('js/admin/demo/chart-pie-demo.js')}}"></script>
+    <script src="{{ asset('vendor/admin/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendor/admin/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('js/admin/demo/datatables-demo.js') }}"></script>
 
 </body>
 

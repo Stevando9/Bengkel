@@ -1,4 +1,4 @@
-<x-header-admin></x-header-admin>
+<x-header-admin>Montir</x-header-admin>
 
 <body id="page-top">
 
@@ -27,11 +27,26 @@
                     <div class="row">
                         <div class="col"></div>
                         <div class="col-auto">
-                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-info shadow-sm">
+                            <a data-target="#addMontirModal" data-toggle="modal" class="d-none d-sm-inline-block btn btn-sm btn-info shadow-sm">
                                 <i class="fas fa-plus fa-sm text-white-50"></i> Tambah
                             </a>
                         </div>
                     </div>
+
+                    @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                    @endif
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                         
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -57,29 +72,19 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                        @foreach ($montir as $tir)
                                         <tr>
-                                            <td>12342</td>
-                                            <td>Dappa</td>
-                                            <td>14 Tahun</td>
+                                            <td>{{ $tir['id'] }}</td>
+                                            <td>{{ $tir['nama_montir'] }}</td>
+                                            <td>{{ $tir['pengalaman'] }}</td>
                                             <td>
                                                 <a href="#" class="btn btn-sm btn-warning shadow-sm">
                                                     <i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
-                                                <a href="#" class="btn btn-sm btn-danger shadow-sm">
+                                                <a href="/Admin/hapusMontir/{{$tir['id']}}" class="btn btn-sm btn-danger shadow-sm">
                                                     <i class="fas fa-trash fa-sm text-white-50"></i> Hapus</a>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>12342</td>
-                                            <td>Arditya</td>
-                                            <td>7 Tahun</td>
-                                            <td>
-                                                <a href="#" class="btn btn-sm btn-warning shadow-sm">
-                                                    <i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
-                                                <a href="#" class="btn btn-sm btn-danger shadow-sm">
-                                                    <i class="fas fa-trash fa-sm text-white-50"></i> Hapus</a>
-                                            </td>
-                                        </tr>                                        
-                                        </tr>
+                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -113,6 +118,37 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
+    <!-- Modal Box -->
+    <div class="modal fade" id="addMontirModal" tabindex="-1" aria-labelledby="addMontirModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addMontirModalLabel">Tambah Montir Baru</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('tambahMontir') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Nama Montir</label>
+                            <input type="text" name="nama_montir" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Pengalaman</label>
+                            <input type="text" name="pengalaman" class="form-control" required>
+                        </div>                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -136,6 +172,7 @@
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('vendor/admin/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/admin/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <link href="{{ asset('vendor/admin/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 
     <!-- Core plugin JavaScript-->
     <script src="{{ asset('vendor/admin/jquery-easing/jquery.easing.min.js') }}"></script>
@@ -144,11 +181,9 @@
     <script src="{{ asset('js/admin/sb-admin-2.min.js') }}"></script>
 
     <!-- Page level plugins -->
-    <script src="{{ asset('vendor/admin/chart.js/Chart.min.js') }}"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="{{ asset('js/admin/demo/chart-area-demo.js') }}"></script>
-    <script src="{{ asset('js/admin/demo/chart-pie-demo.js')}}"></script>
+    <script src="{{ asset('vendor/admin/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendor/admin/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('js/admin/demo/datatables-demo.js') }}"></script>
 
 </body>
 

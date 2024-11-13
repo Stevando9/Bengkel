@@ -68,7 +68,129 @@
         .text-right {
             text-align: right;
         }
+        /* CSS untuk mengatur hover pada ikon */
+        .social-icon {
+            position: relative;
+            display: inline-block;
+        }
 
+        /* Ikon umum */
+        .icon {
+            transition: transform 0.3s ease;
+        }
+
+        .google-icon:hover .icon {
+            transform: translateX(50px); /* Jarak untuk ikon Twitter */
+        }
+        .twitter-icon:hover .icon {
+            transform: translateX(50px); /* Jarak untuk ikon Twitter */
+        }
+        .instagram-icon:hover .icon {
+            transform: translateX(60px); /* Jarak untuk ikon Instagram */
+        }
+        .linkedin-icon:hover .icon {
+            transform: translateX(50px); /* Jarak untuk ikon Instagram */
+        }
+        .google-icon:hover ~ .twitter-icon .icon,
+        .google-icon:hover ~ .instagram-icon .icon,
+        .google-icon:hover ~ .linkedin-icon .icon {
+        transform: translateX(50px); /* Geser ikon lainnya ke kanan */
+        }
+        .twitter-icon:hover ~ .instagram-icon .icon,
+        .twitter-icon:hover ~ .linkedin-icon .icon {
+        transform: translateX(50px); /* Geser ikon lainnya ke kanan */
+        }
+        .instagram-icon:hover ~ .linkedin-icon .icon {
+        transform: translateX(50px); /* Geser ikon lainnya ke kanan */
+        }
+        
+
+        /* Teks yang muncul saat dihover */
+        .icon-text {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            white-space: nowrap;
+        }
+
+        /* Menampilkan teks saat dihover */
+        .social-icon:hover .icon-text {
+            opacity: 1;
+        }
+        
+        /* start modal edit account */
+        /* Modal Background */
+        #edit-account-modal {
+            background-color: rgba(0, 0, 0, 0.8); /* Background overlay */
+        }
+
+        /* Modal Container */
+        .modal-content {
+            background-color: #1f1f1f; /* Dark background for modal */
+            color: #ffffff;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        /* Header Style */
+        .modal-content h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Upload Photo Section */
+        .upload-photo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Form Input */
+        .modal-content input[type="text"],
+        .modal-content input[type="password"] {
+            background-color: #2c2c2c;
+            border: 1px solid #444444;
+            color: #cccccc;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            width: 100%;
+        }
+
+        /* Action Buttons */
+        .action-buttons button {
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            border-radius: 0.375rem;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .action-buttons .cancel {
+            background-color: #333333;
+            color: #ffffff;
+            border: 1px solid #555555;
+        }
+
+        .action-buttons .cancel:hover {
+            background-color: #444444;
+        }
+
+        .action-buttons .submit {
+            background-color: #28a745; /* Green color for submit button */
+            color: #333333;
+        }
+
+        .action-buttons .submit:hover {
+            background-color: #218838;
+        }
+        /* end modal edit account */
     </style>
 </head>
 
@@ -117,7 +239,7 @@
             </a>
 
             <!-- Akun -->
-            <a href="#" class="flex items-center px-4 py-2 text-white hover:bg-gray-600">
+            <a data-modal-target="edit-account-modal" class="flex items-center px-4 py-2 text-white hover:bg-gray-600">
                 <img src="{{ asset("img/Vector Profile.png") }}" alt="Deskripsi Icon" class="h-6 w-6 mr-2" />
                 Akun
             </a>
@@ -241,8 +363,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="px-8 lg:w-1/3 xl:w-1/5">
-                    <div class="bg-white rounded-xl overflow-hidden shadow-lg mb-10">
+                <div class="px-4 lg:w-1/3 xl:w-1/5">
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg mb-10 justify-center">
                         <img src="{{ asset("img/Servis Ringan.png") }}" alt="Servis Ringan" class="w-10/12">
                         <div class="py-8 px-6">
                             <h3 class="text-black hover:text-primary block font-semibold text-xl truncate">
@@ -280,13 +402,12 @@
                         SERVIS
                     </h1>
                     <p class="text-lg max-w-xl text-white text-right">
-                        <!-- mx-auto -->
                         Bengkel Kami  Menyediakan Beberapa Layanan Servis
                         Yang Bisa Disesuaikan Dengan Kebutuhan Anda
                     </p>
-                    <div class="py-5">
-                        <img src="{{ asset("img/R1.png") }}" alt="R1" class="w-10/12">
-                    </div>
+                    <div class="flex justify-end pr-0">
+                        <img src="{{ asset('img/R1.png') }}" alt="R1" class="w-10/12">
+                    </div>                    
                 </div>
                 <!-- <div class="relative w-full lg:w-1/2 xl:w-1/3 bg-cover bg-center" style="background-image: url('R1.png');">
                     <h1 class="text-white text-4xl font-bold text-right py-6">
@@ -317,14 +438,15 @@
     <!-- Konten Stop -->
 
     <!-- Produk Start -->
-    <section class="pt-36 pb-2">
-        <div class="flex justify-center items-center">
-            <button class="bg-yellow-400 text-black font-bold py-2 px-4 rounded">
-                Produk
-            </button>
-        </div>
+    <section class="pt-8 pb-2">
+    <div class="flex justify-center items-center">
+        <button class="bg-yellow-400 text-black font-bold py-2 px-4 rounded">
+            Produk
+        </button>
+    </div>
     </section>
-    <section id="produk">
+
+    <section id="produk pt-8 pb-2">
         <div class="bg-black text-white p-5">
             <div class="bg-black text-white p-5 w-full max-w-3xl mx-auto">
                 <!-- Bagian Header Kategori -->
@@ -337,138 +459,90 @@
                         <a href="#" class="text-white hover:text-primary">Oli Gardan</a>
                         <a href="#" class="text-white hover:text-primary">Kampas Rem</a>
                     </div>
-                    <button
-                        class="text-black bg-yellow-400 px-4 py-2 rounded hover:bg-yellow-500 transition">Filter</button>
+                    <button class="text-black bg-yellow-400 px-4 py-2 rounded hover:bg-yellow-500 transition">Filter</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="Carousel Produk" class="pt-12 pb-12">
-        <div class="relative max-w-xl mx-auto">
+    <section id="Carousel Produk" class="pt-3 pb-36"> <!-- Decrease padding-top from pt-12 to pt-8 -->
+        <div class="relative max-w-3xl mx-auto">
             <!-- Atur flex direction ke column agar produk berurutan ke bawah -->
             <div class="absolute inset-0 flex justify-between items-start">
                 <!-- Panah Kiri -->
                 <a class="p-4 cursor-pointer text-white bg-black bg-opacity-50 rounded-full text-2xl z-10"
-                    onclick="plusProductSlides(-1)">&#10094;</a>
-    
+                    style="top: 50%;" onclick="plusProductSlides(-1)">&#10094;</a> <!-- Add top: 50% for vertical centering -->
+
                 <!-- Produk -->
                 <div class="flex space-x-6 mx-auto overflow-hidden text-white">
                     <!-- Produk 1 -->
                     <div class="text-center product-slide px-4 py-6">
-                        <img src="{{ asset("img/Oli Motul.png") }}" alt="Oli Mesin Motul" class="w-12 h-12 mx-auto mb-2 object-cover cs">
+                        <img src="{{ asset('img/Oli Motul.png') }}" alt="Oli Mesin Motul" class="w-[200px] h-[200px] mx-auto mb-2 object-cover cs">
                         <h3 class="font-semibold text-lg">Motul</h3>
                         <p class="text-sm">Oli Mesin</p>
                         <p class="font-semibold">Rp150.000,00</p>
                     </div>
-                    
+
                     <!-- Produk 2 -->
                     <div class="text-center product-slide px-4 py-6">
-                        <img src="{{ asset("img/Busi NGK.jpg") }}" alt="Busi NGK" class="w-12 h-12 mx-auto mb-2 object-cover cs">
+                        <img src="{{ asset('img/Busi NGK.jpg') }}" alt="Busi NGK" class="w-[200px] h-[200px] mx-auto mb-2 object-cover cs">
                         <h3 class="font-semibold text-lg">NGK</h3>
                         <p class="text-sm">Busi</p>
                         <p class="font-semibold">Rp30.000,00</p>
                     </div>
-    
+
                     <!-- Produk 3 -->
                     <div class="text-center product-slide px-4 py-6">
-                        <img src="{{ asset("img/Ban Irc.jpeg") }}" alt="Ban Motor IRC" class="w-12 h-12 mx-auto mb-2 object-cover cs">
+                        <img src="{{ asset('img/Ban Irc.jpeg') }}" alt="Ban Motor IRC" class="w-[200px] h-[200px] mx-auto mb-2 object-cover cs">
                         <h3 class="font-semibold text-lg">IRC Ring 14</h3>
                         <p class="text-sm">Ban Motor</p>
                         <p class="font-semibold">Rp200.000,00</p>
                     </div>
-    
+
                     <!-- Produk 4 -->
                     <div class="text-center product-slide hidden px-4 py-6">
-                        <img src="{{ asset("img/Oli Castrol.jpeg") }}" alt="Oli Mesin Castrol" class="w-12 h-12 mx-auto mb-2 object-cover cs">
+                        <img src="{{ asset('img/Oli Castrol.jpeg') }}" alt="Oli Mesin Castrol" class="w-[200px] h-[200px] mx-auto mb-2 object-cover cs">
                         <h3 class="font-semibold text-lg">Castrol</h3>
                         <p class="text-sm">Oli Mesin</p>
                         <p class="font-semibold">Rp120.000,00</p>
                     </div>
-    
+
                     <!-- Produk 5 -->
                     <div class="text-center product-slide hidden px-4 py-6">
-                        <img src="{{ asset("img/V-Belt Honda.jpeg") }}" alt="V-Belt Honda" class="w-12 h-12 mx-auto mb-2 object-cover cs">
+                        <img src="{{ asset('img/V-Belt Honda.jpeg') }}" alt="V-Belt Honda" class="w-[200px] h-[200px] mx-auto mb-2 object-cover cs">
                         <h3 class="font-semibold text-lg">V-Belt Honda</h3>
                         <p class="text-sm">Van Belt</p>
                         <p class="font-semibold">Rp150.000,00</p>
                     </div>
                 </div>
-    
+
                 <!-- Panah Kanan -->
                 <a class="p-4 cursor-pointer text-white bg-black bg-opacity-50 rounded-full text-2xl z-10"
-                    onclick="plusProductSlides(1)">&#10095;</a>
+                    style="top: 50%;" onclick="plusProductSlides(1)">&#10095;</a> <!-- Add top: 50% for vertical centering -->
             </div>
         </div>
     </section>
-
     <!-- Produk Stop -->
-    <!-- Dump -->
-    <section>
-        <div class="text-black">
-            asdasdas
-        </div>
-    </section>
-    <section>
-        <div class="text-black">
-            asdasdas
-        </div>
-    </section>
-    <section>
-        <div class="text-black">
-            asdasdas
-        </div>
-    </section>
-    <section>
-        <div class="text-black">
-            asdasdas
-        </div>
-    </section>
-    <section>
-        <div class="text-black">
-            asdasdas
-        </div>
-    </section>
-    <section>
-        <div class="text-black">
-            asdasdas
-        </div>
-    </section>
-    <section>
-        <div class="text-black">
-            asdasdas
-        </div>
-    </section>
-    <section>
-        <div class="text-black">
-            asdasdas
-        </div>
-    </section>
-    <!-- Dump -->
 
     <!-- Carousel Tetstimoni Start -->
-    <section id="Carousel Testimoni pt-36 pb-16">
-        <div class="container">
-            <div class="">
+    <section id="Carousel Testimoni pt-36 pb-36">
+        <div class="container mx-auto">
+            <div class="pt-60">
                 <div class="flex items-center justify-center text-primary text-3xl">
                     <h1 class="font-semibold">
                         TESTIMONI
                     </h1>
                 </div>
             </div>
-            <div class="container flex items-center justify-center text-white text-xs">
-                <h1>
-                    Testimoni Anda sangat berharga bagi kami untuk terus meningkatkan layanan dan kualitas
-                    produk.
-                    <span>
-                        Berikan komentar dan rating terbaik Anda di website kami, atau tulis testimoni Anda di
-                        sini:
-                    </span>
-                </h1>
+            <div class="container flex items-center justify-center text-[#767676] text-sm text-center">
+            <h1>
+                Testimoni Anda sangat berharga bagi kami untuk terus meningkatkan layanan dan kualitas produk.<br>
+                Berikan komentar dan rating terbaik Anda di website kami, atau tulis testimoni Anda di sini:
+            </h1>
             </div>
             <div class="carousel-container relative w-full max-w-xl mx-auto p-5">
                 <div class="testimonial active block text-center">
-                    <img src="{{ asset("img/mans.jpg") }}" alt="Profile Image" class="rounded-full w-12 h-12 mx-auto">
+                <img src="{{ asset('img/mans.jpg') }}" alt="Profile Image" class="rounded-full w-[100px] h-[100px] mx-auto">
                     <h2 class="mt-3 text-white font-bold text-2xl">Arya Marty Mansbawar</h2>
                     <p class="mt-3 text-lg text-white max-w-xl mx-auto">Lorem ipsum dolor sit amet consectetur
                         adipisicing elit. Minus et deleniti nesciunt sint eligendi reprehenderit reiciendis.</p>
@@ -476,7 +550,7 @@
                 </div>
 
                 <div class="testimonial hidden text-center">
-                    <img src="{{ asset("img/jopan.jpg") }}" alt="Profile Image" class="rounded-full w-12 h-12 mx-auto">
+                    <img src="{{ asset("img/jopan.jpg") }}" alt="Profile Image" class="rounded-full w-[100px] h-[100px] mx-auto">
                     <h2 class="mt-3 text-white font-bold text-2xl">JOPAN IMYUT</h2>
                     <p class="mt-3 text-lg text-white max-w-xl mx-auto">Lorem ipsum dolor sit amet consectetur
                         adipisicing elit. Quaerat voluptas veniam delectus ipsum libero dolorum!</p>
@@ -484,12 +558,12 @@
                 </div>
 
                 <!-- Letakkan kedua panah dalam satu div -->
-                <div class="absolute inset-0 flex justify-between items-center px-0">
-                    <a class="p-4 cursor-pointer text-white bg-black bg-opacity-50 rounded-full text-2xl z-10"
-                        onclick="plusTestimonialSlides(-1)">&#10094;</a>
-                    <a class="p-4 cursor-pointer text-white bg-black bg-opacity-50 rounded-full text-2xl z-10"
-                        onclick="plusTestimonialSlides(1)">&#10095;</a>
-                </div>
+                 <div class="absolute inset-0 flex justify-between items-center px-0">
+                <a class="p-4 cursor-pointer text-white bg-black bg-opacity-50 rounded-full text-2xl z-10 left-[-40px]"
+                    onclick="plusTestimonialSlides(-1)">&#10094;</a>
+                <a class="p-4 cursor-pointer text-white bg-black bg-opacity-50 rounded-full text-2xl z-10 right-[-40px]"
+                    onclick="plusTestimonialSlides(1)">&#10095;</a>
+            </div>
             </div>
         </div>
 
@@ -562,46 +636,44 @@
         <div class="container mx-auto text-center">
             <!-- Social Media Icons -->
             <div class="flex justify-center space-x-6 mb-4">
-                <a href="https://www.google.com" class="text-gray-500 hover:text-yellow-400 flex items-center">
-                    <!-- Google Icon -->
-                    <img src="{{ asset("img/Logo Google.png") }}" alt="Google Icon"
-                        class="h-8 w-8 transition-transform duration-200 hover:scale-110" />
-                    <span class="ml-2 text-transition">Google</span>
-                    <!-- Menambahkan teks di samping ikon -->
+                <!-- Google Icon -->
+                <a href="https://www.google.com" class="social-icon text-gray-500 hover:text-yellow-400 relative google-icon">
+                    <img src="{{ asset('img/Logo Google.png') }}" alt="Google Icon"
+                        class="icon h-8 w-8 transition-transform duration-200" />
+                    <span class="icon-text">Google</span>
                 </a>
-                <a href="https://www.twitter.com" class="text-gray-500 hover:text-yellow-400 flex items-center">
-                    <!-- Google Icon -->
-                    <img src="{{ asset("img/Logo Twitter.png") }}" alt="Twitter Icon"
-                        class="h-8 w-8 transition-transform duration-200 hover:scale-110" />
-                    <span class="ml-2 text-transition">Twitter</span>
-                    <!-- Menambahkan teks di samping ikon -->
+
+                <!-- Twitter Icon -->
+                <a href="https://www.twitter.com" class="social-icon text-gray-500 hover:text-yellow-400 relative twitter-icon">
+                    <img src="{{ asset('img/Logo Twitter.png') }}" alt="Twitter Icon"
+                        class="icon h-8 w-8 transition-transform duration-200" />
+                    <span class="icon-text">Twitter</span>
                 </a>
-                <a href="https://www.instagram.com" class="text-gray-500 hover:text-yellow-400 flex items-center">
-                    <!-- Google Icon -->
-                    <img src="{{ asset("img/Logo Instagram.png") }}" alt="Instagram Icon"
-                        class="h-8 w-8 transition-transform duration-200 hover:scale-110" />
-                    <span class="ml-2 text-transition">Instagram</span>
-                    <!-- Menambahkan teks di samping ikon -->
+                
+                <!-- Instagram Icon -->
+                <a href="https://www.instagram.com" class="social-icon text-gray-500 hover:text-yellow-400 relative instagram-icon">
+                    <img src="{{ asset('img/Logo Instagram.png') }}" alt="Instagram Icon"
+                        class="icon h-8 w-8 transition-transform duration-200" />
+                    <span class="icon-text">Instagram</span>
                 </a>
-                <a href="https://www.linkedin.com" class="text-gray-500 hover:text-yellow-400 flex items-center">
-                    <!-- Google Icon -->
-                    <img src="{{ asset("img/Logo Linkedln.png") }}" alt="Linkedln Icon"
-                        class="h-8 w-8 transition-transform duration-200 hover:scale-110" />
-                    <span class="ml-2 text-transition">Linkedln</span>
-                    <!-- Menambahkan teks di samping ikon -->
+                
+                <!-- LinkedIn Icon -->
+                <a href="https://www.linkedin.com" class="social-icon text-gray-500 hover:text-yellow-400 relative linkedin-icon">
+                    <img src="{{ asset('img/Logo Linkedln.png') }}" alt="LinkedIn Icon"
+                        class="icon h-8 w-8 transition-transform duration-200" />
+                    <span class="icon-text">LinkedIn</span>
                 </a>
             </div>
 
             <div class="flex items-center justify-center">
-                <img src="{{ asset("img/Cahaya Gunung Licin 2.jpeg") }}" alt="Logo" class="h-10 w-10 rounded-full mr-2">
-                <h1 class="text-xl font-bold text-primary">CAHAYA <span class="text-white">GUNUNG
-                        LICIN</span></h1>
+                <img src="{{ asset('img/Cahaya Gunung Licin 2.jpeg') }}" alt="Logo" class="h-10 w-10 rounded-full mr-2">
+                <h1 class="text-xl font-bold text-primary">CAHAYA <span class="text-white">GUNUNG LICIN</span></h1>
             </div>
         </div>
     </footer>
     <!-- Footer Stop -->
     
-    {{-- Modal Start--}}
+    {{-- Modal Ulasan Start--}}
     <section>
         <div id="review-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
             <div class="bg-gray-900 text-white rounded-lg shadow-lg p-8 w-full max-w-md">
@@ -646,6 +718,63 @@
             </div>
         </div>
     </section>
+    {{-- Modal Ulasan Stop --}}
+
+    {{-- Modal Edit Akun Start --}}
+    <section>
+        <div id="edit-account-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div class="modal-content bg-gray-900 text-white rounded-lg shadow-lg p-8 w-full max-w-2xl">
+                <!-- Header Modal -->
+                <h2 class="text-center text-2xl font-bold mb-6 tracking-wider">EDIT AKUN</h2>
+                
+                <div class="flex gap-8">
+                    <!-- Upload Foto -->
+                    <div class="upload-photo flex flex-col items-center">
+                        <div class="w-32 h-32 bg-gray-700 rounded-lg border border-gray-500 flex items-center justify-center mb-4">
+                            <label for="upload-photo" class="cursor-pointer text-center">
+                                <div class="text-sm text-gray-400">Upload your photo</div>
+                                <input type="file" id="upload-photo" class="hidden">
+                            </label>
+                        </div>
+                    </div>
+        
+                    <!-- Form Edit Akun -->
+                    <form action="#" method="POST" class="w-full">
+                        @csrf
+                        <!-- Password -->
+                        <div class="mb-4">
+                            <label for="password" class="block text-sm font-medium mb-1">Password</label>
+                            <input type="password" id="password" name="password" class="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Masukkan Password Baru">
+                        </div>
+        
+                        <!-- Konfirmasi Password -->
+                        <div class="mb-4">
+                            <label for="password_confirmation" class="block text-sm font-medium mb-1">Konfirmasi Password</label>
+                            <input type="password" id="password_confirmation" name="password_confirmation" class="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Masukkan Password Baru">
+                        </div>
+        
+                        <!-- Alamat -->
+                        <div class="mb-4">
+                            <label for="address" class="block text-sm font-medium mb-1">Alamat</label>
+                            <input type="text" id="address" name="address" class="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Masukkan Alamat">
+                        </div>
+        
+                        <!-- Nomor Telepon -->
+                        <div class="mb-4">
+                            <label for="phone" class="block text-sm font-medium mb-1">Nomor Telepon</label>
+                            <input type="text" id="phone" name="phone" class="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="+62 Masukkan Nomor Telepon">
+                        </div>
+        
+                        <!-- Action Buttons -->
+                        <div class="flex justify-between mt-6">
+                            <button type="button" id="cancel-button" class="cancel bg-gray-800 px-4 py-2 rounded-lg font-semibold border border-gray-600 hover:bg-gray-700 transition duration-150">BATAL</button>
+                            <button type="submit" class="submit bg-green-500 px-4 py-2 rounded-lg font-semibold text-gray-900 hover:bg-green-600 transition duration-150">SIMPAN</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -663,9 +792,9 @@
                 modal.classList.toggle('hidden');
             }
             // Fungsi untuk update tampilan bintang
-        function updateStars() {
-            starContainer.innerHTML = '★'.repeat(rating);
-        }
+            function updateStars() {
+                starContainer.innerHTML = '★'.repeat(rating);
+            }
 
             // Event listener untuk membuka modal
             document.querySelectorAll('[data-modal-target="review-modal"]').forEach(button => {
@@ -696,9 +825,26 @@
                 }
             });
         });
+    // edit-account-modal
+        document.addEventListener('DOMContentLoaded', function () {
+        const modal = document.getElementById('edit-account-modal');
+        const cancelButton = document.getElementById('cancel-button');
 
+        // Fungsi untuk toggle modal
+        function toggleModal() {
+                modal.classList.toggle('hidden');
+            }
+        
+        // Event listener untuk membuka dan menutup modal
+        cancelButton.addEventListener('click', toggleModal);
+
+        // Tambahkan event listener ke tombol lain yang membuka modal (jika ada)
+        document.querySelectorAll('[data-modal-target="edit-account-modal"]').forEach(button => {
+            button.addEventListener('click', toggleModal);
+        });
+    });
     </script>
-    {{-- Modal Stop --}}
+    {{-- Modal Edit Akun Stop --}}
 </body>
 
 </html>

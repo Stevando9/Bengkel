@@ -1,4 +1,4 @@
-<x-header-admin></x-header-admin>
+<x-header-admin>Jasa</x-header-admin>
 
 <body id="page-top">
 
@@ -27,12 +27,27 @@
                     <div class="row">
                         <div class="col"></div>
                         <div class="col-auto">
-                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-info shadow-sm">
+                            <a data-target="#addJasaModal" data-toggle="modal" class="d-none d-sm-inline-block btn btn-sm btn-info shadow-sm">
                                 <i class="fas fa-plus fa-sm text-white-50"></i> Tambah
                             </a>
                         </div>
                     </div>
                         
+                    @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                    @endif
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Tabel Jasa</h6>
@@ -57,39 +72,19 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                        @foreach ($jasa as $jas)
                                         <tr>
-                                            <td>12342</td>
-                                            <td>Servis Ringan</td>
-                                            <td>$320,800</td>
+                                            <td>{{ $jas['kode_jasa'] }}</td>
+                                            <td>{{ $jas['nama_jasa'] }}</td>
+                                            <td>Rp. {{ number_format($jas['biaya']) }}</td>
                                             <td>
                                                 <a href="#" class="btn btn-sm btn-warning shadow-sm">
                                                     <i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
-                                                <a href="#" class="btn btn-sm btn-danger shadow-sm">
+                                                    <a href="/Admin/hapusJasa/{{$jas['kode_jasa']}}" class="btn btn-sm btn-danger shadow-sm">
                                                     <i class="fas fa-trash fa-sm text-white-50"></i> Hapus</a>
                                             </td>
-                                        </tr>
-                                        <tr>
-                                            <td>12342</td>
-                                            <td>Servis Berat</td>
-                                            <td>$520,800</td>
-                                            <td>
-                                                <a href="#" class="btn btn-sm btn-warning shadow-sm">
-                                                    <i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
-                                                <a href="#" class="btn btn-sm btn-danger shadow-sm">
-                                                    <i class="fas fa-trash fa-sm text-white-50"></i> Hapus</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>12342</td>
-                                            <td>pemasangan</td>
-                                            <td>$20,800</td>
-                                            <td>
-                                                <a href="#" class="btn btn-sm btn-warning shadow-sm">
-                                                    <i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
-                                                <a href="#" class="btn btn-sm btn-danger shadow-sm">
-                                                    <i class="fas fa-trash fa-sm text-white-50"></i> Hapus</a>
-                                            </td>
-                                        </tr>
+                                        </tr>   
+                                        @endforeach                                     
                                     </tbody>
                                 </table>
                             </div>
@@ -122,6 +117,41 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+
+    <!-- Modal Box -->
+    <div class="modal fade" id="addJasaModal" tabindex="-1" aria-labelledby="addJasaModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addJasaModalLabel">Tambah Jasa Baru</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('tambahJasa') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Kode Jasa</label>
+                            <input type="text" name="kode_jasa" class="form-control" placeholder="format: Jxxx" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nama Jasa</label>
+                            <input type="text" name="nama_jasa" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Biaya</label>
+                            <input type="number" name="biaya" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan Jasa</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

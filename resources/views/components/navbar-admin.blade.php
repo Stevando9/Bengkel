@@ -3,8 +3,8 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+        <div class="sidebar-brand-icon">
+            <i class="fa-solid fa-user-tie"></i>
         </div>
         <div class="sidebar-brand-text mx-3">CGL Admin</div>
     </a>
@@ -13,12 +13,12 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="{{ route('dashboard') }}">
+    <li class="{{ request()->routeIs('dashboard') ? 'nav-item active' : 'nav-item'}}">
+        <a class="nav-link" href="{{route('dashboard')}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
-    <li class="nav-item">
+    <li class="{{ request()->is('/Admin/dashboard') ? 'nav-item active' : 'nav-item'}}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
             aria-expanded="true" aria-controls="collapseTwo">
             <i class="fa-solid fa-clipboard-list"></i>
@@ -43,15 +43,15 @@
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin_produk') }}">
+    <li class="{{ request()->routeIs('admin_produk') ? 'nav-item active' : 'nav-item'}}">
+        <a class="nav-link" href="{{route('admin_produk')}}">
             <i class="fa-solid fa-dolly"></i>
             <span>Produk</span></a>
     </li>
 
     <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin_jasa') }}">
+    <li class="{{ request()->routeIs('admin_jasa') ? 'nav-item active' : 'nav-item'}}">
+        <a class="nav-link" href="{{route('admin_jasa')}}">
             <i class="fa-solid fa-screwdriver-wrench"></i>
             <span>Jasa</span></a>
     </li>
@@ -65,26 +65,19 @@
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin_montir') }}">
+    <li class="{{ request()->routeIs('admin_montir') ? 'nav-item active' : 'nav-item'}}">
+        <a class="nav-link" href="{{route('admin_montir')}}">
             <i class="fa-solid fa-helmet-safety"></i>
             <span>Montir</span></a>
     </li>
 
     <!-- Nav Item - Charts -->
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin_user') }}">
+    <li class="{{ request()->routeIs('admin_user') ? 'nav-item active' : 'nav-item'}}">
+        <a class="nav-link" href="{{route('admin_user')}}">
             <i class="fa-solid fa-user"></i>
             <span>User</span></a>
     </li>
-
-    <!-- Nav Item - Tables -->
-    <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-            <i class="fa-solid fa-wrench"></i>
-            <span>Settings</span></a>
-    </li>
-
+    
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
