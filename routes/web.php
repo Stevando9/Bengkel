@@ -48,6 +48,10 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+Route::get('/home', function () {
+    return view('home');
+})->name('home');
+
 Route::get('/keranjang', function () {
     return view('keranjang');
 })->name('keranjang');
