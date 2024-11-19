@@ -210,6 +210,13 @@
         }
 
         /* end modal edit account */
+        .modal {
+            display: none;
+        }
+
+        .modal.show {
+            display: flex;
+        }
     </style>
 </head>
 
@@ -259,13 +266,14 @@
             </a>
 
             <!-- Akun -->
-            <a data-modal-target="edit-account-modal" class="flex items-center px-4 py-2 text-white hover:bg-gray-600">
+            <a data-modal-target="detail-account-modal"
+                class="flex items-center px-4 py-2 text-white hover:bg-gray-600">
                 <img src="{{ asset('img/Vector Profile.png') }}" alt="Deskripsi Icon" class="h-6 w-6 mr-2" />
                 Akun
             </a>
 
             <!-- Kontak Kami -->
-            <a href="#" class="flex items-center px-4 py-2 text-white hover:bg-gray-600">
+            <a data-modal-target="edit-account-modal" class="flex items-center px-4 py-2 text-white hover:bg-gray-600">
                 <img src="{{ asset('img/Vector Kontak Kami.png') }}" alt="Deskripsi Icon" class="h-6 w-6 mr-2" />
                 Kontak Kami
             </a>
@@ -711,7 +719,7 @@
     </footer>
     <!-- Footer Stop -->
 
-    {{-- Modal Ulasan Start --}}
+    {{-- Modal Ulasan --}}
     <section>
         <div id="review-modal"
             class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -759,9 +767,7 @@
             </div>
         </div>
     </section>
-    {{-- Modal Ulasan Stop --}}
-
-    {{-- Modal Edit Akun Start --}}
+    {{-- Modal Edit Akun --}}
     <section>
         <div id="edit-account-modal"
             class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -829,9 +835,49 @@
             </div>
         </div>
     </section>
+    {{-- modal Akun --}}
+    <section>
+        <!-- Modal Akun -->
+        <div id="detail-account-modal"
+            class="modal hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div class="bg-gray-800 text-white w-full max-w-3xl p-8 rounded-lg shadow-lg">
+                <h2 class="text-3xl font-bold mb-6 text-center">AKUN</h2>
+                <div class="flex items-start space-x-8">
+                    <div class="flex-shrink-0">
+                        <img src="profile-picture.jpg" alt="Profile Picture" class="w-40 h-40 rounded-full">
+                    </div>
+                    <div class="flex-grow">
+                        <div class="mb-4">
+                            <label class="block text-sm font-semibold">Nama</label>
+                            <p class="border-b border-gray-600 py-2">Arya Marty Mansbawar</p>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-semibold">Email</label>
+                            <p class="border-b border-gray-600 py-2">hiphopmansbaw@gmail.com</p>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-semibold">Nomor Telepon</label>
+                            <p class="border-b border-gray-600 py-2">082322741251</p>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-semibold">Alamat</label>
+                            <p class="border-b border-gray-600 py-2">Maguwoharjo</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-between mt-6">
+                    <button class="bg-gray-700 px-6 py-2 rounded-lg" id="edit-akun-button">EDIT</button>
+                    <button id="close-modal-akun" class="bg-gray-700 px-6 py-2 rounded-lg">KEMBALI</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Referensi elemen modal spesifik untuk detail akun
+            const modalAkunDetail = document.getElementById('detail-account-modal');
+            const closeModalAkunButton = document.getElementById('close-modal-akun');
             // Event listener untuk modal edit akun
             const editAccountModal = document.getElementById('edit-account-modal');
             const cancelEditButton = document.getElementById('cancel-edit-button');
@@ -859,6 +905,23 @@
                     toggleModal(editAccountModal);
                 });
             });
+            // Fungsi untuk membuka modal detail akun
+            function openModalAkunDetail() {
+                modalAkunDetail.classList.add('show');
+            }
+
+            // Event listener untuk tombol "KEMBALI" di modal detail akun
+            closeModalAkunButton.addEventListener('click', function() {
+                modalAkunDetail.classList.remove('show');
+            });
+
+            // Tambahkan fungsi untuk membuka modal dengan event listener
+            document.querySelectorAll('[data-open="detail-account-modal"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    openModalAkunDetail();
+                });
+            });
+
             //  Fungsi untuk membuka/menutup modal
             function toggleModal(modal) {
                 modal.classList.toggle('hidden');
