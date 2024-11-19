@@ -18,6 +18,7 @@ Route::get('/login', [AuthControler::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 Route::post('/register', [AuthControler::class, 'register'])->name('register.post');
 Route::get('/register', [AuthControler::class, 'showRegisterForm'])->name('register');
+Route::get('/logout', [AuthControler::class, 'logout'])->name('logout');
 
 
 Route::get('/Admin/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
