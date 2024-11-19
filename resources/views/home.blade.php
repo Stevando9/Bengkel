@@ -277,11 +277,18 @@
                 Ulasan
             </a>
 
-            <!-- Login -->
+            <!-- Login Logout-->
+            @if (Auth::check())
+            <a href="{{ route('logout') }}" class="flex items-center px-4 py-2 text-white hover:bg-gray-600">
+                <img src="{{ asset('img/Vector Login.png') }}" alt="Deskripsi Icon" class="h-6 w-6 mr-2" />
+                Logout
+            </a> 
+            @else            
             <a href="{{ route('login') }}" class="flex items-center px-4 py-2 text-white hover:bg-gray-600">
                 <img src="{{ asset('img/Vector Login.png') }}" alt="Deskripsi Icon" class="h-6 w-6 mr-2" />
                 Login
             </a>
+            @endif
         </div>
     </header>
 
