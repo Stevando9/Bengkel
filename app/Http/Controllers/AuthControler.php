@@ -18,8 +18,9 @@ class AuthControler extends Controller
             'password' => 'required'
         ]);
 
-        if(Auth::guard('web')->attempt($credentials)){
+        if(Auth::attempt($credentials)){
             return redirect()->route('home')->with('success', 'Login berhasil. Selamat Datang.');
+            $request->session()->regenerate();
         }else{
             return redirect()->back()->with('error', 'Login Gagal');
         }
@@ -34,8 +35,13 @@ class AuthControler extends Controller
         // ])->onlyInput('email');
     }
 
-    public function logout(){
-        Auth::guard('web')->logout();
+    public function logout(Request $request){
+        // Logout user
+        Auth::logout();
+
+        // Hapus sesi untuk keamanan
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return redirect()->route('login');
     }
 
@@ -69,4 +75,5 @@ class AuthControler extends Controller
         // Redirect ke halaman login setelah registrasi sukses
         return redirect()->route('login')->with('success', 'Registrasi berhasil. Silakan login.');
     }
+    
 }
