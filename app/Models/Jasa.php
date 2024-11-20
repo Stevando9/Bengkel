@@ -13,6 +13,6 @@ class Jasa extends Model
     protected $fillable = [
         'kode_jasa',
         'nama_jasa',
-        'biaya',
+        'biaya'
     ];
 }
