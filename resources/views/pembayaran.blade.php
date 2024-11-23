@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Pembayaran</title>
     @vite('resources/css/app.css')
-    <link href="{{ asset('css/header-footer-dll.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('resources/css/header-footer-dll.css') }}" >
     {{-- <style>
         /* Header Style */
         header {
@@ -266,7 +266,7 @@
 
     @include('header')
 
-    <script>
+    {{-- <script>
         // Toggle mobile menu
         document.getElementById('hamburger').addEventListener('click', function () {
             const menu = document.getElementById('hamburgerMenu');
@@ -297,7 +297,7 @@
                 hamburgerMenu.classList.add('hidden');
             }
         });
-    </script>
+    </script> --}}
     {{-- Header Stop --}}
 
     {{-- Konten Start --}}
