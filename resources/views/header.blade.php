@@ -65,3 +65,36 @@
         </a>
     </div>
 </header>
+
+<script>
+    // Toggle mobile menu
+    document.getElementById('hamburger').addEventListener('click', function () {
+        const menu = document.getElementById('hamburgerMenu');
+        if (menu.classList.contains('hidden')) {
+            menu.classList.remove('hidden');
+        } else {
+            menu.classList.add('hidden');
+        }
+    });
+
+    // Scroll event to change header background
+    window.onscroll = function () {
+        const header = document.getElementById('header');
+        if (window.scrollY > 50) {
+            header.classList.add('header-scroll');
+        } else {
+            header.classList.remove('header-scrolled');
+        }
+    };
+
+    // Ambil elemen hamburger dan menu
+    const hamburger = document.getElementById('hamburger');
+    const hamburgerMenu = document.getElementById('hamburgerMenu');
+
+    // Tutup menu saat mengklik di luar menu dan hamburger
+    document.addEventListener('click', (event) => {
+        if (!hamburger.contains(event.target) && !hamburgerMenu.contains(event.target)) {
+            hamburgerMenu.classList.add('hidden');
+        }
+    });
+</script>
