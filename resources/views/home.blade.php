@@ -528,50 +528,16 @@
 
                 <!-- Produk -->
                 <div class="flex space-x-6 mx-auto overflow-hidden text-white">
+                    @foreach ($produk as $prod)                    
                     <!-- Produk 1 -->
                     <div class="text-center product-slide px-4 py-6">
-                        <img src="{{ asset('img/Oli Motul.png') }}" alt="Oli Mesin Motul"
+                        <img src="{{ asset('img/produk/'.$prod['gambar']) }}" alt="{{$prod['nama_produk']}}"
                             class="w-[200px] h-[200px] mx-auto mb-2 object-cover cs">
-                        <h3 class="font-semibold text-lg">Motul</h3>
-                        <p class="text-sm">Oli Mesin</p>
-                        <p class="font-semibold">Rp150.000,00</p>
+                        <h3 class="font-semibold text-lg">{{$prod['nama_produk']}}</h3>
+                        <p class="text-sm">{{ $prod->kategori->nama_kategori ?? 'Kategori tidak ditemukan' }}</p>
+                        <p class="font-semibold">Rp. {{ number_format($prod['harga'])}}</p>
                     </div>
-
-                    <!-- Produk 2 -->
-                    <div class="text-center product-slide px-4 py-6">
-                        <img src="{{ asset('img/Busi NGK.jpg') }}" alt="Busi NGK"
-                            class="w-[200px] h-[200px] mx-auto mb-2 object-cover cs">
-                        <h3 class="font-semibold text-lg">NGK</h3>
-                        <p class="text-sm">Busi</p>
-                        <p class="font-semibold">Rp30.000,00</p>
-                    </div>
-
-                    <!-- Produk 3 -->
-                    <div class="text-center product-slide px-4 py-6">
-                        <img src="{{ asset('img/Ban Irc.jpeg') }}" alt="Ban Motor IRC"
-                            class="w-[200px] h-[200px] mx-auto mb-2 object-cover cs">
-                        <h3 class="font-semibold text-lg">IRC Ring 14</h3>
-                        <p class="text-sm">Ban Motor</p>
-                        <p class="font-semibold">Rp200.000,00</p>
-                    </div>
-
-                    <!-- Produk 4 -->
-                    <div class="text-center product-slide hidden px-4 py-6">
-                        <img src="{{ asset('img/Oli Castrol.jpeg') }}" alt="Oli Mesin Castrol"
-                            class="w-[200px] h-[200px] mx-auto mb-2 object-cover cs">
-                        <h3 class="font-semibold text-lg">Castrol</h3>
-                        <p class="text-sm">Oli Mesin</p>
-                        <p class="font-semibold">Rp120.000,00</p>
-                    </div>
-
-                    <!-- Produk 5 -->
-                    <div class="text-center product-slide hidden px-4 py-6">
-                        <img src="{{ asset('img/V-Belt Honda.jpeg') }}" alt="V-Belt Honda"
-                            class="w-[200px] h-[200px] mx-auto mb-2 object-cover cs">
-                        <h3 class="font-semibold text-lg">V-Belt Honda</h3>
-                        <p class="text-sm">Van Belt</p>
-                        <p class="font-semibold">Rp150.000,00</p>
-                    </div>
+                    @endforeach                    
                 </div>
 
                 <!-- Panah Kanan -->
