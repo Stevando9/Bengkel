@@ -74,6 +74,26 @@ Route::get('/pembayaran', function () {
     return view('pembayaran');
 })->name('pembayaran');
 
+Route::get('/pembayaranqris', function () {
+    return view('pembayaranqris');
+})->name('pembayaranqris');
+
+Route::get('/pembayaranbank', function () {
+    return view('pembayaranbank');
+})->name('pembayaranbank');
+
+Route::get('/pembayarangagal', function () {
+    return view('pembayarangagal');
+})->name('pembayarangagal');
+
+Route::get('/pembayaranberhasil', function () {
+    return view('pembayaranberhasil');
+})->name('pembayaranberhasil');
+
+Route::get('/pembayaranberhasilcod', function () {
+    return view('pembayaranberhasilcod');
+})->name('pembayaranberhasilcod');
+
 Route::get('/update', function () {
     return view('pembayaran');
 })->name('pembayaran');
