@@ -442,7 +442,7 @@
     {{-- Konten Stop --}}
 
     <!-- Footer Start -->
-    {{-- <footer class="bg-gray-800 text-white py-6">
+    <footer class="bg-gray-800 text-white py-6">
         <div class="container mx-auto text-center">
             <!-- Social Media Icons -->
             <div class="flex justify-center space-x-6 mb-4">
@@ -480,9 +480,9 @@
                 <h1 class="text-xl font-bold text-primary">CAHAYA <span class="text-white">GUNUNG LICIN</span></h1>
             </div>
         </div>
-    </footer> --}}
+    </footer>
 
-    @include('footer')
+    {{-- @include('footer') --}}
 
     <!-- Footer Stop -->
     

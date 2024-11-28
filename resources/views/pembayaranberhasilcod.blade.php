@@ -352,11 +352,6 @@
             </div>
         </div>
     </section>
-
-
-
-
-    
     {{-- Konten Stop --}}
 
     <!-- Footer Start -->
@@ -403,8 +398,5 @@
     @include('footer')
 
     <!-- Footer Stop -->
-    
-
-    
 </body>
 </html>

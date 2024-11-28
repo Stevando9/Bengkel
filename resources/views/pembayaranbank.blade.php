@@ -7,7 +7,7 @@
     <title>Pembayaran</title>
     @vite('resources/css/app.css')
     <link href="{{ asset('css/header-footer-dll.css') }}" rel="stylesheet">
-    {{-- <style>
+    <style>
         /* Header Style */
         header {
             position: fixed;
@@ -192,7 +192,7 @@
             background-color: #218838;
         }
         /* end modal edit account */
-    </style> --}}
+    </style>
 </head>
 <body class="bg-black">
     {{-- Header Start --}}
@@ -301,7 +301,7 @@
     {{-- Header Stop --}}
 
     {{-- Konten Start --}}
-   <section class="pt-20 pb-16">
+   <section class="pt-36 pb-16">
         <div class="container mx-auto px-4">
               <div class="bg-white text-black p-6 rounded-lg shadow-md w-full lg:w-1/2 mx-auto">
                 <!-- Header Section -->
@@ -407,6 +407,7 @@
     {{-- Konten Stop --}}
 
     <!-- Footer Start -->
+    <x-footer></x-footer>
     {{-- <footer class="bg-gray-800 text-white py-6">
         <div class="container mx-auto text-center">
             <!-- Social Media Icons -->
@@ -447,11 +448,8 @@
         </div>
     </footer> --}}
 
-    @include('footer')
+    {{-- @include('footer') --}}
 
     <!-- Footer Stop -->
-    
-
-    
 </body>
 </html>

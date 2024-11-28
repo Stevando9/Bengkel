@@ -7,7 +7,7 @@
     <title>Pembayaran</title>
     @vite('resources/css/app.css')
     <link href="{{ asset('css/header-footer-dll.css') }}" rel="stylesheet">
-    {{-- <style>
+    <style>
         /* Header Style */
         header {
             position: fixed;
@@ -192,7 +192,7 @@
             background-color: #218838;
         }
         /* end modal edit account */
-    </style> --}}
+    </style>
 </head>
 <body class="bg-black">
     {{-- Header Start --}}
@@ -301,7 +301,7 @@
     {{-- Header Stop --}}
 
     {{-- Konten Start --}}
-   <section class="pt-20 pb-16">
+   <section class="pt-36 pb-16">
         <div class="container mx-auto px-4">
             <div class="bg-white text-black p-6 rounded-lg shadow-md w-full lg:w-1/3 mx-auto">
                 <!-- Icon & Title -->
@@ -339,27 +339,26 @@
 
                 <!-- Back Button -->
                 <div class="text-center1 mb-2">
-                    <button class="w-full py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800">
-                    LANJUTKAN BELANJA
-                    </button>
+                    <a href="{{ route ('produk') }}">
+                        <button class="w-full py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800">
+                        LANJUTKAN BELANJA
+                        </button>
+                    </a>
                 </div>
                 <div class="text-center">
-                    <button class="w-full py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800">
-                        KEMBALI
-                    </button>
+                    <a href="{{ route ('home') }}">
+                        <button class="w-full py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800">
+                            KEMBALI
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
-
-
-
-
-    
     {{-- Konten Stop --}}
 
     <!-- Footer Start -->
-    {{-- <footer class="bg-gray-800 text-white py-6">
+    <footer class="bg-gray-800 text-white py-6">
         <div class="container mx-auto text-center">
             <!-- Social Media Icons -->
             <div class="flex justify-center space-x-6 mb-4">
@@ -397,13 +396,10 @@
                 <h1 class="text-xl font-bold text-primary">CAHAYA <span class="text-white">GUNUNG LICIN</span></h1>
             </div>
         </div>
-    </footer> --}}
+    </footer>
 
-    @include('footer')
+    {{-- @include('footer') --}}
 
     <!-- Footer Stop -->
-    
-
-    
 </body>
 </html>
