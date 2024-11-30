@@ -45,11 +45,6 @@ Route::get('/Admin/hapusMontir/{montir:id}', [MontirController::class, 'hapusMon
 //login regis
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-
-Route::get('/home', function () {
-    return view('home');
-})->name('home');
-
 Route::get('/keranjang', function () {
     return view('keranjang');
 })->name('keranjang');

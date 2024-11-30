@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class ProdukController extends Controller
 {
     public function index(){
-        return view('produk');
+        return view('produk',['produk'=>produk::with('kategori')->get()]);
       }
 
     public function tambahProduk(Request $request){

@@ -21,7 +21,7 @@ class AdminController extends Controller
 
       public function produk(){
         if ((Auth::check() && Auth::user()->tipe === 'admin')) {        
-        return view('Admin.produk',['produk'=>produk::all(), 'kategori'=>Kategori::all()]);
+        return view('Admin.produk',['produk'=>produk::with('kategori')->get(), 'kategori'=>Kategori::all()]);
         }
         return redirect()->route('login')->with('error', 'Harap Login.'); 
       }

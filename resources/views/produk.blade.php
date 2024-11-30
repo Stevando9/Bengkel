@@ -262,27 +262,15 @@
                 <div class="col-span-3">
                     <h1 class="text-2xl font-bold mb-4">Produk</h1>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        @foreach ($produk as $prod)
                         <div class="bg-white rounded-md shadow-md p-4">
-                            <img src="https://via.placeholder.com/150" alt="Product Image" class="w-full mb-2">
-                            <h2 class="text-lg font-bold mb-2">Oli Mesin</h2>
-                            <p class="text-sm text-gray-600">Rp 50.000</p>
+                            <img src="{{ asset('img/produk/'.$prod['gambar']) }}" alt="{{$prod['nama_produk']}}" class="w-full mb-2">
+                            <h2 class="text-lg font-bold mb-2">{{ $prod['nama_produk'] }}</h2>
+                            <p class="text-sm text-gray-600">Rp. {{ number_format($prod['harga'])}}</p>
                             <button
                                 class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md">Beli</button>
                         </div>
-                        <div class="bg-white rounded-md shadow-md p-4">
-                            <img src="https://via.placeholder.com/150" alt="Product Image" class="w-full mb-2">
-                            <h2 class="text-lg font-bold mb-2">Busi</h2>
-                            <p class="text-sm text-gray-600">Rp 20.000</p>
-                            <button
-                                class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md">Beli</button>
-                        </div>
-                        <div class="bg-white rounded-md shadow-md p-4">
-                            <img src="https://via.placeholder.com/150" alt="Product Image" class="w-full mb-2">
-                            <h2 class="text-lg font-bold mb-2">Rantai</h2>
-                            <p class="text-sm text-gray-600">Rp 30.000</p>
-                            <button
-                                class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md">Beli</button>
-                        </div>
+                        @endforeach
                         <!-- Tambahkan produk lainnya di sini -->
                     </div>
                     {{-- <div class="flex justify-between mb-4 mt-10">

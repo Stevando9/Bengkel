@@ -80,7 +80,7 @@
                                     <tbody>
                                         @foreach ($produk as $prod)
                                         <tr>
-                                            <td>{{$prod['kategori_id']}}</td>
+                                            <td>{{ $prod->kategori->nama_kategori ?? 'Kategori tidak ditemukan'}}</td>
                                             <td>{{$prod['kode_produk']}}</td>
                                             <td>{{$prod['nama_produk']}}</td>
                                             <td>{{$prod['stok']}}</td>
