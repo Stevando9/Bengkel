@@ -27,7 +27,7 @@ Route::get('/Admin/jasa', [AdminController::class, 'jasa'])->name('admin_jasa');
 Route::get('/Admin/user', [AdminController::class, 'daftarUser'])->name('admin_user');
 Route::get('/Admin/montir', [AdminController::class, 'montir'])->name('admin_montir');
 
-Route::post('/Admin/produk', [ProdukController::class, 'tambahProduk'])->name('tambahProduk');
+Route::post('/Admin/tambahProduk', [ProdukController::class, 'tambahProduk'])->name('tambahProduk');
 Route::get('/Admin/hapus/{produk:kode_produk}', [ProdukController::class, 'hapusProduk'])->name('hapusProduk');
 
 Route::post('/Admin/tambahJasa', [JasaController::class, 'tambahJasa'])->name('tambahJasa');

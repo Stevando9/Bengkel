@@ -20,7 +20,7 @@ class MontirController extends Controller
         Montir::create([
         'nama_montir' => $request->nama_montir,
         'pengalaman' => $request->pengalaman,
-        'status' => 'kosong',
+        'status' => 'kosong'
         ]);
   
         return redirect()->back()->with('success', 'Montir berhasil ditambahkan!');

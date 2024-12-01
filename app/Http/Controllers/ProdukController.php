@@ -27,7 +27,7 @@ class ProdukController extends Controller
       $imageName = $productNameSlug . '.' . $request->file('gambar')->getClientOriginalExtension();
 
       // Menyimpan gambar ke folder `public/images/products`
-      $request->file('gambar')->move(public_path('img'), $imageName);
+      $request->file('gambar')->move(public_path('img/produk'), $imageName);
 
       $kategoriId = $request['kategori'];
 
@@ -52,7 +52,7 @@ class ProdukController extends Controller
       $prod = $produk;
       if ($prod) {
           // Hapus gambar dari folder `public/img`          
-          $imagePath = public_path('img/' . $prod['gambar']);
+          $imagePath = public_path('img/produk' . $prod['gambar']);
           if (file_exists($imagePath)) {
               unlink($imagePath);
           }

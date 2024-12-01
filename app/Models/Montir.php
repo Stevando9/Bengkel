@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Montir extends Model
 {
     protected $table = 'montir';
+    public $timestamps = false;
     protected $fillable = [
         'nama_montir',
         'pengalaman',
