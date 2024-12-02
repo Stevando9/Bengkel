@@ -26,15 +26,21 @@ Route::get('/Admin/produk', [AdminController::class, 'produk'])->name('admin_pro
 Route::get('/Admin/jasa', [AdminController::class, 'jasa'])->name('admin_jasa');
 Route::get('/Admin/user', [AdminController::class, 'daftarUser'])->name('admin_user');
 Route::get('/Admin/montir', [AdminController::class, 'montir'])->name('admin_montir');
+Route::get('/Admin/setting', [AdminController::class, 'setting'])->name('admin_settings');
+
+Route::post('/Admin/setting/{id}', [AuthControler::class, 'updateAdmin'])->name('admin_update');
 
 Route::post('/Admin/tambahProduk', [ProdukController::class, 'tambahProduk'])->name('tambahProduk');
 Route::get('/Admin/hapus/{produk:kode_produk}', [ProdukController::class, 'hapusProduk'])->name('hapusProduk');
+Route::post('/Admin/editProduk/{kode_produk}', [ProdukController::class, 'update'])->name('updateProduk');
 
 Route::post('/Admin/tambahJasa', [JasaController::class, 'tambahJasa'])->name('tambahJasa');
 Route::get('/Admin/hapusJasa/{jasa:kode_jasa}', [JasaController::class, 'hapusJasa'])->name('hapusJasa');
+Route::post('/Admin/editJasa/{kode_jasa}', [JasaController::class, 'update'])->name('updateJasa');
 
 Route::post('/Admin/tambahMontir', [MontirController::class, 'tambahMontir'])->name('tambahMontir');
 Route::get('/Admin/hapusMontir/{montir:id}', [MontirController::class, 'hapusMontir'])->name('hapusMontir');
+Route::post('/Admin/editMontir/{id}', [MontirController::class, 'update'])->name('updateMontir');
 // Route::group(['middleware' => ['auth', 'tipe:user']], function () {
 //     Route::get('/home', [AuthControler::class, 'index'])->name('user.home');
 // });

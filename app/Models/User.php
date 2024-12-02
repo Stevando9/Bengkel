@@ -23,7 +23,8 @@ class User extends Authenticatable
         'tipe',
         'no_plat',
         'nama_lengkap',        
-        'no_telpon'
+        'no_telpon',
+        'foto',
     ];
 
     /**

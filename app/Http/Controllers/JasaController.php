@@ -29,7 +29,7 @@ class JasaController extends Controller
       }
       }
 
-    public function hapusJasa(Jasa $jasa){
+    public function hapusJasa(Jasa $jasa){      
         $jas = $jasa;
         if ($jas) {
 
@@ -41,4 +41,22 @@ class JasaController extends Controller
             return redirect()->back()->with('error', 'Jasa tidak ditemukan.');
         }
       }
+
+
+    public function update(Request $request, $kodeJasa)
+    {
+        $request->validate([
+            'nama_jasa' => 'required|string|max:255',
+            'biaya' => 'required|min:0',
+        ]);
+
+        $jasa = Jasa::where('kode_jasa', $kodeJasa)->first();
+
+        $jasa->nama_jasa = $request->input('nama_jasa');
+        $jasa->biaya = $request->input('biaya');
+        $jasa->save();
+
+        return redirect()->back()->with('success', 'Data jasa berhasil diperbarui.');
+    }  
+
 }

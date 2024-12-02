@@ -78,7 +78,7 @@
                                             <td>{{ $tir['nama_montir'] }}</td>
                                             <td>{{ $tir['pengalaman'] }}</td>
                                             <td>
-                                                <a href="#" class="btn btn-sm btn-warning shadow-sm">
+                                                <a href="#"  data-toggle="modal" data-target="#updateModal-{{ $tir->id }}" class="btn btn-sm btn-warning shadow-sm">
                                                     <i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
                                                 <a href="/Admin/hapusMontir/{{$tir['id']}}" class="btn btn-sm btn-danger shadow-sm">
                                                     <i class="fas fa-trash fa-sm text-white-50"></i> Hapus</a>
@@ -97,94 +97,67 @@
             </div>
             <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+            <!-- Modal Box -->
+            <div class="modal fade" id="addMontirModal" tabindex="-1" aria-labelledby="addMontirModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addMontirModalLabel">Tambah Montir Baru</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="{{ route('tambahMontir') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label>Nama Montir</label>
+                                    <input type="text" name="nama_montir" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Pengalaman</label>
+                                    <input type="text" name="pengalaman" class="form-control" required>
+                                </div>                        
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </footer>
-            <!-- End of Footer -->
+            </div>
 
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Modal Box -->
-    <div class="modal fade" id="addMontirModal" tabindex="-1" aria-labelledby="addMontirModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addMontirModalLabel">Tambah Montir Baru</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="{{ route('tambahMontir') }}" method="POST" enctype="multipart/form-data">
+            <!-- Update Modal -->
+            @foreach ($montir as $tir)
+            <div class="modal fade" id="updateModal-{{ $tir->id }}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel-{{ $tir->id }}">Update Jasa</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form  action="{{ route('updateMontir', ['id' => $tir->id]) }}" method="POST">
                     @csrf
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label>Nama Montir</label>
-                            <input type="text" name="nama_montir" class="form-control" required>
+                        <input type="hidden" name="id" id="dataId">
+                        <div class="mb-3">
+                            <label for="nama_montir" class="form-label">Nama Montir</label>
+                            <input type="text" class="form-control" id="nama_montir" name="nama_montir" value="{{ $tir->nama_montir }}" required>
+                          </div>
+                          <div class="mb-3">
+                            <label for="pengalaman" class="form-label">Pengalaman</label>
+                            <input type="text" class="form-control" id="pengalaman" name="pengalaman" value="{{ $tir->pengalaman }}" required>
+                          </div>
                         </div>
-                        <div class="form-group">
-                            <label>Pengalaman</label>
-                            <input type="text" name="pengalaman" class="form-control" required>
-                        </div>                        
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
+                    </form>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="{{ route('logout') }}">Logout</a>
                 </div>
-            </div>
-        </div>
-    </div>
+            </div> 
+            @endforeach   
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('vendor/admin/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('vendor/admin/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <link href="{{ asset('vendor/admin/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-
-    <!-- Core plugin JavaScript-->
-    <script src="{{ asset('vendor/admin/jquery-easing/jquery.easing.min.js') }}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="{{ asset('js/admin/sb-admin-2.min.js') }}"></script>
-
-    <!-- Page level plugins -->
-    <script src="{{ asset('vendor/admin/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('vendor/admin/datatables/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('js/admin/demo/datatables-demo.js') }}"></script>
-
-</body>
-
-</html>
+<x-footer-admin></x-footer-admin>            

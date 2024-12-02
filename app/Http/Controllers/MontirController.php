@@ -41,4 +41,20 @@ class MontirController extends Controller
             return redirect()->back()->with('error', 'Montir tidak ditemukan.');
         }
       }
+
+      public function update(Request $request, $id)
+    {
+      $request->validate([          
+        'nama_montir' => 'required',
+        'pengalaman' => 'required',
+      ]);
+
+        $montir = Montir::where('id', $id)->first();
+
+        $montir->nama_montir = $request->input('nama_montir');
+        $montir->pengalaman = $request->input('pengalaman');
+        $montir->save();
+
+        return redirect()->back()->with('success', 'Data jasa berhasil diperbarui.');
+    }  
 }

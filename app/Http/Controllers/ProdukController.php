@@ -66,5 +66,39 @@ class ProdukController extends Controller
       }
     }
 
+    public function update(Request $request, $kodeProduk)
+    {
+        $request->validate([
+            'nama_produk' => 'required',
+            'kategori'     => 'required',
+            'stok'        => 'required|integer',
+            'harga'        => 'required|decimal:0,2',
+            'gambar'        => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $produk = produk::where('kode_produk', $kodeProduk)->first();
+        $kategoriId = $request['kategori'];
+
+        $produk->nama_produk = $request->input('nama_produk');
+        $produk->kategori_id = $kategoriId;
+        $produk->stok = $request->input('stok');
+        $produk->harga = $request->input('harga');
+        if ($request->hasFile('gambar')) {
+          // Hapus gambar dari folder `public/img`    
+          if ($produk->gambar) {
+              $imagePath = public_path('img/produk/' . $produk['foto']);
+              if (file_exists($imagePath)) {
+                  unlink($imagePath);
+              }
+          }              
+          $productNameSlug = Str::slug($produk->kode_produk, '-');  
+          $imageName = $productNameSlug . '.' . $request->file('gambar')->getClientOriginalExtension();
+          $request->file('gambar')->move(public_path('img/produk'), $imageName);
+          $produk->gambar = $imageName;
+          }
+        $produk->save();
+
+        return redirect()->back()->with('success', 'Data Produk berhasil diperbarui.');
+    }  
 
 }
