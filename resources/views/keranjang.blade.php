@@ -293,7 +293,9 @@
                     <p class="text-lg font-bold text-white">Rp 180.000</p>
                 </div>
                 <div class="">
-                    <button class="bg-yellow-500 px-4 py-2 rounded-md text-gray-900 font-semibold">Checkout</button>
+                    <a href="{{ route ('pembayaran') }}">
+                        <button class="bg-yellow-500 px-4 py-2 rounded-md text-gray-900 font-semibold">Checkout</button>
+                    </a>
                 </div>
             </div>
         </div>
