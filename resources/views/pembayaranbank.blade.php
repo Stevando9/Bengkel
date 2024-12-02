@@ -363,9 +363,11 @@
                 </div>
 
                 <!-- Payment Confirmation Button -->
-                <button class="mt-6 w-full py-3 bg-yellow-500 text-black font-semibold rounded-lg hover:bg-yellow-400">
-                    SUDAH TRANSFER
-                </button>
+                <a href="{{ route ('pembayaranberhasil') }}">
+                    <button class="mt-6 w-full py-3 bg-yellow-500 text-black font-semibold rounded-lg hover:bg-yellow-400">
+                        SUDAH TRANSFER
+                    </button>
+                </a>
             </div>
         </div>
     </section>

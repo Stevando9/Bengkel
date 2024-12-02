@@ -400,8 +400,12 @@
                     
                     <!-- Tombol Kembali dan Bayar -->
                     <div class="flex justify-between mt-4">
-                        <button class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-md">Kembali</button>
-                        <button class="bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2 px-4 rounded-md">Bayar</button>
+                        <a href="{{ route ('keranjang') }}">
+                            <button class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-md">Kembali</button>
+                        </a>
+                        <a href="{{ route ('pembayaranbank') }}">
+                            <button class="bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2 px-4 rounded-md">Bayar</button>
+                        </a>
                     </div>
                 </div>
             </div>
