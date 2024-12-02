@@ -306,7 +306,7 @@
                     <div class="mx-auto justify-start ">
                         <!-- Product Image and Location -->
                         <div class="flex justify-center">
-                            <img src="{{ asset('img/Ban Irc.jpeg') }}" alt="Ban Motor" class="w-60 h-60 object-cover mb-4 mt-5">
+                            <img src="{{ asset('img/produk/'.$produk['gambar']) }}" alt="{{ $produk['nama_produk'] }}" class="w-60 h-60 object-cover mb-4 mt-5">
                         </div>
                         <div class="flex bg-gray-500 text-white mb-4 justify-center mx-auto py-1 rounded-md ">
                             <i class="uil uil-location-pin-alt"></i>
@@ -316,15 +316,15 @@
                     
                     <div class="justify-center w-1/2">
                         <!-- Product Details -->
-                        <h2 class="text-lg font-semibold">Ban IRC 100/90-14 Ban Motor Tubeless</h2>
+                        <h2 class="text-lg font-semibold">{{ $produk['nama_produk'] }}</h2>
                         <p class="text-gray-400">Terjual 296</p>
-                        <p class="text-2xl font-bold mt-10">Rp200.000</p>
+                        <p class="text-2xl font-bold mt-10">Rp{{ number_format($produk['harga']) }}</p>
                 
                         <!-- Product Specifications -->
                         <ul class="text-gray-400 mt-10 space-y-1">
                             <li>Kondisi: Baru</li>
                             <li>Berat Satuan: 1 Kg</li>
-                            <li>Etalase: Ban Motor</li>
+                            <li>Etalase: {{ $kategori['nama_kategori'] }}</li>
                         </ul>
                         <p class="text-blue-500 mt-2 cursor-pointer">Selengkapnya</p>
                     </div>
