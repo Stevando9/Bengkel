@@ -326,7 +326,7 @@
                     </div>
                     <div class="flex justify-between">
                         <span>Metode Transaksi</span>
-                        <span class="font-semibold">QRIS</span>
+                        <span class="font-semibold">COD</span>
                     </div>
                     <div class="flex justify-between">
                         <span>Nama Pengirim</span>
@@ -340,14 +340,18 @@
 
                 <!-- Back Button -->
                 <div class="text-center1 mb-2">
-                    <button class="w-full py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800">
-                    LANJUTKAN BELANJA
-                    </button>
+                    <a href="{{ route ('produk') }}">
+                        <button class="w-full py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800">
+                        LANJUTKAN BELANJA
+                        </button>
+                    </a>
                 </div>
                 <div class="text-center">
-                    <button class="w-full py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800">
-                        KEMBALI
-                    </button>
+                    <a href="{{ route ('home') }}">
+                        <button class="w-full py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800">
+                            KEMBALI
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
