@@ -50,6 +50,7 @@ Route::post('/Admin/editMontir/{id}', [MontirController::class, 'update'])->name
 
 //login regis
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/keranjang', function () {
     return view('keranjang');
@@ -59,13 +60,12 @@ Route::get('/keranjang', function () {
 Route::get('/produk', [ProdukController::class, 'index'])->name('produk');
 
 //jasa
+Route::get('/jasa', [JasaController::class, 'index'])->name('jasa');
+
 Route::get('/produk/detail_produk', function () {
     return view('detail_produk', []);
 })->name('detail_produk');
 
-Route::get('/jasa', function () {
-    return view('jasa', []);
-})->name('jasa');
 
 Route::get('/review_modal', function () {
     return view('review_modal', []);

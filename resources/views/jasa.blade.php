@@ -234,8 +234,9 @@
                         <label for="pilih_jasa" class="block mb-2 text-sm font-medium text-white">Pilih Jasa</label>
                         <select id="pilih_jasa"
                             class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                            <option value="service_ringan">Service Ringan</option>
-                            <option value="service_berat">Service Berat</option>
+                            @foreach ($jasa as $jas)                                                            
+                            <option value="{{ $jas['kode_jasa'] }}">{{ $jas['nama_jasa'] }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="mb-4">
@@ -276,8 +277,9 @@
                             Produk</label>
                         <select id="produk_tambahan"
                             class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                            <option value="oli">Oli</option>
-                            <option value="filter_udara">Filter Udara</option>
+                            @foreach ($produk as $prod)                                                            
+                            <option value="{{ $prod['kode_produk'] }}">{{ $prod['nama_produk'] }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="flex justify-between">

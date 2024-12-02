@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jasa;
+use App\Models\produk;
 use Illuminate\Http\Request;
 
 class JasaController extends Controller
 {
+    public function index(){
+      return view('jasa',['jasa'=>Jasa::all(),'produk'=>produk::all()]);
+    }
+
     public function tambahJasa(Request $request){
         // valiasi data
         $request->validate([
