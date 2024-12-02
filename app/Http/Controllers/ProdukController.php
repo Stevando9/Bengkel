@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\produk;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProdukController extends Controller
 {
     public function index(){
+      if ((Auth::check() && Auth::user()->tipe === 'member')) {
         return view('produk',['produk'=>produk::with('kategori')->get()]);
+      }
+      return redirect()->route('login')->with('error', 'Harap Login.');  
       }
 
     public function tambahProduk(Request $request){

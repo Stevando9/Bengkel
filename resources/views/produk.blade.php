@@ -235,14 +235,9 @@
                                 </svg>
                                 Otomotif
                             </li> --}}
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Oli Mesin</li>
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Busi</li>
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Rantai</li>
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Kampas Rem</li>
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Ban</li>
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Aksesoris</li>
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Perawatan Kendaraan</li>
-                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">Suku Cadang</li>
+                            @foreach($kategori as $kat)
+                            <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1"><a href="">{{$kat['nama_kategori']}}</a></li>                            
+                            @endforeach
                         </ul>
                     </div>
                     <div class="bg-white rounded-md shadow-md p-4">

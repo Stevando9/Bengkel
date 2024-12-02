@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Jasa;
 use App\Models\produk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JasaController extends Controller
 {
     public function index(){
-      return view('jasa',['jasa'=>Jasa::all(),'produk'=>produk::all()]);
+      if ((Auth::check() && Auth::user()->tipe === 'member')) {
+        return view('jasa',['jasa'=>Jasa::all(),'produk'=>produk::all()]);
+      }
+      return redirect()->route('login')->with('error', 'Harap Login.');
     }
 
     public function tambahJasa(Request $request){

@@ -71,27 +71,27 @@ Route::get('/review_modal', function () {
     return view('review_modal', []);
 })->name('review_modal');
 
-Route::get('/pembayaran', function () {
+Route::get('pembayaran', function () {
     return view('pembayaran');
 })->name('pembayaran');
 
-Route::get('/pembayaranqris', function () {
+Route::get('/pembayaran/pembayaranqris', function () {
     return view('pembayaranqris');
 })->name('pembayaranqris');
 
-Route::get('/pembayaranbank', function () {
+Route::get('/pembayaran/pembayaranbank', function () {
     return view('pembayaranbank');
 })->name('pembayaranbank');
 
-Route::get('/pembayarangagal', function () {
+Route::get('/pembayaran/pembayarangagal', function () {
     return view('pembayarangagal');
 })->name('pembayarangagal');
 
-Route::get('/pembayaranberhasil', function () {
+Route::get('/pembayaran/pembayaranberhasil', function () {
     return view('pembayaranberhasil');
 })->name('pembayaranberhasil');
 
-Route::get('/pembayaranberhasilcod', function () {
+Route::get('/pembayaran/pembayaranberhasilcod', function () {
     return view('pembayaranberhasilcod');
 })->name('pembayaranberhasilcod');
 
