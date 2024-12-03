@@ -401,11 +401,7 @@
 
         // Start timer on page load
         window.onload = startTimer;
-    </script>
-
-
-
-    
+    </script>    
     {{-- Konten Stop --}}
 
     <!-- Footer Start -->
