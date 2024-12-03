@@ -58,13 +58,10 @@ Route::get('/keranjang', function () {
 
 //produk
 Route::get('/produk', [ProdukController::class, 'index'])->name('produk');
-
+Route::get('/produk/kategori/{kategori_id}', [ProdukController::class, 'byKategori'])->name('produkByKat');
+Route::get('/produk/detail_produk/{kode_produk}', [ProdukController::class, 'detail'])->name('detailProduk');
 //jasa
 Route::get('/jasa', [JasaController::class, 'index'])->name('jasa');
-
-Route::get('/produk/detail_produk', function () {
-    return view('detail_produk', []);
-})->name('detail_produk');
 
 
 Route::get('/review_modal', function () {

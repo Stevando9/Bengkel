@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategori;
 use App\Models\produk;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -11,10 +12,22 @@ class ProdukController extends Controller
 {
     public function index(){
       if ((Auth::check() && Auth::user()->tipe === 'member')) {
-        return view('produk',['produk'=>produk::with('kategori')->get()]);
+        return view('produk',['produk'=>produk::with('kategori')->get(),'kategori'=>Kategori::all()]);
       }
       return redirect()->route('login')->with('error', 'Harap Login.');  
       }
+
+    public function byKategori($kategoriId){
+      if ((Auth::check() && Auth::user()->tipe === 'member')) {
+        return view('produk',['produk'=>produk::where('kategori_id', $kategoriId)->get(),'kategori'=>Kategori::all()]);
+      }
+      return redirect()->route('login')->with('error', 'Harap Login.');  
+    }
+
+    public function detail($prod){
+      $coba=produk::where('kode_produk', $prod)->first();      
+      return view('detail_produk',['produk'=>produk::where('kode_produk', $prod)->first(),  'kategori'=>Kategori::where('kategori_id',$coba['kategori_id'])->first()]);
+    }
 
     public function tambahProduk(Request $request){
       $request->validate([
