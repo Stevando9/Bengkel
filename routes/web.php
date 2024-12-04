@@ -9,6 +9,7 @@ use App\Http\Controllers\MontirController;
 use App\Http\Controllers\ProdukController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\UserController;
 
 
 // admin
@@ -20,6 +21,11 @@ Route::post('/register', [AuthControler::class, 'register'])->name('register.pos
 Route::get('/register', [AuthControler::class, 'showRegisterForm'])->name('register');
 Route::get('/logout', [AuthControler::class, 'logout'])->name('logout');
 
+// Route::post('/update-user', [UserController::class, 'update'])->name('user.update');
+Route::middleware(['auth'])->group(function () {
+    // Menggunakan controller UserController dengan method update
+    Route::put('/user/update', [UserController::class, 'update'])->name('user.update');
+});
 
 Route::get('/Admin/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 Route::get('/Admin/produk', [AdminController::class, 'produk'])->name('admin_produk');
@@ -44,6 +50,7 @@ Route::get('/Admin/hapusMontir/{montir:id}', [MontirController::class, 'hapusMon
 
 //login regis
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/keranjang', function () {
     return view('keranjang');
