@@ -2,15 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategori;
 use App\Models\produk;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProdukController extends Controller
 {
     public function index(){
-        return view('produk',['produk'=>produk::with('kategori')->get()]);
+      if ((Auth::check() && Auth::user()->tipe === 'member')) {
+        return view('produk',['produk'=>produk::with('kategori')->get(),'kategori'=>Kategori::all()]);
       }
+      return redirect()->route('login')->with('error', 'Harap Login.');  
+      }
+
+    public function byKategori($kategoriId){
+      if ((Auth::check() && Auth::user()->tipe === 'member')) {
+        return view('produk',['produk'=>produk::where('kategori_id', $kategoriId)->get(),'kategori'=>Kategori::all()]);
+      }
+      return redirect()->route('login')->with('error', 'Harap Login.');  
+    }
+
+    public function detail($prod){
+      $coba=produk::where('kode_produk', $prod)->first();      
+      return view('detail_produk',['produk'=>produk::where('kode_produk', $prod)->first(),  'kategori'=>Kategori::where('kategori_id',$coba['kategori_id'])->first()]);
+    }
 
     public function tambahProduk(Request $request){
       $request->validate([
@@ -66,5 +83,39 @@ class ProdukController extends Controller
       }
     }
 
+    public function update(Request $request, $kodeProduk)
+    {
+        $request->validate([
+            'nama_produk' => 'required',
+            'kategori'     => 'required',
+            'stok'        => 'required|integer',
+            'harga'        => 'required|decimal:0,2',
+            'gambar'        => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $produk = produk::where('kode_produk', $kodeProduk)->first();
+        $kategoriId = $request['kategori'];
+
+        $produk->nama_produk = $request->input('nama_produk');
+        $produk->kategori_id = $kategoriId;
+        $produk->stok = $request->input('stok');
+        $produk->harga = $request->input('harga');
+        if ($request->hasFile('gambar')) {
+          // Hapus gambar dari folder `public/img`    
+          if ($produk->gambar) {
+              $imagePath = public_path('img/produk/' . $produk['foto']);
+              if (file_exists($imagePath)) {
+                  unlink($imagePath);
+              }
+          }              
+          $productNameSlug = Str::slug($produk->kode_produk, '-');  
+          $imageName = $productNameSlug . '.' . $request->file('gambar')->getClientOriginalExtension();
+          $request->file('gambar')->move(public_path('img/produk'), $imageName);
+          $produk->gambar = $imageName;
+          }
+        $produk->save();
+
+        return redirect()->back()->with('success', 'Data Produk berhasil diperbarui.');
+    }  
 
 }

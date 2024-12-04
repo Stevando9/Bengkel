@@ -338,9 +338,11 @@
 
                 <!-- Back Button -->
                 <div class="text-center">
-                    <button class="w-full py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800">
-                        KEMBALI
-                    </button>
+                    <a href="{{ route ('home') }}">
+                        <button class="w-full py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800">
+                            KEMBALI
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>

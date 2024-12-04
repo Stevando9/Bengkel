@@ -154,12 +154,12 @@
     <div class="login-container">
         <div class="left-section">
             @if (session('success'))
-                <div class="alert alert-success">
+                <div style="color: #28a745; font-weight: bold; background-color: #d4edda; padding: 10px; border: 1px solid #c3e6cb; border-radius: 5px;">
                     {{ session('success') }}
                 </div>
                 @endif
                 @if ($errors->any())
-                <div class="alert alert-danger">
+                <div style="color: #dc3545; font-weight: bold; background-color: #f8d7da; padding: 10px; border: 1px solid #c3e6cb; border-radius: 5px;">
                     <ul>
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>

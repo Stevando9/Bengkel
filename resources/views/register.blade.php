@@ -165,6 +165,20 @@
                 <hr class="line">
             </div>
             <form action="{{ route('register') }}" method="post">
+                @if (session('success'))
+                <div style="color: #28a745; font-weight: bold; background-color: #d4edda; padding: 10px; border: 1px solid #c3e6cb; border-radius: 5px;">
+                    {{ session('success') }}
+                </div>
+                @endif
+                @if ($errors->any())
+                <div style="color: #dc3545; font-weight: bold; background-color: #f8d7da; padding: 10px; border: 1px solid #c3e6cb; border-radius: 5px;">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
             @csrf
             <input type="text" placeholder="Nama" name="nama_lengkap">
             <input type="email" placeholder="Email" name="email">

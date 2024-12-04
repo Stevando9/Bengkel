@@ -3,10 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jasa;
+use App\Models\produk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JasaController extends Controller
 {
+    public function index(){
+      if ((Auth::check() && Auth::user()->tipe === 'member')) {
+        return view('jasa',['jasa'=>Jasa::all(),'produk'=>produk::all()]);
+      }
+      return redirect()->route('login')->with('error', 'Harap Login.');
+    }
+
     public function tambahJasa(Request $request){
         // valiasi data
         $request->validate([
@@ -29,7 +38,7 @@ class JasaController extends Controller
       }
       }
 
-    public function hapusJasa(Jasa $jasa){
+    public function hapusJasa(Jasa $jasa){      
         $jas = $jasa;
         if ($jas) {
 
@@ -41,4 +50,22 @@ class JasaController extends Controller
             return redirect()->back()->with('error', 'Jasa tidak ditemukan.');
         }
       }
+
+
+    public function update(Request $request, $kodeJasa)
+    {
+        $request->validate([
+            'nama_jasa' => 'required|string|max:255',
+            'biaya' => 'required|min:0',
+        ]);
+
+        $jasa = Jasa::where('kode_jasa', $kodeJasa)->first();
+
+        $jasa->nama_jasa = $request->input('nama_jasa');
+        $jasa->biaya = $request->input('biaya');
+        $jasa->save();
+
+        return redirect()->back()->with('success', 'Data jasa berhasil diperbarui.');
+    }  
+
 }

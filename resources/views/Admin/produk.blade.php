@@ -88,7 +88,7 @@
                                             <td>{{$prod['gambar']}}</td>
                                             <td>
                                             
-                                                <a href="#" class="btn btn-sm btn-warning shadow-sm">
+                                                <a href="#" data-toggle="modal" data-target="#updateModal-{{ $prod->kode_produk }}" class="btn btn-sm btn-warning shadow-sm">
                                                     <i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
                                                 <a href="/Admin/hapus/{{$prod['kode_produk']}}" class="btn btn-sm btn-danger shadow-sm">
                                                     <i class="fas fa-trash fa-sm text-white-50"></i> Hapus</a>
@@ -107,115 +107,106 @@
             </div>
             <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+            <!-- Modal Box -->
+            <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addProductModalLabel">Tambah Produk Baru</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="{{ route('tambahProduk') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label>Kode Produk</label>
+                                    <input type="text" name="kode_produk" class="form-control" placeholder="Bxxx" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nama Produk</label>
+                                    <input type="text" name="nama_produk" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="kategori">Pilih Kategori:</label>
+                                    <select id="kategori" name="kategori">
+                                        <option value="">--Pilih Disini--</option>
+                                        @foreach ($kategori as $kat)
+                                        <option value="{{ $kat['kategori_id'] }}">{{ $kat->nama_kategori }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Stok</label>
+                                    <input type="number" name="stok" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Harga</label>
+                                    <input type="number" name="harga" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Gambar Produk</label>
+                                    <input type="file" name="gambar" class="form-control-file" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                <button type="submit" class="btn btn-primary">Simpan Produk</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </footer>
-            <!-- End of Footer -->
+            </div>
 
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Modal Box -->
-    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addProductModalLabel">Tambah Produk Baru</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="{{ route('tambahProduk') }}" method="POST" enctype="multipart/form-data">
+            @foreach ($produk as $prod)
+            <div class="modal fade" id="updateModal-{{ $prod->kode_produk }}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel-{{ $prod->kode_produk }}">Update Produk</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form  action="{{ route('updateProduk', ['kode_produk' => $prod->kode_produk]) }}" method="POST">
                     @csrf
                     <div class="modal-body">
+                        <input type="hidden" name="id" id="dataId">
                         <div class="form-group">
-                            <label>Kode Produk</label>
-                            <input type="text" name="kode_produk" class="form-control" placeholder="Bxxx" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Nama Produk</label>
-                            <input type="text" name="nama_produk" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="kategori">Pilih Kategori:</label>
-                            <select id="kategori" name="kategori">
-                                <option value="">--Pilih Disini--</option>
-                                @foreach ($kategori as $kat)
-                                <option value="{{ $kat['kategori_id'] }}">{{ $kat->nama_kategori }}</option>
+                            <label class="form-label">Nama Produk</label>
+                            <input type="text" class="form-control" name="nama_produk" value="{{ $prod->nama_produk }}" required>
+                          </div>
+                          <div class="form-group">
+                            <label for="kategori">Kategori</label>
+                            <select name="kategori" id="kategori" class="form-control">
+                                @foreach ($kategori as $item)
+                                    <option value="{{ $item->kategori_id }}" {{  $prod->kategori->kategori_id == $item->kategori_id ? 'selected' : '' }}>
+                                        {{ $item->nama_kategori }}
+                                    </option>
                                 @endforeach
                             </select>
-                        </div>
-                        <div class="form-group">
+                          </div>
+                          <div class="form-group">
                             <label>Stok</label>
-                            <input type="number" name="stok" class="form-control" required>
-                        </div>
-                        <div class="form-group">
+                            <input type="number" name="stok" class="form-control" value="{{ $prod->stok }}" required>
+                          </div>
+                          <div class="form-group">
                             <label>Harga</label>
-                            <input type="number" name="harga" class="form-control" required>
+                            <input type="number" name="harga" class="form-control" value="{{ $prod->harga }}" required>
+                          </div>
+                          <div class="form-group">
+                            <label>Gambar Produk</label>                            
+                            <input type="file" name="gambar" class="form-control-file">
+                          </div>
+
                         </div>
-                        <div class="form-group">
-                            <label>Gambar Produk</label>
-                            <input type="file" name="gambar" class="form-control-file" required>
-                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan Produk</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
+                    </form>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="{{ route('logout') }}">Logout</a>
                 </div>
-            </div>
-        </div>
-    </div>
+            </div> 
+            @endforeach           
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('vendor/admin/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('vendor/admin/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <link href="{{ asset('vendor/admin/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-
-    <!-- Core plugin JavaScript-->
-    <script src="{{ asset('vendor/admin/jquery-easing/jquery.easing.min.js') }}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="{{ asset('js/admin/sb-admin-2.min.js') }}"></script>
-
-    <!-- Page level plugins -->
-    <script src="{{ asset('vendor/admin/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('vendor/admin/datatables/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('js/admin/demo/datatables-demo.js') }}"></script>
-
-</body>
-
-</html>
+<x-footer-admin></x-footer-admin>

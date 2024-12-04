@@ -47,4 +47,11 @@ class AdminController extends Controller
         }
         return redirect()->route('login')->with('error', 'Harap Login.'); 
       }
+
+      public function setting(){
+        if ((Auth::check() && Auth::user()->tipe === 'admin')) {  
+        return view('Admin.settings');
+        }
+        return redirect()->route('login')->with('error', 'Harap Login.'); 
+      }
 }
