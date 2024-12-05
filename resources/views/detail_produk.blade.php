@@ -317,16 +317,14 @@
                     <div class="justify-center w-1/2">
                         <!-- Product Details -->
                         <h2 class="text-lg font-semibold">{{ $produk['nama_produk'] }}</h2>
-                        <p class="text-gray-400">Terjual 296</p>
+                        <p class="text-gray-400">Stock: {{ $produk['stok'] }}</p>
                         <p class="text-2xl font-bold mt-10">Rp{{ number_format($produk['harga']) }}</p>
                 
                         <!-- Product Specifications -->
                         <ul class="text-gray-400 mt-10 space-y-1">
                             <li>Kondisi: Baru</li>
-                            <li>Berat Satuan: 1 Kg</li>
                             <li>Etalase: {{ $kategori['nama_kategori'] }}</li>
                         </ul>
-                        <p class="text-blue-500 mt-2 cursor-pointer">Selengkapnya</p>
                     </div>
                 </div>
                 {{-- <!-- Free Shipping Badge -->
@@ -339,7 +337,7 @@
         
                 <!-- Action Buttons -->
                 <div class="flex mt-6 space-x-2 justify-between">
-                    <button class="w-32 bg-gray-300 hover:bg-gray-500 text-black font-semibold py-2 rounded-lg">+ Keranjang</button>
+                    <button class="w-32 bg-gray-300 hover:bg-gray-500 text-black font-semibold py-2 rounded-lg"><a href="{{ route('addKeranjang',[$produk['kode_produk']]) }}">+ Keranjang</a></button>
                     <button class="w-32 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-2 rounded-lg">Beli</button>
                 </div>
             </div>
