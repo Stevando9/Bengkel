@@ -22,9 +22,8 @@ class User extends Authenticatable
         'password',
         'tipe',
         'no_plat',
-        'nama_lengkap',        
-        'no_telpon',
-        'foto',
+        'nama_lengkap',
+        'no_telpon'
     ];
 
     /**
@@ -49,4 +48,19 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function alamat()
+    {
+        return $this->hasOne(Alamat::class, 'id_user');
+    }
+
+    // Metode pembaruan data (tidak menerima Request)
+    // public function updateProfile($data)
+    // {
+    //     if (!empty($data['password'])) {
+    //         $this->password = Hash::make($data['password']);
+    //     }
+    //     $this->no_telpon = $data['phone'];
+    //     $this->alamat()->updateOrCreate([], ['detail_alamat' => $data['address']]);
+    //     $this->save();
+    // }
 }

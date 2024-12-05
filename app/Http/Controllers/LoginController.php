@@ -21,6 +21,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             // Pengguna berhasil login, redirect sesuai role            
             $request->session()->regenerate();
+            session()->flash('status', 'login-success');
             return $this->authenticated($request, Auth::user())
                 ?: redirect()->intended('/fail');
         }
@@ -30,11 +31,11 @@ class LoginController extends Controller
     }
 
     protected function authenticated(Request $request, $user)
-    {   
+    {
         if ($user->tipe == 'admin') {
             return redirect('/Admin/dashboard')->with('success', 'Login berhasil. Selamat Datang.');
         } else if ($user->tipe == 'member') {
-            return redirect('/home')->with('success', 'Login berhasil. Selamat Datang.');            
+            return redirect('/home')->with('success', 'Login berhasil. Selamat Datang.');
         }
 
         return redirect()->back()->with('error', 'Login Gagal');
