@@ -59,7 +59,7 @@
             </a>
 
             <!-- Kontak Kami -->
-            <a data-modal-target="" class="flex items-center px-4 py-2 text-white hover:bg-gray-600">
+            <a href="#kontakKami" class="flex items-center px-4 py-2 text-white hover:bg-gray-600">
                 <img src="{{ asset('img/Vector Kontak Kami.png') }}" alt="Deskripsi Icon" class="h-6 w-6 mr-2" />
                 Kontak Kami
             </a>
@@ -128,7 +128,7 @@
                         <h2 class="text-3xl font-bold mb-6 text-center">AKUN</h2>
                         <div class="flex items-start space-x-8">
                             <div class="flex-shrink-0">
-                                <img src="{{ asset('img/mans.jpg') }}" alt="Profile Picture"
+                                <img src="{{ asset('img/' . Auth::user()->foto) }}" alt="Profile Picture"
                                     class="w-40 h-40 rounded-full">
                             </div>
                             <div class="flex-grow">
@@ -155,8 +155,9 @@
                             <button id="edit-akun-button" data-nama="{{ Auth::user()->nama_lengkap }}"
                                 data-email="{{ Auth::user()->email }}" data-telepon="{{ Auth::user()->no_telpon }}"
                                 data-alamat="{{ Auth::user()->alamat->detail_alamat ?? '' }}"
-                                class="bg-gray-700 px-6 py-2 rounded-lg">EDIT</button>
-                            <button id="close-modal-akun" class="bg-gray-700 px-6 py-2 rounded-lg">KEMBALI</button>
+                                class="bg-yellow-500 px-8 py-2 rounded-lg font-semibold text-gray-900 hover:bg-yellow-600 transition duration-150">EDIT</button>
+                            <button id="close-modal-akun"
+                                class="bg-gray-900 px-6 py-2 rounded-lg font-semibold text-yellow-500 hover:bg-gray-700 transition duration-150">KEMBALI</button>
                         </div>
                     </div>
                 </div>
@@ -197,7 +198,7 @@
             @auth
                 <div id="edit-account-modal"
                     class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                    <div class="modal-content bg-gray-900 text-white rounded-lg shadow-lg p-8 w-full max-w-2xl">
+                    <div class="modal-content bg-gray-800 text-white rounded-lg shadow-lg p-8 w-full max-w-2xl">
                         <!-- Header Modal -->
                         <h2 class="text-center text-2xl font-bold mb-6 tracking-wider">EDIT AKUN</h2>
 
@@ -207,6 +208,8 @@
                                 <div
                                     class="w-32 h-32 bg-gray-700 rounded-lg border border-gray-500 flex items-center justify-center mb-4">
                                     <label for="upload-photo" class="cursor-pointer text-center">
+                                        <img src="{{ asset('img/' . Auth::user()->foto) }}" alt="Profile Photo"
+                                            class="rounded-lg w-full h-full object-cover">
                                         <div class="text-sm text-gray-400">Upload your photo</div>
                                         <input type="file" id="upload-photo" class="hidden">
                                     </label>
@@ -258,7 +261,7 @@
 
                                 <!-- Action Buttons -->
                                 <div class="flex justify-between mt-6">
-                                    <button type="button" id="cancel-edit-button"
+                                    <button id="cancel-edit-button"
                                         class="cancel bg-gray-800 px-4 py-2 rounded-lg font-semibold border border-gray-600 hover:bg-gray-700 transition duration-150">BATAL</button>
                                     {{-- <button type="submit-edit-button"
                                     class="submit bg-green-500 px-4 py-2 rounded-lg font-semibold text-gray-900 hover:bg-green-600 transition duration-150">SIMPAN</button> --}}
@@ -295,11 +298,6 @@
                             toggleModal(editAccountModal);
                         });
                     });
-                    // //  Fungsi untuk membuka/menutup modal
-                    // function toggleModal(modal) {
-                    //     modal.classList.toggle('hidden');
-                    // }
-                    // ----------EDIT AKUN--------------
                     // Event listener tombol "BATAL" di modal edit akun
                     cancelEditButton.addEventListener('click', function() {
                         toggleModal(editAccountModal);
@@ -431,4 +429,5 @@
                 modal.classList.toggle('hidden');
             }
         </script>
+
     </header>

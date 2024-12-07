@@ -21,6 +21,6 @@ class Alamat extends Model
     // Relasi: Alamat belongs to User
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->hasOne(User::class, 'id_user', 'id');
     }
 }

@@ -50,7 +50,7 @@ class User extends Authenticatable
     }
     public function alamat()
     {
-        return $this->hasOne(Alamat::class, 'id_user');
+        return $this->hasOne(Alamat::class, 'id_user', 'id');
     }
 
     // Metode pembaruan data (tidak menerima Request)

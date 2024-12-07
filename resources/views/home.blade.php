@@ -7,6 +7,10 @@
     <title>Beranda</title>
     @vite('resources/css/app.css')
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
         /* Header Style */
         header {
             position: fixed;
@@ -137,77 +141,6 @@
         }
 
         /* start modal edit account */
-        /* Modal Background */
-        #edit-account-modal {
-            background-color: rgba(0, 0, 0, 0.8);
-            /* Background overlay */
-        }
-
-        /* Modal Container */
-        .modal-content {
-            background-color: #1f1f1f;
-            /* Dark background for modal */
-            color: #ffffff;
-            padding: 2rem;
-            border-radius: 0.5rem;
-            max-width: 600px;
-            width: 100%;
-        }
-
-        /* Header Style */
-        .modal-content h2 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            letter-spacing: 0.1rem;
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        /* Upload Photo Section */
-        .upload-photo {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Form Input */
-        .modal-content input[type="text"],
-        .modal-content input[type="password"] {
-            background-color: #2c2c2c;
-            border: 1px solid #444444;
-            color: #cccccc;
-            padding: 0.75rem;
-            border-radius: 0.375rem;
-            width: 100%;
-        }
-
-        /* Action Buttons */
-        .action-buttons button {
-            padding: 0.75rem 1.5rem;
-            font-weight: 600;
-            border-radius: 0.375rem;
-            transition: background-color 0.2s ease-in-out;
-        }
-
-        .action-buttons .cancel {
-            background-color: #333333;
-            color: #ffffff;
-            border: 1px solid #555555;
-        }
-
-        .action-buttons .cancel:hover {
-            background-color: #444444;
-        }
-
-        .action-buttons .submit {
-            background-color: #28a745;
-            /* Green color for submit button */
-            color: #333333;
-        }
-
-        .action-buttons .submit:hover {
-            background-color: #218838;
-        }
 
         /* end modal edit account */
         .modal {
@@ -451,16 +384,16 @@
 
                 <!-- Produk -->
                 <div class="flex space-x-6 mx-auto overflow-hidden text-white">
-                    @foreach ($produk as $prod)                    
-                    <!-- Produk 1 -->
-                    <div class="text-center product-slide px-4 py-6">
-                        <img src="{{ asset('img/produk/'.$prod['gambar']) }}" alt="{{$prod['nama_produk']}}"
-                            class="w-[200px] h-[200px] mx-auto mb-2 object-cover cs">
-                        <h3 class="font-semibold text-lg">{{$prod['nama_produk']}}</h3>
-                        <p class="text-sm">{{ $prod->kategori->nama_kategori ?? 'Kategori tidak ditemukan' }}</p>
-                        <p class="font-semibold">Rp. {{ number_format($prod['harga'])}}</p>
-                    </div>
-                    @endforeach                    
+                    @foreach ($produk as $prod)
+                        <!-- Produk 1 -->
+                        <div class="text-center product-slide px-4 py-6">
+                            <img src="{{ asset('img/produk/' . $prod['gambar']) }}" alt="{{ $prod['nama_produk'] }}"
+                                class="w-[200px] h-[200px] mx-auto mb-2 object-cover cs">
+                            <h3 class="font-semibold text-lg">{{ $prod['nama_produk'] }}</h3>
+                            <p class="text-sm">{{ $prod->kategori->nama_kategori ?? 'Kategori tidak ditemukan' }}</p>
+                            <p class="font-semibold">Rp. {{ number_format($prod['harga']) }}</p>
+                        </div>
+                    @endforeach
                 </div>
 
                 <!-- Panah Kanan -->
@@ -578,8 +511,15 @@
             asd
         </div>
     </section>
-
-    <x-footer></x-footer>
+    <script>
+        document.querySelector('a[href="#kontakKami"]').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('kontakKami').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    </script>
+    <x-footer id="kontakKami"></x-footer>
 </body>
 
 </html>
