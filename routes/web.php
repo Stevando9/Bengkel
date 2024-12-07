@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JasaController;
+use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\MontirController;
 use App\Http\Controllers\ProdukController;
 use Illuminate\Support\Facades\Route;
@@ -59,9 +60,8 @@ Route::post('/Admin/editMontir/{id}', [MontirController::class, 'update'])->name
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('/keranjang', function () {
-    return view('keranjang');
-})->name('keranjang');
+Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang');
+Route::get('/keranjang/tambah/{kode_produk}', [KeranjangController::class, 'add'])->name('addKeranjang');
 
 //produk
 Route::get('/produk', [ProdukController::class, 'index'])->name('produk');

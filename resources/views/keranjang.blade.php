@@ -233,19 +233,20 @@
 
             <!-- Produk List -->
             <div class="bg-gray-900 text-white p-4 rounded-b-md">
+                @foreach ($keranjang as $item)                                    
                 <!-- Item Produk 1 -->
                 <div class="flex items-center justify-center mb-4">
                     <!-- Gambar Produk -->
                     <div class="w-1/4">
-                        <img src="https://via.placeholder.com/50" alt="Motul Engine Oil" class="w-full rounded-lg">
+                        <img src="{{ asset('img/produk/'.$item->produk->gambar) }}" alt="{{ $item->produk->nama_produk }}" class="w-full rounded-lg">
                     </div>
                     <!-- Detail Produk -->
                     <div class="w-1/2 ml-4">
-                        <h2 class="text-lg font-bold">Oli Mesin Motul</h2>
+                        <h2 class="text-lg font-bold">{{ $item->produk->nama_produk }}</h2>
                     </div>
                     <!-- Harga Produk -->
                     <div class="w-1/4 text-center">
-                        <p class="text-lg font-bold">Rp 150.000</p>
+                        <p class="text-lg font-bold">Rp. {{ number_format($item->produk->harga) }}</p>
                     </div>
                     <!-- Jumlah Produk -->
                     <div class="w-1/4 flex justify-center pl-56">
@@ -258,39 +259,13 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Item Produk 2 -->
-                <div class="flex items-center mb-4">
-                    <!-- Gambar Produk -->
-                    <div class="w-1/4">
-                        <img src="https://via.placeholder.com/50" alt="Busi NGK" class="w-full rounded-lg">
-                    </div>
-                    <!-- Detail Produk -->
-                    <div class="w-1/2 ml-4">
-                        <h2 class="text-lg font-bold">Busi NGK</h2>
-                    </div>
-                    <!-- Harga Produk -->
-                    <div class="w-1/4 text-center">
-                        <p class="text-lg font-bold">Rp 30.000</p>
-                    </div>
-                    <!-- Jumlah Produk -->
-                    <div class="w-1/4 flex justify-center pl-56">
-                        <div class="flex items-center mt-1">
-                            <button onclick="kurangiJumlah(2)"
-                                class="bg-gray-600 hover:bg-gray-500 text-sm font-medium px-2 py-1 rounded-md">-</button>
-                            <span id="jumlahProduk-2" class="mx-2 text-sm">1</span>
-                            <button onclick="tambahJumlah(2)"
-                                class="bg-gray-600 hover:bg-gray-500 text-sm font-medium px-2 py-1 rounded-md">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                @endforeach
 
             <!-- Subtotal dan Checkout -->
             <div class="justify-end items-center bg-gray-700 text-yellow-500 p-4 rounded-b-md text-right flex">
                 <div class="p-5">
-                    <p class="text-lg font-semibold">Subtotal Untuk Produk (2 Produk)</p>
-                    <p class="text-lg font-bold text-white">Rp 180.000</p>
+                    <p class="text-lg font-semibold">Subtotal Untuk Produk ({{ $total }})</p>
+                    <p class="text-lg font-bold text-white">Rp. {{ number_format($harga) }}</p>
                 </div>
                 <div class="">
                     <a href="{{ route ('pembayaran') }}">
