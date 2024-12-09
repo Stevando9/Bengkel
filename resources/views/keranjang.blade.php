@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Keranjang</title>
     @vite('resources/css/app.css')
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <style>
         /* Header Style */
         header {
@@ -223,11 +224,11 @@
     <section class="pt-36 pb-16">
         <div class="container mx-auto">
             <!-- Header -->
-            <div class="grid grid-cols-3 bg-yellow-500 p-4 rounded-t-md w-auto">
-                <h1 class="text-lg font-bold text-black col-span-2">Produk</h1>
-                <div class="flex justify-between">
-                    <p class="text-lg font-bold text-black justify-between">Harga</p>
-                    <p class="text-lg font-bold text-black ml-8">Jumlah</p>
+            <div class="grid grid-cols-4 bg-yellow-500 p-4 rounded-t-md w-auto">
+                <h1 class="text-lg font-bold text-black col-span-2 text-center">Produk</h1>
+                <div class="flex justify-between col-span-2">
+                    <p class="text-lg font-bold text-black text-center w-1/2">Harga</p>
+                    <p class="text-lg font-bold text-black text-center w-1/2">Jumlah</p>
                 </div>
             </div>
 
@@ -236,6 +237,10 @@
                 @foreach ($keranjang as $item)                                    
                 <!-- Item Produk 1 -->
                 <div class="flex items-center justify-center mb-4">
+                    <!-- Checkbox -->
+                    <div class="mr-4">
+                        <input type="checkbox" class="form-checkbox h-5 w-5 text-yellow-500">
+                    </div>
                     <!-- Gambar Produk -->
                     <div class="w-1/4">
                         <img src="{{ asset('img/produk/'.$item->produk->gambar) }}" alt="{{ $item->produk->nama_produk }}" class="w-full rounded-lg">
@@ -249,7 +254,7 @@
                         <p class="text-lg font-bold">Rp. {{ number_format($item->produk->harga) }}</p>
                     </div>
                     <!-- Jumlah Produk -->
-                    <div class="w-1/4 flex justify-center pl-56">
+                    <div class="w-1/3 flex justify-center pl-16">
                         <div class="flex items-center mt-1">
                             <button onclick="kurangiJumlah(1)"
                                 class="bg-gray-600 hover:bg-gray-500 text-sm font-medium px-2 py-1 rounded-md">-</button>
@@ -257,6 +262,12 @@
                             <button onclick="tambahJumlah(1)"
                                 class="bg-gray-600 hover:bg-gray-500 text-sm font-medium px-2 py-1 rounded-md">+</button>
                         </div>
+                    </div>
+                    <!-- Tombol Hapus -->
+                    <div class="mr-6">
+                        <button onclick="hapusProduk(1)" class="text-red-500 hover:text-red-700">
+                            <i class="uil uil-trash-alt"></i>
+                        </button>
                     </div>
                 </div>
                 @endforeach
@@ -291,6 +302,11 @@
             var quantityElement = document.getElementById("jumlahProduk-" + productId);
             var currentQuantity = parseInt(quantityElement.innerText);
             quantityElement.innerText = currentQuantity + 1;
+        }
+
+        function hapusProduk(productId) {
+            // Logika untuk menghapus produk dari daftar keranjang
+            alert("Produk " + productId + " telah dihapus.");
         }
     </script>
     {{-- Konten Stop --}}
