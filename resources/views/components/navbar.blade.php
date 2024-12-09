@@ -217,58 +217,55 @@
                             </div>
 
                             <!-- Form Edit Akun -->
-                            <form action="{{ route('user.update') }}" method="POST" class="w-full">
+                            {{-- <form action="{{ route('user.update') }}" method="POST" class="w-full"> --}}
+                            <!-- Form untuk update user dan alamat -->
+                            <form action="{{ route('user.update', Auth::user()->id) }}" method="POST" class="w-full">
                                 @csrf
-                                @method('PUT') <!-- Menggunakan PUT untuk mengupdate data -->
-                                <!-- Password -->
+                                @method('PUT')
+
+                                <!-- Input Password -->
                                 <div class="mb-4">
                                     <label for="password" class="block text-sm font-medium mb-1">Password Baru</label>
                                     <input type="password" id="password" name="password"
                                         class="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                                        placeholder="Masukkan Password Baru"
-                                        onmouseover="togglePasswordVisibility(this, true)"
-                                        onmouseout="togglePasswordVisibility(this, false)">
+                                        placeholder="Masukkan Password Baru">
                                 </div>
 
+                                <!-- Konfirmasi Password -->
                                 <div class="mb-4">
                                     <label for="password_confirmation" class="block text-sm font-medium mb-1">Konfirmasi
                                         Password</label>
                                     <input type="password" id="password_confirmation" name="password_confirmation"
                                         class="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                                        placeholder="Konfirmasi Password Baru"
-                                        onmouseover="togglePasswordVisibility(this, true)"
-                                        onmouseout="togglePasswordVisibility(this, false)">
+                                        placeholder="Konfirmasi Password Baru">
                                 </div>
-
-
-                                <!-- Alamat -->
+                                <!-- Input Alamat -->
                                 <div class="mb-4">
                                     <label for="address" class="block text-sm font-medium mb-1">Alamat</label>
-                                    <input type="text" id="address" name="address"
+                                    <input type="text" id="address" name="detail_alamat"
                                         value="{{ Auth::user()->alamat->detail_alamat ?? '' }}"
                                         class="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                                         placeholder="Masukkan Alamat">
                                 </div>
-
-                                <!-- Nomor Telepon -->
+                                <!-- Input Nomor Telepon -->
                                 <div class="mb-4">
                                     <label for="phone" class="block text-sm font-medium mb-1">Nomor Telepon</label>
                                     <input type="text" id="phone" name="phone"
-                                        value="{{ Auth::user()->no_telpon }}"
+                                        value="{{ old('nomor_telpon', Auth::user()->no_telpon) }}"
                                         class="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                                         placeholder="+62 Masukkan Nomor Telepon">
                                 </div>
-
-                                <!-- Action Buttons -->
+                                <!-- Tombol Aksi -->
                                 <div class="flex justify-between mt-6">
-                                    <button id="cancel-edit-button"
-                                        class="cancel bg-gray-800 px-4 py-2 rounded-lg font-semibold border border-gray-600 hover:bg-gray-700 transition duration-150">BATAL</button>
-                                    {{-- <button type="submit-edit-button"
-                                    class="submit bg-green-500 px-4 py-2 rounded-lg font-semibold text-gray-900 hover:bg-green-600 transition duration-150">SIMPAN</button> --}}
+                                    <button type="button"
+                                        class="cancel bg-gray-800 px-4 py-2 rounded-lg font-semibold border border-gray-600 hover:bg-gray-700 transition duration-150">BATAL
+                                    </button>
                                     <button type="submit"
-                                        class="submit bg-green-500 px-4 py-2 rounded-lg font-semibold text-gray-900 hover:bg-green-600 transition duration-150">SIMPAN</button>
+                                        class="submit bg-green-500 px-4 py-2 rounded-lg font-semibold text-gray-900 hover:bg-green-600 transition duration-150">SIMPAN
+                                    </button>
                                 </div>
                             </form>
+
                         </div>
                     </div>
                 </div>

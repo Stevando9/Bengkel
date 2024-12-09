@@ -13,35 +13,65 @@ class UserController extends Controller
     /**
      * Update user data (password, phone, address).
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        // Validasi input
-        $request->validate([
-            'password' => 'nullable|min:6',
-            'phone' => 'required|string|max:15',
-            'address' => 'required|string|max:255',
+        $user = User::findOrFail($id);
+
+        // Validasi data
+        $validatedData = $request->validate([
+            'password' => 'nullable|confirmed|min:8',
+            'detail_alamat' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:15',
         ]);
 
-        $user = Auth::user();
-
-        // Perbarui password jika ada
+        // Update password jika ada
         if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
+            $user->password = bcrypt($request->password);
         }
 
-        // Perbarui nomor telepon
+        // Update nomor telepon
         $user->no_telpon = $request->phone;
 
-        // Perbarui atau buat data alamat
-        $user->alamat()->updateOrCreate(
-            ['id_user' => $user->id],
-            ['detail_alamat' => $request->address]
-        );
+        // Update alamat jika ada
+        if ($user->alamat) {
+            $user->alamat->detail_alamat = $request->detail_alamat;
+            $user->alamat->save();
+        }
 
         $user->save();
 
-        return redirect()->back()->with('success', 'Data akun berhasil diperbarui.');
+        return redirect()->back()->with('success', 'Data berhasil diperbarui.');
     }
+
+    // public function update(Request $request, $id) {
+    //     $user = User::findOrFail($id);
+    //     // Validasi input
+    //     $request->validate([
+    //         'password' => 'nullable|min:6',
+    //         'phone' => 'required|string|max:15',
+    //         'address' => 'required|string|max:255',
+    //     ]);
+
+    //     $user = Auth::user();
+
+    //     // Perbarui password jika ada
+    //     if ($request->filled('password')) {
+    //         $user->password = Hash::make($request->password);
+    //     }
+
+    //     // Perbarui nomor telepon
+    //     $user->no_telpon = $request->phone;
+
+    //     // Perbarui atau buat data alamat
+    //     $user->alamat()->updateOrCreate(
+    //         ['id_user' => $user->id],
+    //         ['detail_alamat' => $request->address]
+    //     );
+
+    //     $user->save();
+
+    //     return redirect()->back()->with('success', 'Data akun berhasil diperbarui.');
+    // }
 
     /**
      * Update user profile photo.
