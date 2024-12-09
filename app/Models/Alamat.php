@@ -9,6 +9,8 @@ class Alamat extends Model
 {
     use HasFactory;
     protected $table = 'alamat';
+    protected $primaryKey = 'alamat_id'; // Primary key tabel
+    public $incrementing = true; // Jika `alamat_id` adalah auto-increment
 
     protected $fillable = [
         'alamat_id',
