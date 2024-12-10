@@ -26,7 +26,7 @@ Route::get('/logout', [AuthControler::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     // Menggunakan controller UserController dengan method update
     // Route::put('/user/update', [UserController::class, 'update'])->name('user.update');
-    Route::put('/user/{id}/update', [UserController::class, 'update'])->name('user.update');
+    Route::post('/user/update/{id}', [UserController::class, 'update'])->name('user.update');
     Route::put('/user/update-foto', [UserController::class, 'updateFoto'])->name('user.updateFoto');
 });
 

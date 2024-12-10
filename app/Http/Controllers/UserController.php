@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\produk;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -15,14 +17,13 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-
-        // Validasi data
-        $validatedData = $request->validate([
+        $request->validate([
             'password' => 'nullable|confirmed|min:8',
             'detail_alamat' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|max:15',
-        ]);
+            'phone' => 'required|string|max:15',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);      
+        $user = User::findOrFail($id);
 
         // Update password jika ada
         if ($request->filled('password')) {
@@ -33,14 +34,28 @@ class UserController extends Controller
         $user->no_telpon = $request->phone;
 
         // Update alamat jika ada
-        if ($user->alamat) {
+        if ($request->filled('detail_alamat')) {
             $user->alamat->detail_alamat = $request->detail_alamat;
-            $user->alamat->save();
         }
+
+        if ($request->hasFile('photo')) {
+            // Hapus gambar dari folder `public/img`    
+            if ($user->foto) {
+                $imagePath = public_path('img/user/' . $user['foto']);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }              
+            $usernameSlug = Str::slug($user->nama_lengkap, '-');  
+            $imageName = $usernameSlug . '.' . $request->file('photo')->getClientOriginalExtension();
+            $request->file('photo')->move(public_path('img/user'), $imageName);
+            $user->foto = $imageName;
+        }    
 
         $user->save();
 
-        return redirect()->back()->with('success', 'Data berhasil diperbarui.');
+        return redirect()->route('home')->with('success', 'Data berhasil diperbarui!');
+        
     }
 
     // public function update(Request $request, $id) {
@@ -75,37 +90,5 @@ class UserController extends Controller
 
     /**
      * Update user profile photo.
-     */
-    public function updateFoto(Request $request)
-    {
-        // Validasi input
-        $request->validate([
-            'foto' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048', // Maksimal ukuran 2MB
-        ]);
-
-        $user = Auth::user();
-
-        // Proses file foto jika ada
-        if ($request->hasFile('foto')) {
-            $foto = $request->file('foto');
-
-            // Simpan file di folder 'public/img'
-            $fotoPath = $foto->store('public/img');
-
-            // Ambil nama file untuk disimpan di database
-            $fotoName = basename($fotoPath);
-
-            // Hapus file lama jika ada
-            if ($user->foto) {
-                Storage::delete('public/img/' . $user->foto);
-            }
-
-            // Simpan nama file ke database
-            $user->foto = $fotoName;
-        }
-
-        $user->save();
-
-        return redirect()->back()->with('success', 'Foto profil berhasil diperbarui.');
-    }
+     */    
 }

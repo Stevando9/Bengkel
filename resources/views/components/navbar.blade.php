@@ -128,8 +128,14 @@
                         <h2 class="text-3xl font-bold mb-6 text-center">AKUN</h2>
                         <div class="flex items-start space-x-8">
                             <div class="flex-shrink-0">
-                                <img src="{{ asset('img/' . Auth::user()->foto) }}" alt="Profile Picture"
-                                    class="w-40 h-40 rounded-full">
+                                @if (Auth::user()->foto)                                      
+                                    <img src="{{ asset('img/user/' . Auth::user()->foto) }}" alt="Profile Picture"
+                                    class="w-40 h-40 rounded-full">    
+                                @else
+                                    <img src="{{ asset('img/user/Vector Profile.png') }}" alt="Profile Picture"
+                                    class="w-40 h-40 rounded-full"> 
+                                @endif
+                                
                             </div>
                             <div class="flex-grow">
                                 <div class="mb-4">
@@ -203,25 +209,28 @@
                         <h2 class="text-center text-2xl font-bold mb-6 tracking-wider">EDIT AKUN</h2>
 
                         <div class="flex gap-8">
-                            <!-- Upload Foto -->
-                            <div class="upload-photo flex flex-col items-center">
-                                <div
-                                    class="w-32 h-32 bg-gray-700 rounded-lg border border-gray-500 flex items-center justify-center mb-4">
-                                    <label for="upload-photo" class="cursor-pointer text-center">
-                                        <img src="{{ asset('img/' . Auth::user()->foto) }}" alt="Profile Photo"
-                                            class="rounded-lg w-full h-full object-cover">
-                                        <div class="text-sm text-gray-400">Upload your photo</div>
-                                        <input type="file" id="upload-photo" class="hidden">
-                                    </label>
-                                </div>
-                            </div>
-
                             <!-- Form Edit Akun -->
                             {{-- <form action="{{ route('user.update') }}" method="POST" class="w-full"> --}}
                             <!-- Form untuk update user dan alamat -->
-                            <form action="{{ route('user.update', Auth::user()->id) }}" method="POST" class="w-full">
+                            <form action="{{ route('user.update', Auth::user()->id) }}" method="POST" enctype="multipart/form-data" class="w-full">
                                 @csrf
-                                @method('PUT')
+                                <!-- Upload Foto -->
+                                <div class="upload-photo flex flex-col items-center">
+                                    <div
+                                        class="w-32 h-32 bg-gray-700 rounded-lg border border-gray-500 flex items-center justify-center mb-4">
+                                        <label for="upload-photo" class="cursor-pointer text-center">
+                                            @if (Auth::user()->foto)
+                                                <img src="{{ asset('img/user/' . Auth::user()->foto) }}" alt="Profile Picture"
+                                                class="w-40 h-40 rounded-full">                                                    
+                                            @else
+                                                <img src="{{ asset('img/user/Vector Profile.png') }}" alt="Profile Picture"
+                                                class="rounded-lg w-full h-full object-cover">    
+                                            @endif                                        
+                                            <div class="text-sm text-gray-400">Upload your photo</div>                                            
+                                        </label>
+                                        <input type="file" id="upload-photo" name="photo" class="hidden">
+                                    </div>
+                                </div>                            
 
                                 <!-- Input Password -->
                                 <div class="mb-4">
@@ -251,7 +260,7 @@
                                 <div class="mb-4">
                                     <label for="phone" class="block text-sm font-medium mb-1">Nomor Telepon</label>
                                     <input type="text" id="phone" name="phone"
-                                        value="{{ old('nomor_telpon', Auth::user()->no_telpon) }}"
+                                        value="{{ Auth::user()->no_telpon }}"
                                         class="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                                         placeholder="+62 Masukkan Nomor Telepon">
                                 </div>
