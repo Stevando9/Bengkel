@@ -226,49 +226,57 @@
             <div class="grid grid-cols-3 bg-yellow-500 p-4 rounded-t-md w-auto">
                 <h1 class="text-lg font-bold text-black col-span-2">Produk</h1>
                 <div class="flex justify-between">
-                    <p class="text-lg font-bold text-black justify-between">Harga</p>
+                    <p class="text-lg font-bold text-black">Harga</p>
                     <p class="text-lg font-bold text-black ml-8">Jumlah</p>
                 </div>
             </div>
 
-            <!-- Produk List -->
+            <!-- Keranjang -->
             <div class="bg-gray-900 text-white p-4 rounded-b-md">
-                @foreach ($keranjang as $item)                                    
-                <!-- Item Produk 1 -->
-                <div class="flex items-center justify-center mb-4">
-                    <!-- Gambar Produk -->
-                    <div class="w-1/4">
-                        <img src="{{ asset('img/produk/'.$item->produk->gambar) }}" alt="{{ $item->produk->nama_produk }}" class="w-full rounded-lg">
-                    </div>
-                    <!-- Detail Produk -->
-                    <div class="w-1/2 ml-4">
-                        <h2 class="text-lg font-bold">{{ $item->produk->nama_produk }}</h2>
-                    </div>
-                    <!-- Harga Produk -->
-                    <div class="w-1/4 text-center">
-                        <p class="text-lg font-bold">Rp. {{ number_format($item->produk->harga) }}</p>
-                    </div>
-                    <!-- Jumlah Produk -->
-                    <div class="w-1/4 flex justify-center pl-56">
-                        <div class="flex items-center mt-1">
-                            <button onclick="kurangiJumlah(1)"
-                                class="bg-gray-600 hover:bg-gray-500 text-sm font-medium px-2 py-1 rounded-md">-</button>
-                            <span id="jumlahProduk-1" class="mx-2 text-sm">1</span>
-                            <button onclick="tambahJumlah(1)"
-                                class="bg-gray-600 hover:bg-gray-500 text-sm font-medium px-2 py-1 rounded-md">+</button>
+                @foreach ($keranjang as $item)
+                    <div class="flex items-center justify-center mb-4">
+                        <!-- Gambar Produk -->
+                        <div class="w-1/4">
+                            <img src="{{ asset('img/produk/' . $item->produk->gambar) }}"
+                                alt="{{ $item->produk->nama_produk }}" class="w-full rounded-lg">
+                        </div>
+
+                        <!-- Nama Produk -->
+                        <div class="w-1/2 ml-4">
+                            <h2 class="text-lg font-bold">{{ $item->produk->nama_produk }}</h2>
+                        </div>
+
+                        <!-- Harga Total Per Item -->
+                        <div class="w-1/4 text-center">
+                            <p id="hargaProduk-{{ $item->produk->kode_produk }}" class="text-lg font-bold">
+                                Rp. {{ number_format($item->produk->harga * $item->jumlah) }}
+                            </p>
+                        </div>
+
+                        <!-- Update Jumlah -->
+                        <div class="w-1/4 flex justify-center pl-56">
+                            <div class="flex items-center mt-1">
+                                <button
+                                    onclick="updateJumlah('{{ $item->produk->kode_produk }}', -1, {{ $item->produk->harga }})"
+                                    class="bg-gray-600 hover:bg-gray-500 text-sm font-medium px-2 py-1 rounded-md">-</button>
+                                <span id="jumlahProduk-{{ $item->produk->kode_produk }}"
+                                    class="mx-2 text-sm">{{ $item->jumlah }}</span>
+                                <button
+                                    onclick="updateJumlah('{{ $item->produk->kode_produk }}', 1, {{ $item->produk->harga }})"
+                                    class="bg-gray-600 hover:bg-gray-500 text-sm font-medium px-2 py-1 rounded-md">+</button>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endforeach
 
-            <!-- Subtotal dan Checkout -->
-            <div class="justify-end items-center bg-gray-700 text-yellow-500 p-4 rounded-b-md text-right flex">
-                <div class="p-5">
-                    <p class="text-lg font-semibold">Subtotal Untuk Produk ({{ $total }})</p>
-                    <p class="text-lg font-bold text-white">Rp. {{ number_format($harga) }}</p>
-                </div>
-                <div class="">
-                    <a href="{{ route ('pembayaran') }}">
+                <!-- Total -->
+                <div class="justify-end items-center bg-gray-700 text-yellow-500 p-4 rounded-b-md text-right flex">
+                    <div class="p-5">
+                        <p class="text-lg font-semibold">Total Jumlah Produk</p>
+                        <p id="subtotalDisplay" class="text-lg font-bold text-white">Rp. {{ number_format($harga) }}
+                        </p>
+                    </div>
+                    <a href="{{ route('pembayaran') }}">
                         <button class="bg-yellow-500 px-4 py-2 rounded-md text-gray-900 font-semibold">Checkout</button>
                     </a>
                 </div>
@@ -277,20 +285,41 @@
     </section>
 
     <script>
-        function kurangiJumlah(productId) {
-            var quantityElement = document.getElementById("jumlahProduk-" + productId);
-            var currentQuantity = parseInt(quantityElement.innerText);
+        // Simpan jumlah produk dan subtotal
+        const jumlahProduk = @json($keranjang->mapWithKeys(fn($item) => [$item->produk->kode_produk => $item->jumlah]));
+        const hargaProdukList = @json($keranjang->mapWithKeys(fn($item) => [$item->produk->kode_produk => $item->produk->harga]));
+        let subtotal = {{ $harga }};
 
-            // Mengurangi jumlah jika lebih besar dari 1
-            if (currentQuantity > 1) {
-                quantityElement.innerText = currentQuantity - 1;
-            }
-        }
+        // Fungsi untuk memperbarui jumlah produk dan subtotal
+        function updateJumlah(kodeProduk, delta, hargaProduk) {
+            const jumlahSpan = document.getElementById(`jumlahProduk-${kodeProduk}`);
+            const hargaSpan = document.getElementById(`hargaProduk-${kodeProduk}`);
+            let jumlah = jumlahProduk[kodeProduk] || 0;
 
-        function tambahJumlah(productId) {
-            var quantityElement = document.getElementById("jumlahProduk-" + productId);
-            var currentQuantity = parseInt(quantityElement.innerText);
-            quantityElement.innerText = currentQuantity + 1;
+            // Update jumlah produk
+            jumlah += delta;
+            if (jumlah < 1) jumlah = 1; // Minimal 1 item
+
+            // Update data dan DOM
+            jumlahProduk[kodeProduk] = jumlah;
+            jumlahSpan.innerText = jumlah;
+
+            // Update harga per item
+            const hargaTotalPerItem = jumlah * hargaProduk;
+            hargaSpan.innerText = "Rp. " + hargaTotalPerItem.toLocaleString("id-ID");
+
+            // Hitung subtotal
+            subtotal = 0; // Reset subtotal
+
+            // Totalkan semua harga dengan aturan khusus
+            Object.keys(jumlahProduk).forEach((kode) => {
+                const hargaProdukLain = hargaProdukList[kode];
+                subtotal += jumlahProduk[kode] * hargaProdukLain;
+            });
+
+            // Tampilkan subtotal di layar
+            const subtotalDisplay = document.getElementById("subtotalDisplay");
+            subtotalDisplay.innerText = "Rp. " + subtotal.toLocaleString("id-ID");
         }
     </script>
     {{-- Konten Stop --}}
