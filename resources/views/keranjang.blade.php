@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Keranjang</title>
     @vite('resources/css/app.css')
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <style>
         /* Header Style */
         header {
@@ -223,11 +224,11 @@
     <section class="pt-36 pb-16">
         <div class="container mx-auto">
             <!-- Header -->
-            <div class="grid grid-cols-3 bg-yellow-500 p-4 rounded-t-md w-auto">
-                <h1 class="text-lg font-bold text-black col-span-2">Produk</h1>
-                <div class="flex justify-between">
-                    <p class="text-lg font-bold text-black">Harga</p>
-                    <p class="text-lg font-bold text-black ml-8">Jumlah</p>
+            <div class="grid grid-cols-4 bg-yellow-500 p-4 rounded-t-md w-auto">
+                <h1 class="text-lg font-bold text-black col-span-2 text-center">Produk</h1>
+                <div class="flex justify-between col-span-2">
+                    <p class="text-lg font-bold text-black text-center w-1/2">Harga</p>
+                    <p class="text-lg font-bold text-black text-center w-1/2">Jumlah</p>
                 </div>
             </div>
 
@@ -235,6 +236,10 @@
             <div class="bg-gray-900 text-white p-4 rounded-b-md">
                 @foreach ($keranjang as $item)
                     <div class="flex items-center justify-center mb-4">
+                        <!-- Checkbox -->
+                        <div class="mr-4">
+                            <input type="checkbox" class="form-checkbox h-5 w-5 text-yellow-500">
+                        </div>
                         <!-- Gambar Produk -->
                         <div class="w-1/4">
                             <img src="{{ asset('img/produk/' . $item->produk->gambar) }}"
@@ -254,7 +259,7 @@
                         </div>
 
                         <!-- Update Jumlah -->
-                        <div class="w-1/4 flex justify-center pl-56">
+                        <div class="w-1/3 flex justify-center pl-16">
                             <div class="flex items-center mt-1">
                                 <button
                                     onclick="updateJumlah('{{ $item->produk->kode_produk }}', -1, {{ $item->produk->harga }})"
@@ -265,6 +270,12 @@
                                     onclick="updateJumlah('{{ $item->produk->kode_produk }}', 1, {{ $item->produk->harga }})"
                                     class="bg-gray-600 hover:bg-gray-500 text-sm font-medium px-2 py-1 rounded-md">+</button>
                             </div>
+                        </div>
+                        <!-- Tombol Hapus -->
+                        <div class="mr-6">
+                            <button onclick="hapusProduk(1)" class="text-red-500 hover:text-red-700">
+                                <i class="uil uil-trash-alt"></i>
+                            </button>
                         </div>
                     </div>
                 @endforeach
@@ -320,6 +331,11 @@
             // Tampilkan subtotal di layar
             const subtotalDisplay = document.getElementById("subtotalDisplay");
             subtotalDisplay.innerText = "Rp. " + subtotal.toLocaleString("id-ID");
+        }
+
+        function hapusProduk(productId) {
+            // Logika untuk menghapus produk dari daftar keranjang
+            alert("Produk " + productId + " telah dihapus.");
         }
     </script>
     {{-- Konten Stop --}}
