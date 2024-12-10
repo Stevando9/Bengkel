@@ -266,7 +266,7 @@
                                 </div>
                                 <!-- Tombol Aksi -->
                                 <div class="flex justify-between mt-6">
-                                    <button type="button"
+                                    <button
                                         class="cancel bg-gray-800 px-4 py-2 rounded-lg font-semibold border border-gray-600 hover:bg-gray-700 transition duration-150">BATAL
                                     </button>
                                     <button type="submit"
