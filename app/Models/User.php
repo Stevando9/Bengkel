@@ -53,6 +53,11 @@ class User extends Authenticatable
         return $this->hasOne(Alamat::class, 'id_user', 'id');
     }
 
+    public function ulasan()
+    {
+        return $this->hasOne(Ulasan::class, 'id_user');
+    }
+
     // Metode pembaruan data (tidak menerima Request)
     // public function updateProfile($data)
     // {

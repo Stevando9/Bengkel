@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('isiPesan');
             $table->integer('rating');
-            $table->unsignedBigInteger('id_user');
-            $table->foreign('id_user')->references('id')->on('users');
+            $table->unsignedBigInteger('id_user')->nullable(); // Langsung nullable
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade'); // Tambahkan onDelete untuk integritas data
             $table->timestamps();
         });
     }

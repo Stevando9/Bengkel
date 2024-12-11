@@ -11,6 +11,7 @@ use App\Http\Controllers\ProdukController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UlasanController;
 
 
 // admin
@@ -28,6 +29,9 @@ Route::middleware(['auth'])->group(function () {
     // Route::put('/user/update', [UserController::class, 'update'])->name('user.update');
     Route::post('/user/update/{id}', [UserController::class, 'update'])->name('user.update');
     Route::put('/user/update-foto', [UserController::class, 'updateFoto'])->name('user.updateFoto');
+    Route::post('/ulasan', [UlasanController::class, 'store'])->name('ulasan.store');
+    Route::put('/ulasan/{id}', [UlasanController::class, 'update'])->name('ulasan.update');
+    Route::post('/ulasan', [UlasanController::class, 'storeOrUpdate'])->name('ulasan.storeOrUpdate');
 });
 
 Route::get('/Admin/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');

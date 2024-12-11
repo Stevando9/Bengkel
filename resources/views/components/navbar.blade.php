@@ -120,6 +120,16 @@
 
 
         {{-- modal Akun --}}
+        {{-- <!-- Pesan sukses atau error -->
+        @if (session('success'))
+            <div class="bg-green-500 text-white p-4 rounded-lg mb-4">
+                {{ session('success') }}
+            </div>
+        @elseif(session('error'))
+            <div class="bg-red-500 text-white p-4 rounded-lg mb-4">
+                {{ session('error') }}
+            </div>
+        @endif --}}
         <section>
             @auth
                 <div id="detail-account-modal"
@@ -128,14 +138,14 @@
                         <h2 class="text-3xl font-bold mb-6 text-center">AKUN</h2>
                         <div class="flex items-start space-x-8">
                             <div class="flex-shrink-0">
-                                @if (Auth::user()->foto)                                      
+                                @if (Auth::user()->foto)
                                     <img src="{{ asset('img/user/' . Auth::user()->foto) }}" alt="Profile Picture"
-                                    class="w-40 h-40 rounded-full">    
+                                        class="w-40 h-40 rounded-full">
                                 @else
                                     <img src="{{ asset('img/user/Vector Profile.png') }}" alt="Profile Picture"
-                                    class="w-40 h-40 rounded-full"> 
+                                        class="w-40 h-40 rounded-full">
                                 @endif
-                                
+
                             </div>
                             <div class="flex-grow">
                                 <div class="mb-4">
@@ -212,7 +222,8 @@
                             <!-- Form Edit Akun -->
                             {{-- <form action="{{ route('user.update') }}" method="POST" class="w-full"> --}}
                             <!-- Form untuk update user dan alamat -->
-                            <form action="{{ route('user.update', Auth::user()->id) }}" method="POST" enctype="multipart/form-data" class="w-full">
+                            <form action="{{ route('user.update', Auth::user()->id) }}" method="POST"
+                                enctype="multipart/form-data" class="w-full">
                                 @csrf
                                 <!-- Upload Foto -->
                                 <div class="upload-photo flex flex-col items-center">
@@ -220,17 +231,17 @@
                                         class="w-32 h-32 bg-gray-700 rounded-lg border border-gray-500 flex items-center justify-center mb-4">
                                         <label for="upload-photo" class="cursor-pointer text-center">
                                             @if (Auth::user()->foto)
-                                                <img src="{{ asset('img/user/' . Auth::user()->foto) }}" alt="Profile Picture"
-                                                class="w-40 h-40 rounded-full">                                                    
+                                                <img src="{{ asset('img/user/' . Auth::user()->foto) }}"
+                                                    alt="Profile Picture" class="w-40 h-40 rounded-full">
                                             @else
-                                                <img src="{{ asset('img/user/Vector Profile.png') }}" alt="Profile Picture"
-                                                class="rounded-lg w-full h-full object-cover">    
-                                            @endif                                        
-                                            <div class="text-sm text-gray-400">Upload your photo</div>                                            
+                                                <img src="{{ asset('img/user/Vector Profile.png') }}"
+                                                    alt="Profile Picture" class="rounded-lg w-full h-full object-cover">
+                                            @endif
+                                            <div class="text-sm text-gray-400">Upload your photo</div>
                                         </label>
                                         <input type="file" id="upload-photo" name="photo" class="hidden">
                                     </div>
-                                </div>                            
+                                </div>
 
                                 <!-- Input Password -->
                                 <div class="mb-4">
@@ -338,17 +349,18 @@
 
                         <!-- User Info -->
                         <div class="flex items-center mb-4">
-                            <img src="https://via.placeholder.com/50" alt="User"
+                            <img src="{{ asset('img/user/' . Auth::user()->foto) }}" alt="User"
                                 class="w-14 h-14 rounded-full mr-4 border-2 border-gray-700">
                             <div>
-                                <p class="text-lg font-semibold">Arya Marty Mansbawar</p>
+                                <p class="text-lg font-semibold">{{ Auth::user()->nama_lengkap }}</p>
                             </div>
                         </div>
 
+                        {{-- <form action="{{ route('ulasan.update', Auth::ulasan()->id) }}" method="POST"> --}}
                         <!-- Kritik & Saran -->
                         <div class="mb-6">
                             <label for="feedback" class="block text-sm font-medium mb-2">Kritik & Saran</label>
-                            <textarea id="feedback" rows="4"
+                            <textarea id="feedback" rows="4" value="{{ Auth::user()->ulasan->isiPesan ?? '' }}"
                                 class="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                                 placeholder="Masukkan kritik dan saran..."></textarea>
                         </div>
@@ -373,6 +385,7 @@
                             <button id="submit-review-button"
                                 class="bg-yellow-500 px-4 py-2 rounded-lg font-semibold text-gray-900 hover:bg-yellow-600 transition duration-150">KIRIM</button>
                         </div>
+                        {{-- </form> --}}
                     </div>
                 </div>
             @endauth
@@ -384,23 +397,25 @@
                     const incrementButton = document.getElementById('increment');
                     const ratingDisplay = document.getElementById('rating');
                     const starContainer = document.getElementById('star-container');
-                    let rating = 1; // Default rating
-                    const cancelReviewButton = document.getElementById('cancel-review-button');;
+                    const cancelReviewButton = document.getElementById('cancel-review-button');
                     const submitReviewButton = document.getElementById('submit-review-button');
+                    const feedbackReview = document.getElementById('feedback');
+                    let rating = 1; // Default rating
 
-                    // Buka modal
-                    // Event listener untuk membuka modal review
-                    document.querySelectorAll('[data-modal-target="review-modal"]').forEach(button => {
-                        button.addEventListener('click', function() {
-                            toggleModal(reviewModal);
-                        });
-                    });
+                    // Fungsi untuk membuka dan menutup modal
+                    function toggleModal(modal) {
+                        if (modal.classList.contains('hidden')) {
+                            modal.classList.remove('hidden');
+                        } else {
+                            modal.classList.add('hidden');
+                        }
+                    }
 
-                    // ----------ULASAN--------------
-                    // Fungsi untuk update tampilan bintang
+                    // Fungsi untuk memperbarui tampilan bintang
                     function updateStars() {
                         starContainer.innerHTML = '★'.repeat(rating) + '☆'.repeat(5 - rating);
                     }
+
                     // Set awal tampilan rating dan bintang
                     ratingDisplay.textContent = rating;
                     updateStars();
@@ -413,6 +428,7 @@
                             updateStars();
                         }
                     });
+
                     incrementButton.addEventListener('click', function() {
                         if (rating < 5) {
                             rating++;
@@ -424,6 +440,62 @@
                     // Event listener tombol "BATAL" di modal ulasan
                     cancelReviewButton.addEventListener('click', function() {
                         toggleModal(reviewModal);
+                    });
+
+                    // Event listener untuk membuka modal review
+                    document.querySelectorAll('[data-modal-target="review-modal"]').forEach(button => {
+                        button.addEventListener('click', function() {
+                            // Ambil data ulasan user jika sudah ada
+                            const ulasan = @json(Auth::user()->ulasan ?? null);
+
+                            if (ulasan) {
+                                feedbackReview.value = ulasan.isiPesan; // Isi pesan
+                                rating = ulasan.rating; // Rating
+                                ratingDisplay.textContent = rating;
+                                updateStars();
+                            } else {
+                                feedbackReview.value = ''; // Reset input
+                                rating = 1; // Default rating
+                                ratingDisplay.textContent = rating;
+                                updateStars();
+                            }
+
+                            toggleModal(reviewModal);
+                        });
+                    });
+
+                    // Event listener untuk tombol submit ulasan
+                    submitReviewButton.addEventListener('click', async function() {
+                        try {
+                            const feedback = feedbackReview.value.trim();
+                            if (feedback === '') {
+                                alert('Kritik dan saran tidak boleh kosong.');
+                                return;
+                            }
+
+                            const response = await fetch('/ulasan', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}', // Token CSRF dari Laravel
+                                },
+                                body: JSON.stringify({
+                                    isiPesan: feedback,
+                                    rating: rating,
+                                }),
+                            });
+
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+
+                            const result = await response.json();
+                            alert(result.message); // Pesan sukses dari backend
+                            toggleModal(reviewModal); // Tutup modal setelah berhasil
+                        } catch (error) {
+                            console.error('Error:', error);
+                            alert('Terjadi kesalahan saat mengirim ulasan. Silakan coba lagi.');
+                        }
                     });
                 });
             </script>
