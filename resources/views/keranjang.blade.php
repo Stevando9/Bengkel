@@ -289,7 +289,7 @@
                     <div class="p-5">
                         {{-- <p class="text-lg font-semibold">Total Jumlah Produk</p> --}}
                         <p id="totalJumlahProdukDisplay" class="text-lg font-semibold">Total Jumlah Produk: 0</p>
-                        <p id="subtotalDisplay" class="text-lg font-bold text-white">Rp. {{ number_format($harga) }}
+                        <p id="subtotalDisplay" class="text-lg font-bold text-white">Rp. {{ number_format(0) }}
                         </p>
                     </div>
                     <a href="{{ route('pembayaran') }}">
@@ -337,6 +337,11 @@
         //     const subtotalDisplay = document.getElementById("subtotalDisplay");
         //     subtotalDisplay.innerText = "Rp. " + subtotal.toLocaleString("id-ID");
         // }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateSubtotal(); // Hitung ulang subtotal saat halaman selesai dimuat
+        });
+
         function updateJumlah(kodeProduk, delta, hargaProduk) {
             const jumlahSpan = document.getElementById(`jumlahProduk-${kodeProduk}`);
             const hargaSpan = document.getElementById(`hargaProduk-${kodeProduk}`);
@@ -394,8 +399,8 @@
             subtotalDisplay.innerText = "Rp. " + subtotal.toLocaleString("id-ID");
 
             // Perbarui tampilan total jumlah produk
-            const totalJumlahProdukDisplay = document.getElementById("totalJumlahProdukDisplay");
-            totalJumlahProdukDisplay.innerText = "Total Jumlah Produk: " + totalJumlah;
+            const totalJumlahProdukDisplay =
+                document.getElementById("totalJumlahProdukDisplay").innerText = "Total Jumlah Produk: " + totalJumlah;
         }
     </script>
     {{-- Konten Stop --}}

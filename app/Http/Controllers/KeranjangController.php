@@ -12,14 +12,20 @@ class KeranjangController extends Controller
 {
   public function index()
   {
-    if ((Auth::check() && Auth::user()->tipe === 'member')) {
-      $keranjang = Keranjang::with('produk')->where('user_id', Auth::user()->id)->get();
-      $total = $keranjang->count();
-      $harga = Keranjang::where('user_id', Auth::user()->id)->sum('estimasi_harga');
-      return view('keranjang', compact('keranjang', 'total', 'harga'));
+    if (Auth::check() && Auth::user()->tipe === 'member') {
+      // Ambil data keranjang berdasarkan user ID
+      $keranjang = Keranjang::with('produk')->where('user_id', Auth::id())->get();
+
+      return view('keranjang', [
+        'keranjang' => $keranjang,
+        'harga' => 0 // Subtotal default
+      ]);
     }
-    return redirect()->route('login')->with('error', 'Harap Login.');
+
+    // Jika pengguna belum login
+    return redirect()->route('login')->with('error', 'Harap login terlebih dahulu.');
   }
+
 
   public function add(Request $request)
   {
