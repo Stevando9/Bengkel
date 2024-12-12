@@ -236,9 +236,13 @@
             <div class="bg-gray-900 text-white p-4 rounded-b-md">
                 @foreach ($keranjang as $item)
                     <div class="flex items-center justify-center mb-4">
+
                         <!-- Checkbox -->
                         <div class="mr-4">
-                            <input type="checkbox" class="form-checkbox h-5 w-5 text-yellow-500">
+                            <input type="checkbox" class="form-checkbox h-5 w-5 text-yellow-500"
+                                data-kode-produk="{{ $item->produk->kode_produk }}"
+                                data-harga="{{ $item->produk->harga }}" data-jumlah="{{ $item->jumlah }}"
+                                onchange="updateSubtotal()">
                         </div>
                         <!-- Gambar Produk -->
                         <div class="w-1/4">
@@ -283,7 +287,8 @@
                 <!-- Total -->
                 <div class="justify-end items-center bg-gray-700 text-yellow-500 p-4 rounded-b-md text-right flex">
                     <div class="p-5">
-                        <p class="text-lg font-semibold">Total Jumlah Produk</p>
+                        {{-- <p class="text-lg font-semibold">Total Jumlah Produk</p> --}}
+                        <p id="totalJumlahProdukDisplay" class="text-lg font-semibold">Total Jumlah Produk: 0</p>
                         <p id="subtotalDisplay" class="text-lg font-bold text-white">Rp. {{ number_format($harga) }}
                         </p>
                     </div>
@@ -302,16 +307,48 @@
         let subtotal = {{ $harga }};
 
         // Fungsi untuk memperbarui jumlah produk dan subtotal
+        // function updateJumlah(kodeProduk, delta, hargaProduk) {
+        //     const jumlahSpan = document.getElementById(`jumlahProduk-${kodeProduk}`);
+        //     const hargaSpan = document.getElementById(`hargaProduk-${kodeProduk}`);
+        //     let jumlah = jumlahProduk[kodeProduk] || 0;
+
+        //     // Update jumlah produk
+        //     jumlah += delta;
+        //     if (jumlah < 1) jumlah = 1; // Minimal 1 item
+
+        //     // Update data dan DOM
+        //     jumlahProduk[kodeProduk] = jumlah;
+        //     jumlahSpan.innerText = jumlah;
+
+        //     // Update harga per item
+        //     const hargaTotalPerItem = jumlah * hargaProduk;
+        //     hargaSpan.innerText = "Rp. " + hargaTotalPerItem.toLocaleString("id-ID");
+
+        //     // Hitung subtotal
+        //     subtotal = 0; // Reset subtotal
+
+        //     // Totalkan semua harga dengan aturan khusus
+        //     Object.keys(jumlahProduk).forEach((kode) => {
+        //         const hargaProdukLain = hargaProdukList[kode];
+        //         subtotal += jumlahProduk[kode] * hargaProdukLain;
+        //     });
+
+        //     // Tampilkan subtotal di layar
+        //     const subtotalDisplay = document.getElementById("subtotalDisplay");
+        //     subtotalDisplay.innerText = "Rp. " + subtotal.toLocaleString("id-ID");
+        // }
         function updateJumlah(kodeProduk, delta, hargaProduk) {
             const jumlahSpan = document.getElementById(`jumlahProduk-${kodeProduk}`);
             const hargaSpan = document.getElementById(`hargaProduk-${kodeProduk}`);
+            const checkbox = document.querySelector(`input[data-kode-produk="${kodeProduk}"]`);
+
             let jumlah = jumlahProduk[kodeProduk] || 0;
 
             // Update jumlah produk
             jumlah += delta;
             if (jumlah < 1) jumlah = 1; // Minimal 1 item
 
-            // Update data dan DOM
+            // Update data di DOM
             jumlahProduk[kodeProduk] = jumlah;
             jumlahSpan.innerText = jumlah;
 
@@ -319,23 +356,46 @@
             const hargaTotalPerItem = jumlah * hargaProduk;
             hargaSpan.innerText = "Rp. " + hargaTotalPerItem.toLocaleString("id-ID");
 
-            // Hitung subtotal
-            subtotal = 0; // Reset subtotal
+            // Perbarui data jumlah di checkbox
+            if (checkbox) {
+                checkbox.setAttribute('data-jumlah', jumlah);
+            }
 
-            // Totalkan semua harga dengan aturan khusus
-            Object.keys(jumlahProduk).forEach((kode) => {
-                const hargaProdukLain = hargaProdukList[kode];
-                subtotal += jumlahProduk[kode] * hargaProdukLain;
-            });
-
-            // Tampilkan subtotal di layar
-            const subtotalDisplay = document.getElementById("subtotalDisplay");
-            subtotalDisplay.innerText = "Rp. " + subtotal.toLocaleString("id-ID");
+            // Hitung ulang subtotal dan total jumlah
+            updateSubtotal();
         }
+
 
         function hapusProduk(productId) {
             // Logika untuk menghapus produk dari daftar keranjang
             alert("Produk " + productId + " telah dihapus.");
+        }
+
+        function updateSubtotal() {
+            const checkboxes = document.querySelectorAll('.form-checkbox'); // Ambil semua checkbox
+            let subtotal = 0; // Inisialisasi subtotal
+            let totalJumlah = 0; // Inisialisasi total jumlah produk
+
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    // Ambil data dari checkbox
+                    const kodeProduk = checkbox.getAttribute('data-kode-produk');
+                    const hargaProduk = parseInt(checkbox.getAttribute('data-harga'));
+                    const jumlahProduk = parseInt(document.getElementById(`jumlahProduk-${kodeProduk}`).innerText);
+
+                    // Tambahkan ke subtotal dan total jumlah
+                    subtotal += hargaProduk * jumlahProduk;
+                    totalJumlah += jumlahProduk;
+                }
+            });
+
+            // Perbarui tampilan subtotal
+            const subtotalDisplay = document.getElementById("subtotalDisplay");
+            subtotalDisplay.innerText = "Rp. " + subtotal.toLocaleString("id-ID");
+
+            // Perbarui tampilan total jumlah produk
+            const totalJumlahProdukDisplay = document.getElementById("totalJumlahProdukDisplay");
+            totalJumlahProdukDisplay.innerText = "Total Jumlah Produk: " + totalJumlah;
         }
     </script>
     {{-- Konten Stop --}}
