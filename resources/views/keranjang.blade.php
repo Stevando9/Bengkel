@@ -277,9 +277,9 @@
                         </div>
                         <!-- Tombol Hapus -->
                         <div class="mr-6">
-                            <button onclick="hapusProduk(1)" class="text-red-500 hover:text-red-700">
+                            <a href="{{ route('keranjang.remove', $item->id) }}"><button onclick="hapusProduk($item->produk->nama_produk)" class="text-red-500 hover:text-red-700">
                                 <i class="uil uil-trash-alt"></i>
-                            </button>
+                            </button></a>
                         </div>
                     </div>
                 @endforeach
@@ -371,9 +371,10 @@
         }
 
 
-        function hapusProduk(productId) {
+        function hapusProduk(namaProduk) {
             // Logika untuk menghapus produk dari daftar keranjang
-            alert("Produk " + productId + " telah dihapus.");
+            
+            alert( namaProduk + " telah dihapus.");
         }
 
         function updateSubtotal() {

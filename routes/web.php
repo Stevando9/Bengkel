@@ -28,7 +28,6 @@ Route::middleware(['auth'])->group(function () {
     // Menggunakan controller UserController dengan method update
     // Route::put('/user/update', [UserController::class, 'update'])->name('user.update');
     Route::post('/user/update/{id}', [UserController::class, 'update'])->name('user.update');
-    Route::put('/user/update-foto', [UserController::class, 'updateFoto'])->name('user.updateFoto');
     Route::post('/ulasan', [UlasanController::class, 'store'])->name('ulasan.store');
     Route::put('/ulasan/{id}', [UlasanController::class, 'update'])->name('ulasan.update');
     Route::post('/ulasan', [UlasanController::class, 'storeOrUpdate'])->name('ulasan.storeOrUpdate');
@@ -69,7 +68,7 @@ Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang
 Route::get('/keranjang/tambah/{kode_produk}', [KeranjangController::class, 'add'])->name('addKeranjang');
 Route::post('/keranjang/add', [KeranjangController::class, 'add'])->name('keranjang.add');
 Route::post('/keranjang/update', [KeranjangController::class, 'updateJumlah'])->name('keranjang.update');
-Route::post('/keranjang/remove/{kode}', [KeranjangController::class, 'remove'])->name('keranjang.remove');
+Route::get('/keranjang/remove/{id}', [KeranjangController::class, 'remove'])->name('keranjang.remove');
 
 //produk
 Route::get('/produk', [ProdukController::class, 'index'])->name('produk');

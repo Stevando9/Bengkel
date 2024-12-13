@@ -8,6 +8,8 @@ use App\Models\Keranjang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use function Laravel\Prompts\alert;
+
 class KeranjangController extends Controller
 {
   public function index()
@@ -90,13 +92,11 @@ class KeranjangController extends Controller
 
   public function remove($kode)
   {
-    $keranjang = Keranjang::where('kode_produk', $kode)
-      ->where('user_id', Auth::id())
-      ->first();
-
+    $keranjang = Keranjang::where('id', $kode)->first();
     if ($keranjang) {
       $keranjang->delete();
-      return redirect()->route('keranjang')->with('success', 'Barang berhasil dihapus dari keranjang.');
+      
+      return redirect()->route('keranjang')->with(alert('Barang Telah dihapus'));
     }
 
     return redirect()->back()->with('error', 'Barang tidak ditemukan di keranjang.');

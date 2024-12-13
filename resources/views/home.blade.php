@@ -405,51 +405,51 @@
     </section>
     <!-- Produk Stop -->
 
-    <!-- Carousel Tetstimoni Start -->
-    <section id="Carousel Testimoni pt-36 pb-36">
-        <div class="container mx-auto">
-            <div class="pt-60">
-                <div class="flex items-center justify-center text-primary text-3xl">
-                    <h1 class="font-semibold">
-                        TESTIMONI
-                    </h1>
-                </div>
-            </div>
-            <div class="container flex items-center justify-center text-[#767676] text-sm text-center">
-                <h1>
-                    Testimoni Anda sangat berharga bagi kami untuk terus meningkatkan layanan dan kualitas produk.<br>
-                    Berikan komentar dan rating terbaik Anda di website kami, atau tulis testimoni Anda di sini:
+    <!-- Carousel Testimoni Start -->
+<section id="Carousel Testimoni pt-36 pb-36">
+    <div class="container mx-auto">
+        <div class="pt-60">
+            <div class="flex items-center justify-center text-primary text-3xl">
+                <h1 class="font-semibold">
+                    TESTIMONI
                 </h1>
             </div>
-            <div class="carousel-container relative w-full max-w-xl mx-auto p-5">
-                <div class="testimonial active block text-center">
-                    <img src="{{ asset('img/mans.jpg') }}" alt="Profile Image"
+        </div>
+        <div class="container flex items-center justify-center text-[#767676] text-sm text-center">
+            <h1>
+                Testimoni Anda sangat berharga bagi kami untuk terus meningkatkan layanan dan kualitas produk.<br>
+                Berikan komentar dan rating terbaik Anda di website kami, atau tulis testimoni Anda di sini:
+            </h1>
+        </div>
+        <div class="carousel-container relative w-full max-w-xl mx-auto p-5">
+            <!-- Testimonial container diisi melalui Blade -->
+            <div id="testimonial-container">
+                @foreach ($ulasan as $index => $item)
+                <div class="testimonial {{ $index !== 0 ? 'hidden' : '' }} text-center">
+                    <img src="{{ asset('img/user/'.$item->user->foto) }}" alt="Profile Image"
                         class="rounded-full w-[100px] h-[100px] mx-auto">
-                    <h2 class="mt-3 text-white font-bold text-2xl">Arya Marty Mansbawar</h2>
-                    <p class="mt-3 text-lg text-white max-w-xl mx-auto">Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Minus et deleniti nesciunt sint eligendi reprehenderit reiciendis.</p>
-                    <div class="stars text-yellow-400 mt-3">★★★★☆</div>
+                    <h2 class="mt-3 text-white font-bold text-2xl">{{ $item->user->nama_lengkap ?? 'Anonymous' }}</h2>
+                    <p class="mt-3 text-lg text-white max-w-xl mx-auto">{{ $item->isiPesan }}</p>
+                    <div class="stars text-yellow-400 mt-3">
+                        @for ($i = 1; $i <= 5; $i++)
+                            {!! $i <= $item->rating ? '&#9733;' : '&#9734;' !!}
+                        @endfor
+                    </div>
                 </div>
-                <div class="testimonial hidden text-center">
-                    <img src="{{ asset('img/jopan.jpg') }}" alt="Profile Image"
-                        class="rounded-full w-[100px] h-[100px] mx-auto">
-                    <h2 class="mt-3 text-white font-bold text-2xl">JOPAN IMYUT</h2>
-                    <p class="mt-3 text-lg text-white max-w-xl mx-auto">Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Quaerat voluptas veniam delectus ipsum libero dolorum!</p>
-                    <div class="stars text-yellow-400 mt-3">★★★☆☆</div>
-                </div>
-                <!-- Letakkan kedua panah dalam satu div -->
-                <div class="absolute inset-0 flex justify-between items-center px-0">
-                    <a class="p-4 cursor-pointer text-white bg-black bg-opacity-50 rounded-full text-2xl z-10 left-[-40px]"
-                        onclick="plusTestimonialSlides(-1)">&#10094;</a>
-                    <a class="p-4 cursor-pointer text-white bg-black bg-opacity-50 rounded-full text-2xl z-10 right-[-40px]"
-                        onclick="plusTestimonialSlides(1)">&#10095;</a>
-                </div>
+                @endforeach
+            </div>
+            <!-- Letakkan kedua panah dalam satu div -->
+            <div class="absolute inset-0 flex justify-between items-center px-0">
+                <a class="p-4 cursor-pointer text-white bg-black bg-opacity-50 rounded-full text-2xl z-10 left-[-40px]"
+                    onclick="plusTestimonialSlides(-1)">&#10094;</a>
+                <a class="p-4 cursor-pointer text-white bg-black bg-opacity-50 rounded-full text-2xl z-10 right-[-40px]"
+                    onclick="plusTestimonialSlides(1)">&#10095;</a>
             </div>
         </div>
+    </div>
 
-        <script>
-            let currentProductSlide = 0;
+    <script>
+        let currentProductSlide = 0;
             const products = document.querySelectorAll('.product-slide');
 
             function showProductSlides(n) {
@@ -477,32 +477,29 @@
                 showProductSlides(n);
             }
 
-            // Carousel Testimoni
-            let testimonialIndex = 0;
-            const testimonialSlides = document.querySelectorAll('.testimonial');
+        // Carousel Testimoni
+        let testimonialIndex = 0;
+        const testimonialSlides = document.querySelectorAll('.testimonial');
 
-            function showTestimonialSlide(n) {
-                if (n >= testimonialSlides.length) {
-                    testimonialIndex = 0;
-                }
-                if (n < 0) {
-                    testimonialIndex = testimonialSlides.length - 1;
-                }
-                testimonialSlides.forEach((slide, i) => {
-                    slide.style.display = (i === testimonialIndex) ? 'block' : 'none';
-                });
-            }
+        function showTestimonialSlide(n) {
+            testimonialSlides.forEach((slide, i) => {
+                slide.style.display = (i === testimonialIndex) ? 'block' : 'none';
+            });
+        }
 
-            function plusTestimonialSlides(n) {
-                showTestimonialSlide(testimonialIndex += n);
-            }
-
-            // Mulai dari slide pertama untuk testimoni
+        function plusTestimonialSlides(n) {
+            testimonialIndex += n;
+            if (testimonialIndex >= testimonialSlides.length) testimonialIndex = 0;
+            if (testimonialIndex < 0) testimonialIndex = testimonialSlides.length - 1;
             showTestimonialSlide(testimonialIndex);
-        </script>
-        </div>
-    </section>
-    <!-- Carousel Tetstimoni Stop -->
+        }
+
+        // Mulai dari slide pertama untuk testimoni
+        showTestimonialSlide(testimonialIndex);
+    </script>
+</section>
+<!-- Carousel Testimoni Stop -->
+
 
     <section>
         <div class="text-black">
