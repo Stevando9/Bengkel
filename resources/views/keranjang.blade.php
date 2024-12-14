@@ -239,10 +239,10 @@
 
                         <!-- Checkbox -->
                         <div class="mr-4">
-                            <input type="checkbox" class="form-checkbox h-5 w-5 text-yellow-500"
+                            <input type="checkbox" class="form-checkbox h-5 w-5 text-yellow-500" 
                                 data-kode-produk="{{ $item->produk->kode_produk }}"
                                 data-harga="{{ $item->produk->harga }}" data-jumlah="{{ $item->jumlah }}"
-                                onchange="updateSubtotal()">
+                                onchange="updateSubtotal()" value="{{ $item->produk->kode_produk }}">
                         </div>
                         <!-- Gambar Produk -->
                         <div class="w-1/4">
@@ -291,10 +291,8 @@
                         <p id="totalJumlahProdukDisplay" class="text-lg font-semibold">Total Jumlah Produk: 0</p>
                         <p id="subtotalDisplay" class="text-lg font-bold text-white">Rp. {{ number_format(0) }}
                         </p>
-                    </div>
-                    <a href="{{ route('pembayaran') }}">
-                        <button class="bg-yellow-500 px-4 py-2 rounded-md text-gray-900 font-semibold">Checkout</button>
-                    </a>
+                    </div>                    
+                    <button class="bg-yellow-500 px-4 py-2 rounded-md text-gray-900 font-semibold" id="CO">Checkout</button>                    
                 </div>
             </div>
         </div>
@@ -304,6 +302,7 @@
         // Simpan jumlah produk dan subtotal
         const jumlahProduk = @json($keranjang->mapWithKeys(fn($item) => [$item->produk->kode_produk => $item->jumlah]));
         const hargaProdukList = @json($keranjang->mapWithKeys(fn($item) => [$item->produk->kode_produk => $item->produk->harga]));
+        const checkout = document.getElementById("CO");
         let subtotal = {{ $harga }};
 
         // Fungsi untuk memperbarui jumlah produk dan subtotal
@@ -337,6 +336,19 @@
         //     const subtotalDisplay = document.getElementById("subtotalDisplay");
         //     subtotalDisplay.innerText = "Rp. " + subtotal.toLocaleString("id-ID");
         // }
+
+        checkout.addEventListener("click", function(){
+            var checkedValue = Array.from(document.querySelectorAll('.form-checkbox:checked')).map(checkbox =>checkbox.value);
+            var jumProdukArray = Array.from(document.querySelectorAll('.form-checkbox:checked')).map(checkbox => {                
+                var kodeProduk = checkbox.value;
+                var jumProduk = document.getElementById(`jumlahProduk-${kodeProduk}`).innerText;
+                return jumProduk;
+            });                 
+            return redirect()->route("pembayaran",[
+                'checkedValue' => json_encode($checkedValue),
+                'jumProdukArray' => json_encode($jumProdukArray),
+            ]);
+        });
 
         document.addEventListener('DOMContentLoaded', () => {
             updateSubtotal(); // Hitung ulang subtotal saat halaman selesai dimuat
