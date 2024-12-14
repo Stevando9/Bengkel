@@ -1,17 +1,18 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthControler;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JasaController;
-use App\Http\Controllers\KeranjangController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MontirController;
 use App\Http\Controllers\ProdukController;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\UlasanController;
+use App\Http\Controllers\KeranjangController;
+use App\Http\Controllers\PembayaranController;
 
 
 // admin
@@ -82,9 +83,7 @@ Route::get('/review_modal', function () {
     return view('review_modal', []);
 })->name('review_modal');
 
-Route::get('pembayaran', function () {
-    return view('pembayaran');
-})->name('pembayaran');
+Route::get('/pembayaran/{checkedValue}/{jumProdukArray}', [PembayaranController::class, 'index'])->name('pembayaran');
 
 Route::get('/pembayaran/pembayaranqris', function () {
     return view('pembayaranqris');
