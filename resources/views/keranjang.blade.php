@@ -339,15 +339,28 @@
 
         checkout.addEventListener("click", function(){
             var checkedValue = Array.from(document.querySelectorAll('.form-checkbox:checked')).map(checkbox =>checkbox.value);
+
+            // Jika tidak ada checkbox yang dipilih
+            if (checkedValue.length === 0) {
+                alert("Silakan pilih setidaknya satu produk sebelum melanjutkan.");
+                return; // Hentikan eksekusi fungsi
+            }
+
             var jumProdukArray = Array.from(document.querySelectorAll('.form-checkbox:checked')).map(checkbox => {                
                 var kodeProduk = checkbox.value;
                 var jumProduk = document.getElementById(`jumlahProduk-${kodeProduk}`).innerText;
                 return jumProduk;
             });                 
-            return redirect()->route("pembayaran",[
-                'checkedValue' => json_encode($checkedValue),
-                'jumProdukArray' => json_encode($jumProdukArray),
-            ]);
+            // Serialisasi array menjadi string (JSON)
+            let serializedCheckedValue = JSON.stringify(checkedValue);
+            let serializedJumProdukArray = JSON.stringify(jumProdukArray);
+
+            // Encode data agar aman untuk URL
+            let encodedCheckedValue = encodeURIComponent(serializedCheckedValue);
+            let encodedJumProdukArray = encodeURIComponent(serializedJumProdukArray);
+
+            // Redirect ke route pembayaran dengan parameter
+            window.location.href = `/pembayaran/${encodedCheckedValue}/${encodedJumProdukArray}`;
         });
 
         document.addEventListener('DOMContentLoaded', () => {

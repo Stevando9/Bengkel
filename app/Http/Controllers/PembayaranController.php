@@ -7,13 +7,13 @@ use Illuminate\Http\Request;
 
 class PembayaranController extends Controller
 {
-    public function index($checkedValue, $jumProdukArray)
+    public function index($checkedValue, $jumProduk)
     {
         // Decode JSON menjadi array
         $checkedValueArray = json_decode($checkedValue, true);
-        $jumProdukArray = json_decode($jumProdukArray, true);
+        $jumProdukArray = json_decode($jumProduk, true);
 
-        $prod= produk::whereIn('kode_produk',$checkedValueArray);
+        $prod= produk::whereIn('kode_produk',$checkedValueArray)->get();
 
         // Contoh penggunaan data
         $data = $prod->map(function ($produk) use ($checkedValueArray, $jumProdukArray) {
