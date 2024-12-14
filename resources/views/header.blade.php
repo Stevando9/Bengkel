@@ -1,4 +1,5 @@
-<header class="bg-gray-800 text-white">
+<h1>Ga dipake Broo</h1>
+{{-- <header class="bg-gray-800 text-white">
     <div class="container mx-auto flex justify-between items-center py-4 px-6">
         <!-- Logo and Brand Name -->
         <div class="flex items-center">
@@ -97,4 +98,4 @@
             hamburgerMenu.classList.add('hidden');
         }
     });
-</script>
+</script> --}}

@@ -25,7 +25,6 @@
                 <x-nav-link route="keranjang" label="KERANJANG" />
             </nav>
 
-
             <!-- Always Visible Hamburger Menu -->
             <div>
                 <button id="hamburger" class="focus:outline-none pr-10">

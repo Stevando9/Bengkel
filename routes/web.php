@@ -90,6 +90,10 @@ Route::get('/pembayaran/pembayaranqris', function () {
     return view('pembayaranqris');
 })->name('pembayaranqris');
 
+Route::get('/pembayaran/konfirmasi', function () {
+    return view('konfirmasipembayaran');
+})->name('konfirmasipembayaran');
+
 Route::get('/pembayaran/pembayaranbank', function () {
     return view('pembayaranbank');
 })->name('pembayaranbank');
@@ -106,7 +110,7 @@ Route::get('/pembayaran/pembayaranberhasilcod', function () {
     return view('pembayaranberhasilcod');
 })->name('pembayaranberhasilcod');
 
-Route::get('/update', function () {
-    return view('pembayaran');
-})->name('pembayaran');
+// Route::get('/update', function () {
+//     return view('pembayaran');
+// })->name('pembayaran');
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
