@@ -163,14 +163,14 @@
                                 <div class="mb-4">
                                     <label class="block text-sm font-semibold">Alamat</label>
                                     <p class="border-b border-gray-600 py-2">
-                                        {{ Auth::user()->alamat->detail_alamat ?? 'Alamat belum diisi' }}</p>
+                                        {{ Auth::user()->alamat ?? 'Alamat belum diisi' }}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="flex justify-between mt-6">
                             <button id="edit-akun-button" data-nama="{{ Auth::user()->nama_lengkap }}"
                                 data-email="{{ Auth::user()->email }}" data-telepon="{{ Auth::user()->no_telpon }}"
-                                data-alamat="{{ Auth::user()->alamat->detail_alamat ?? '' }}"
+                                data-alamat="{{ Auth::user()->alamat ?? '' }}"
                                 class="bg-yellow-500 px-8 py-2 rounded-lg font-semibold text-gray-900 hover:bg-yellow-600 transition duration-150">EDIT</button>
                             <button id="close-modal-akun"
                                 class="bg-gray-900 px-6 py-2 rounded-lg font-semibold text-yellow-500 hover:bg-gray-700 transition duration-150">KEMBALI</button>
@@ -263,7 +263,7 @@
                                 <div class="mb-4">
                                     <label for="address" class="block text-sm font-medium mb-1">Alamat</label>
                                     <input type="text" id="address" name="detail_alamat"
-                                        value="{{ Auth::user()->alamat->detail_alamat ?? '' }}"
+                                        value="{{ Auth::user()->alamat ?? '' }}"
                                         class="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                                         placeholder="Masukkan Alamat">
                                 </div>

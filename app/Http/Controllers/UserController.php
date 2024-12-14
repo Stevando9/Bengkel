@@ -19,10 +19,10 @@ class UserController extends Controller
     {
         $request->validate([
             'password' => 'nullable|confirmed|min:8',
-            'detail_alamat' => 'nullable|string|max:255',
+            'alamat' => 'nullable|string|max:255',
             'phone' => 'required|string|max:15',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);      
+        ]);
         $user = User::findOrFail($id);
 
         // Update password jika ada
@@ -35,7 +35,7 @@ class UserController extends Controller
 
         // Update alamat jika ada
         if ($request->filled('detail_alamat')) {
-            $user->alamat->detail_alamat = $request->detail_alamat;
+            $user->alamat = $request->detail_alamat;
         }
 
         if ($request->hasFile('photo')) {
@@ -45,17 +45,16 @@ class UserController extends Controller
                 if (file_exists($imagePath)) {
                     unlink($imagePath);
                 }
-            }              
-            $usernameSlug = Str::slug($user->nama_lengkap, '-');  
+            }
+            $usernameSlug = Str::slug($user->nama_lengkap, '-');
             $imageName = $usernameSlug . '.' . $request->file('photo')->getClientOriginalExtension();
             $request->file('photo')->move(public_path('img/user'), $imageName);
             $user->foto = $imageName;
-        }    
+        }
 
         $user->save();
 
         return redirect()->route('home')->with('success', 'Data berhasil diperbarui!');
-        
     }
 
     // public function update(Request $request, $id) {
@@ -90,5 +89,5 @@ class UserController extends Controller
 
     /**
      * Update user profile photo.
-     */    
+     */
 }
