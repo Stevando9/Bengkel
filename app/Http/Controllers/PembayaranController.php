@@ -21,6 +21,7 @@ class PembayaranController extends Controller
             return [
                 'kode_produk' => $produk->kode_produk,
                 'nama_produk' => $produk->nama_produk,
+                'gambar' => $produk->gambar,
                 'harga' => $produk->harga,
                 'jumlah' => $jumProdukArray[$index] ?? 0, // Default jumlah = 0 jika tidak ditemukan
                 'subtotal' => $produk->harga * ($jumProdukArray[$index] ?? 0),

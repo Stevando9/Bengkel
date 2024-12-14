@@ -93,11 +93,15 @@
                             <p class="text-sm font-medium">Produk</p>
                             <p class="text-sm font-medium">Harga</p>
                         </div>
+                        @php
+                            $subtotal =0;
+                        @endphp
+                        @foreach ($data as $item)                                                    
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex items-center">
-                                <img src="https://placehold.co/50x50" alt="Produk" class="rounded-md">
+                                <img src="{{ asset('img/produk/'.$item['gambar']) }}" alt="{{ $item['nama_produk'] }}" class="rounded-md-2" style="width: 50px; height: auto;">
                                 <div class="ml-4">
-                                    <p class="text-sm font-medium">Ban IRC 100/90-14 Ban Motor Tubeless</p>
+                                    <p class="text-sm font-medium">{{ $item['nama_produk'] }} ({{ $item['jumlah'] }})</p>
                                     {{-- <div class="flex items-center mt-1">
                                         <button onclick="kurangiJumlah()" class="bg-gray-600 hover:bg-gray-500 text-sm font-medium px-2 py-1 rounded-md">-</button>
                                         <span id="jumlahProduk" class="mx-2 text-sm">1</span>
@@ -105,12 +109,16 @@
                                     </div> --}}
                                 </div>
                             </div>
-                            <p class="text-sm font-medium">Rp 200.000</p>
+                            <p class="text-sm font-medium">Rp {{ number_format($item['harga']) }}</p>
                         </div>
-                        <hr class="border-gray-600 mb-2">
+                        @php
+                            $subtotal+=$item['subtotal'];
+                        @endphp
+                        @endforeach
+                        <hr class="border-gray-600 mb-2">                        
                         <div class="flex justify-between text-sm font-medium">
                             <p>Sub Total :</p>
-                            <p>Rp 200.000</p>
+                            <p>Rp {{ number_format($subtotal) }}</p>
                         </div>
                         <div class="flex justify-between text-sm font-medium">
                             <p>Biaya Pengiriman :</p>
@@ -119,7 +127,7 @@
                         <hr class="border-gray-600 mt-2 mb-2">
                         <div class="flex justify-between text-sm font-medium mt-2">
                             <p>Total :</p>
-                            <p>Rp 215.000</p>
+                            <p>Rp {{ number_format($subtotal+15000) }}</p>
                         </div>
                     </div>
 
