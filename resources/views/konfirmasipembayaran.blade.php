@@ -115,11 +115,11 @@
                 <div class="text-sm text-gray-700 mb-6 space-y-2">
                     <div class="flex justify-between">
                         <span>Nomor Transaksi</span>
-                        <span class="font-semibold">000085752257</span>
+                        <span id="transaction-number" class="font-semibold"></span>                    
                     </div>
                     <div class="flex justify-between">
                         <span>Waktu Transaksi</span>
-                        <span class="font-semibold">25-02-2023, 13:22:16</span>
+                        <span id="transaction-time" class="font-semibold"></span>
                     </div>
                     <div class="flex justify-between">
                         <span>Metode Transaksi</span>
@@ -139,34 +139,87 @@
     </section>
 
     <script>
-        // Timer setup
-        let countdown = 300; // 5 minutes in seconds
-
+        // Countdown Start
+        let countdown = 300; // 5 menit dalam detik
+    
         function startTimer() {
             const timerElement = document.querySelector('.text-red-500.text-3xl.text-center.font-bold.mb-5');
-
+    
             const interval = setInterval(() => {
                 const minutes = Math.floor(countdown / 60);
                 const seconds = countdown % 60;
-
+    
                 const formattedTime =
                     String(minutes).padStart(2, '0') + ":" +
                     String(seconds).padStart(2, '0');
-
+    
                 timerElement.textContent = formattedTime;
-
+    
                 if (countdown <= 0) {
                     clearInterval(interval);
                     timerElement.textContent = "00:00";
                     alert("Waktu pembayaran telah habis!");
                 }
-
+    
                 countdown--;
             }, 1000);
         }
-
-        // Start timer on page load
-        window.onload = startTimer;
+        // Countdown Stop
+    
+        // Real Time Start
+        // Fungsi untuk mendapatkan waktu saat ini dalam format DD-MM-YYYY, HH:MM:SS
+        function getCurrentTime() {
+            const now = new Date();
+    
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0'); // Bulan dimulai dari 0
+            const year = now.getFullYear();
+    
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+    
+            return `${day}-${month}-${year}, ${hours}:${minutes}:${seconds}`;
+        }
+    
+        // Menampilkan waktu transaksi real-time di halaman
+        function displayTransactionTime() {
+            const transactionTimeElement = document.querySelector('#transaction-time');
+            transactionTimeElement.textContent = getCurrentTime();
+        }
+        // Real Time Stop
+    
+        // Nomor Transaksi Start
+        // Fungsi untuk membuat nomor transaksi random 12 digit
+        function generateTransactionNumber() {
+            let transactionNumber = '';
+            for (let i = 0; i < 12; i++) {
+                transactionNumber += Math.floor(Math.random() * 10); // Angka acak 0-9
+            }
+            return transactionNumber;
+        }
+    
+        // Menampilkan nomor transaksi di halaman
+        function displayTransactionNumber() {
+            let transactionNumber = localStorage.getItem('transactionNumber');
+    
+            // Jika nomor transaksi belum ada di localStorage, buat nomor baru
+            if (!transactionNumber) {
+                transactionNumber = generateTransactionNumber();
+                localStorage.setItem('transactionNumber', transactionNumber);
+            }
+    
+            const transactionNumberElement = document.querySelector('#transaction-number');
+            transactionNumberElement.textContent = transactionNumber;
+        }
+        // Nomor Transaksi Stop
+    
+        // Jalankan semua fungsi saat halaman dimuat
+        window.onload = function () {
+            startTimer();               // Timer countdown
+            displayTransactionTime();   // Waktu transaksi real-time
+            displayTransactionNumber(); // Nomor transaksi konsisten
+        }
     </script>
     {{-- Konten Stop --}}
 
