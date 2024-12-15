@@ -84,6 +84,7 @@ Route::get('/review_modal', function () {
 })->name('review_modal');
 
 Route::get('/pembayaran/{checkedValue}/{jumProdukArray}', [PembayaranController::class, 'index'])->name('pembayaran');
+Route::get('/pembayaran/single/{kode_produk}/{jumlah}', [PembayaranController::class, 'indexSingle'])->name('pembayaran.single');
 
 Route::get('/pembayaran/pembayaranqris', function () {
     return view('pembayaranqris');
