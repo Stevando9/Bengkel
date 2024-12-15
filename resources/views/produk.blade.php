@@ -229,12 +229,6 @@
                     <div class="bg-white rounded-md shadow-md p-4">
                         <h2 class="text-lg font-bold mb-2">Kategori</h2>
                         <ul>
-                            {{-- <li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                Otomotif
-                            </li> --}}
                             @foreach($kategori as $kat)
                             <a href="{{ route('produkByKat', [$kat->kategori_id]) }}"><li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">{{$kat['nama_kategori']}}</li> </a>                           
                             @endforeach
@@ -259,12 +253,13 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         @foreach ($produk as $prod)
                         <a href="/produk/detail_produk/{{$prod['kode_produk']}}">
-                            <div class="bg-white rounded-md shadow-md p-4">                            
-                                <img src="{{ asset('img/produk/'.$prod['gambar']) }}" alt="{{$prod['nama_produk']}}" class="w-full mb-2">
-                                <h2 class="text-lg font-bold mb-2">{{ $prod['nama_produk'] }}</h2>
-                                <p class="text-sm text-gray-600">Rp. {{ number_format($prod['harga'])}}</p>
-                                <button
-                                    class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md">Beli</button>
+                            <div class="bg-white rounded-md shadow-md p-4 flex flex-col h-full">                            
+                                <img src="{{ asset('img/produk/'.$prod['gambar']) }}" alt="{{ $prod['nama_produk'] }}" class="w-full h-48 object-contain mb-2">
+                                <div class="mt-auto">
+                                    <h2 class="text-lg font-bold mb-2">{{ $prod['nama_produk'] }}</h2>
+                                    <p class="text-sm text-gray-600">Rp. {{ number_format($prod['harga'])}}</p>
+                                    <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md">Beli</button>
+                                </div>
                             </div>
                         </a>
                         @endforeach

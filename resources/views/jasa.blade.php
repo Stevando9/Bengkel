@@ -67,25 +67,45 @@
         {{-- Header Stop --}}
 
         {{-- Konten Start --}}
-        <section class="pt-24 pb-16">
+        <section class="pt-[4.5rem] pb-16">
             <div class="container mx-auto items-center justify-center flex">
-                <!-- Tombol Sidebar -->
-                <button id="sidebar-toggle"
-                    class="absolute top-20 left-64 top-44 bg-gray-700 text-white px-5 py-2 rounded-md hover:bg-gray-600 transition">
-                    Tambah Merek Motor 
+                <!-- Tombol untuk membuka modal -->
+                <button id="open-modal" class="absolute top-1/2 left-72 top-44 bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition">
+                    Tambah Merek Motor
                 </button>
 
-                <!-- Sidebar -->
-                <div id="sidebar"
-                    class="fixed top-0 left-0 h-60 w-64 bg-gray-800 text-white p-4 rounded-md shadow-lg transform -translate-x-full transition-transform">
-                    <h2 class="text-xl font-bold mb-4">Tambah Merek Motor</h2>
-                    <input type="text" id="new_motor_brand"
-                        class="w-full bg-gray-700 text-white px-3 py-2 rounded-md focus:ring focus:ring-blue-500 mb-4"
-                        placeholder="Masukkan merek motor baru">
-                    <button id="add_motor_brand"
-                        class="w-full bg-blue-500 text-white px-3 py-2 rounded-md hover:bg-blue-600 transition">
-                        Tambah
-                    </button>
+                <!-- Modal -->
+                <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <div class="bg-white rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700 w-1/3">
+                        <div class="p-4 sm:p-7">
+                            <div class="text-center">
+                                <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Tambah Merek Motor</h1>
+                            </div>
+
+                            <div class="mt-5">
+                                <form id="add-brand-form">
+                                    <div class="grid gap-y-4">
+                                        <div>
+                                            <label for="new_motor_brand" class="block text-sm font-bold ml-1 mb-2 dark:text-white">Nama Merek</label>
+                                            <div class="relative">
+                                                <input type="text" id="new_motor_brand" name="new_motor_brand" class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm" required placeholder="Masukkan merek motor">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label for="new_motor_brand" class="block text-sm font-bold ml-1 mb-2 dark:text-white">Nomor Plat</label>
+                                            <div class="relative">
+                                                <input type="text" id="new_motor_brand" name="new_motor_brand" class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm" required placeholder="Masukkan nomor plat">
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                                            Tambah
+                                        </button>
+                                    </div>
+                                </form>
+                                <button id="close-modal" class="mt-4 py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-600">Tutup</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="bg-second text-white rounded-md w-1/3">
@@ -149,29 +169,26 @@
         <!-- Footer Stop -->
 
         <script>
-            const sidebar = document.getElementById('sidebar');
-            const toggleButton = document.getElementById('sidebar-toggle');
-            const addMotorBrandButton = document.getElementById('add_motor_brand');
+            const modal = document.getElementById('modal');
+            const openModalButton = document.getElementById('open-modal');
+            const closeModalButton = document.getElementById('close-modal');
+            const addBrandForm = document.getElementById('add-brand-form');
             const newMotorBrandInput = document.getElementById('new_motor_brand');
             const merkMotorSelect = document.getElementById('merk_motor');
-        
-            // Fungsi untuk toggle sidebar
-            toggleButton.addEventListener('click', (event) => {
-                event.stopPropagation(); // Mencegah klik pada toggleButton menutup sidebar
-                sidebar.classList.toggle('translate-x-0');
-                sidebar.classList.toggle('-translate-x-full');
+    
+            // Buka modal
+            openModalButton.addEventListener('click', () => {
+                modal.classList.remove('hidden');
             });
-        
-            // Menutup sidebar saat klik di luar area sidebar atau tombol toggle
-            document.addEventListener('click', (event) => {
-                if (!sidebar.contains(event.target) && !toggleButton.contains(event.target)) {
-                    sidebar.classList.add('-translate-x-full'); // Pastikan sidebar tersembunyi
-                    sidebar.classList.remove('translate-x-0');
-                }
+    
+            // Tutup modal
+            closeModalButton.addEventListener('click', () => {
+                modal.classList.add('hidden');
             });
-        
-            // Menambah merek motor baru ke dalam daftar
-            addMotorBrandButton.addEventListener('click', () => {
+    
+            // Tambah merek motor baru
+            addBrandForm.addEventListener('submit', (event) => {
+                event.preventDefault();
                 const newBrand = newMotorBrandInput.value.trim();
                 if (newBrand) {
                     const option = document.createElement('option');
