@@ -8,55 +8,209 @@
         <title>Jasa</title>
         @vite('resources/css/app.css')
         <style>
-            /* Sidebar styles */
-            .sidebar {
+            /* Header Style */
+            header {
                 position: fixed;
-                left: 0;
                 top: 0;
-                height: 100%;
-                width: 250px;
-                background-color: rgba(31, 41, 55, 1);
-                color: white;
-                padding: 20px;
-                box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-                transform: translateX(-100%);
-                transition: transform 0.3s ease-in-out;
-            }
-
-            .sidebar.active {
-                transform: translateX(0);
-            }
-
-            .sidebar-toggle {
-                position: fixed;
-                top: 20px;
-                left: 20px;
-                background-color: #4a5568;
-                color: white;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 5px;
-                cursor: pointer;
-            }
-
-            .sidebar-toggle:hover {
-                background-color: #2d3748;
-            }
-
-            .sidebar input,
-            .sidebar button {
+                left: 0;
                 width: 100%;
-                margin-bottom: 10px;
-                padding: 10px;
-                border: 1px solid #4a5568;
-                border-radius: 5px;
-                background-color: #2d3748;
-                color: white;
+                z-index: 100;
+                background-color: rgba(31, 41, 55, 1);
+                /* Default solid background */
+                transition: background-color 0.3s ease;
             }
 
-            .sidebar button:hover {
-                background-color: #4a5568;
+            /* Transparent header when scrolled */
+            .header-scrolled {
+                background-color: rgba(31, 41, 55, 0.8);
+                /* Transparent background */
             }
+
+            /* Footer Logo */
+            .text-transition {
+                opacity: 0;
+                /* Menyembunyikan teks secara default */
+                transform: translateX(-10px);
+                /* Memindahkan teks sedikit ke kiri */
+                transition: opacity 0.3s ease, transform 0.3s ease;
+                /* Menambahkan transisi untuk efek halus */
+            }
+
+            a {
+                position: relative;
+                /* Mengatur posisi relatif agar teks dapat diposisikan dengan benar */
+            }
+
+            a:hover .text-transition {
+                opacity: 1;
+                /* Menampilkan teks saat hover */
+                transform: translateX(0);
+                /* Mengembalikan teks ke posisi semula */
+            }
+
+            /* img {
+                transition: transform 0.2s;
+                /* Transisi untuk efek zoom */
+            /* } */
+            /* img:hover { */
+            /* transform: scale(1.2); */
+            /* Mengubah ukuran ikon saat hover */
+            /* } */
+
+            .cs {
+                transition: transform 0.2s;
+                /* Transisi untuk efek zoom */
+            }
+
+            .cs:hover {
+                transform: scale(1.2);
+                /* Mengubah ukuran ikon saat hover */
+            }
+
+            .text-right {
+                text-align: right;
+            }
+
+            /* CSS untuk mengatur hover pada ikon */
+            .social-icon {
+                position: relative;
+                display: inline-block;
+            }
+
+            /* Ikon umum */
+            .icon {
+                transition: transform 0.3s ease;
+            }
+
+            .google-icon:hover .icon {
+                transform: translateX(50px);
+                /* Jarak untuk ikon Twitter */
+            }
+
+            .twitter-icon:hover .icon {
+                transform: translateX(50px);
+                /* Jarak untuk ikon Twitter */
+            }
+
+            .instagram-icon:hover .icon {
+                transform: translateX(60px);
+                /* Jarak untuk ikon Instagram */
+            }
+
+            .linkedin-icon:hover .icon {
+                transform: translateX(50px);
+                /* Jarak untuk ikon Instagram */
+            }
+
+            .google-icon:hover~.twitter-icon .icon,
+            .google-icon:hover~.instagram-icon .icon,
+            .google-icon:hover~.linkedin-icon .icon {
+                transform: translateX(50px);
+                /* Geser ikon lainnya ke kanan */
+            }
+
+            .twitter-icon:hover~.instagram-icon .icon,
+            .twitter-icon:hover~.linkedin-icon .icon {
+                transform: translateX(50px);
+                /* Geser ikon lainnya ke kanan */
+            }
+
+            .instagram-icon:hover~.linkedin-icon .icon {
+                transform: translateX(50px);
+                /* Geser ikon lainnya ke kanan */
+            }
+
+
+            /* Teks yang muncul saat dihover */
+            .icon-text {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                white-space: nowrap;
+            }
+
+            /* Menampilkan teks saat dihover */
+            .social-icon:hover .icon-text {
+                opacity: 1;
+            }
+
+            /* start modal edit account */
+            /* Modal Background */
+            #edit-account-modal {
+                background-color: rgba(0, 0, 0, 0.8);
+                /* Background overlay */
+            }
+
+            /* Modal Container */
+            .modal-content {
+                background-color: #1f1f1f;
+                /* Dark background for modal */
+                color: #ffffff;
+                padding: 2rem;
+                border-radius: 0.5rem;
+                max-width: 600px;
+                width: 100%;
+            }
+
+            /* Header Style */
+            .modal-content h2 {
+                font-size: 1.75rem;
+                font-weight: 700;
+                letter-spacing: 0.1rem;
+                text-align: center;
+                margin-bottom: 1.5rem;
+            }
+
+            /* Upload Photo Section */
+            .upload-photo {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            /* Form Input */
+            .modal-content input[type="text"],
+            .modal-content input[type="password"] {
+                background-color: #2c2c2c;
+                border: 1px solid #444444;
+                color: #cccccc;
+                padding: 0.75rem;
+                border-radius: 0.375rem;
+                width: 100%;
+            }
+
+            /* Action Buttons */
+            .action-buttons button {
+                padding: 0.75rem 1.5rem;
+                font-weight: 600;
+                border-radius: 0.375rem;
+                transition: background-color 0.2s ease-in-out;
+            }
+
+            .action-buttons .cancel {
+                background-color: #333333;
+                color: #ffffff;
+                border: 1px solid #555555;
+            }
+
+            .action-buttons .cancel:hover {
+                background-color: #444444;
+            }
+
+            .action-buttons .submit {
+                background-color: #28a745;
+                /* Green color for submit button */
+                color: #333333;
+            }
+
+            .action-buttons .submit:hover {
+                background-color: #218838;
+            }
+
+            /* end modal edit account */
         </style>
     </head>
 
@@ -67,10 +221,10 @@
         {{-- Header Stop --}}
 
         {{-- Konten Start --}}
-        <section class="pt-[4.5rem] pb-16">
+        <section class="pt-36 pb-16">
             <div class="container mx-auto items-center justify-center flex">
                 <!-- Tombol untuk membuka modal -->
-                <button id="open-modal" class="absolute top-1/2 left-72 top-44 bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition">
+                <button id="open-modal" class="absolute top-2/4 left-72 top-44 bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition">
                     Tambah Merek Motor
                 </button>
 

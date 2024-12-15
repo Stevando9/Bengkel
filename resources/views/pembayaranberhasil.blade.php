@@ -264,7 +264,7 @@
         </div>
     </header> --}}
 
-    @include('header')
+    @include('components.navbar')
 
     <script>
         // Toggle mobile menu
