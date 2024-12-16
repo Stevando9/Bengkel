@@ -74,4 +74,10 @@ class PembayaranController extends Controller
         // Tampilkan ke view
         return view('pembayaran', compact('data'));
     }
+    public function showPembayaranBank(Request $request)
+    {
+        // Ambil nama bank dari query string
+        $bank = $request->input('bank'); // 'bank' berasal dari query parameter (?bank=)
+        return view('pembayaranbank', compact('bank'));
+    }
 }

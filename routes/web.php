@@ -12,8 +12,10 @@ use App\Http\Controllers\MontirController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UlasanController;
 use App\Http\Controllers\KeranjangController;
+use App\Http\Controllers\pembayaranbank;
+use App\Http\Controllers\pembayaranbankController;
 use App\Http\Controllers\PembayaranController;
-
+use App\Models\Pembayaran;
 
 // admin
 // Route::get('/admin/dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
@@ -99,6 +101,9 @@ Route::get('/pembayaran/konfirmasi', function () {
 Route::get('/pembayaran/pembayaranbank', function () {
     return view('pembayaranbank');
 })->name('pembayaranbank');
+
+Route::get('/pembayaranbank', [PembayaranController::class, 'showPembayaranBank'])->name('pembayaranbank');
+
 
 Route::get('/pembayaran/pembayarangagal', function () {
     return view('pembayarangagal');
