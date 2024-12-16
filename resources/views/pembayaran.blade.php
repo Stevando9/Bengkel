@@ -124,13 +124,17 @@
                             <p>Rp {{ number_format($subtotal) }}</p>
                         </div>
                         <div class="flex justify-between text-sm font-medium">
-                            <p>Biaya Pengiriman :</p>
-                            <p>Rp 15.000</p>
+                            @if ($deliveryMethod === 'radioKirim')
+                                <p>Biaya Pengiriman:</p>
+                            @else
+                                <p>Biaya Pemasangan:</p>
+                            @endif
+                            <p>Rp {{ number_format($additionalCost) }}</p>
                         </div>
                         <hr class="border-gray-600 mt-2 mb-2">
                         <div class="flex justify-between text-sm font-medium mt-2">
                             <p>Total :</p>
-                            <p>Rp {{ number_format($subtotal + 15000) }}</p>
+                            <p>Rp {{ number_format($total) }}</p>
                         </div>
                     </div>
 

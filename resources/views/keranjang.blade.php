@@ -272,16 +272,26 @@
                 var jumProduk = document.getElementById(`jumlahProduk-${kodeProduk}`).innerText;
                 return jumProduk;
             });
+
+            // Ambil pilihan dari radio button (Kirim atau Pasang di Tempat)
+            const deliveryOption = document.querySelector('input[name="deliveryOption"]:checked');
+            if (!deliveryOption) {
+                alert("Silakan pilih opsi pengiriman terlebih dahulu!");
+                return; // Hentikan eksekusi fungsi
+            }
+            const deliveryMethod = deliveryOption.id; // "radioKirim" atau "radioPasang"
+
             // Serialisasi array menjadi string (JSON)
             let serializedCheckedValue = JSON.stringify(checkedValue);
-            let serializedJumProdukArray = JSON.stringify(jumProdukArray);
+            let serializedJumProdukArray = JSON.stringify(jumProdukArray);            
 
             // Encode data agar aman untuk URL
             let encodedCheckedValue = encodeURIComponent(serializedCheckedValue);
             let encodedJumProdukArray = encodeURIComponent(serializedJumProdukArray);
+            let encodedDeliveryMethod = encodeURIComponent(deliveryMethod);
 
             // Redirect ke route pembayaran dengan parameter
-            window.location.href = `/pembayaran/${encodedCheckedValue}/${encodedJumProdukArray}`;
+            window.location.href = `/pembayaran/${encodedCheckedValue}/${encodedJumProdukArray}/${encodedDeliveryMethod}`;
         });
 
         document.addEventListener('DOMContentLoaded', () => {
