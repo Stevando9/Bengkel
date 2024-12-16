@@ -224,7 +224,7 @@
         <section class="pt-36 pb-16">
             <div class="container mx-auto items-center justify-center flex">
                 <!-- Tombol untuk membuka modal -->
-                <button id="open-modal" class="absolute top-2/4 left-72 top-44 bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition md:left-40">
+                <button id="open-modal" class="absolute top-2/4 left-72 top-44 bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition md:left-40 sm:left-40">
                     Tambah Merek Motor
                 </button>
 
