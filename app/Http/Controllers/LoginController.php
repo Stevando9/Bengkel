@@ -27,7 +27,7 @@ class LoginController extends Controller
         }
 
         // Jika login gagal, kirimkan error
-        return redirect()->back()->with('error', 'Login Gagal');
+        return redirect()->back()->with('error', 'Password atau email salah');
     }
 
     protected function authenticated(Request $request, $user)
