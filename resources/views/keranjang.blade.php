@@ -349,31 +349,6 @@
             const totalJumlahProdukDisplay =
                 document.getElementById("totalJumlahProdukDisplay").innerText = "Total Jumlah Produk: " + totalJumlah;
         }
-
-        // document.addEventListener("DOMContentLoaded", function() {
-        //     const checkboxKirim = document.getElementById("checkboxKirim");
-        //     const checkboxPasang = document.getElementById("checkboxPasang");
-        //     const checkoutButton = document.getElementById("CO");
-
-        //     // Fungsi untuk mengelola checkbox
-        //     function manageCheckboxes(changedCheckbox) {
-        //         if (changedCheckbox === checkboxKirim && checkboxKirim.checked) {
-        //             checkboxPasang.checked = false; // Matikan checkbox "Pasang di Tempat"
-        //         } else if (changedCheckbox === checkboxPasang && checkboxPasang.checked) {
-        //             checkboxKirim.checked = false; // Matikan checkbox "Kirim"
-        //         }
-
-        //         // Periksa apakah salah satu checkbox dipilih
-        //         checkoutButton.disabled = !(checkboxKirim.checked || checkboxPasang.checked);
-        //     }
-
-        //     // Tambahkan event listener ke kedua checkbox
-        //     checkboxKirim.addEventListener("change", () => manageCheckboxes(checkboxKirim));
-        //     checkboxPasang.addEventListener("change", () => manageCheckboxes(checkboxPasang));
-
-        //     // Inisialisasi awal
-        //     manageCheckboxes();
-        // });
     </script>
     {{-- Konten Stop --}}
 
