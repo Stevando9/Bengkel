@@ -219,15 +219,15 @@
                         <div class="mr-10">
                             <p>
                                 <label class="flex items-center text-white">
-                                    <input type="checkbox" id="checkboxKirim"
-                                        class="form-checkbox h-5 w-5 text-yellow-500 mr-2" value="kirim">
+                                    <input type="radio" name="deliveryOption" id="radioKirim"
+                                        class="form-radio h-5 w-5 text-yellow-500 mr-2">
                                     Kirim
                                 </label>
                             </p>
                             <p>
                                 <label class="flex items-center text-white">
-                                    <input type="checkbox" id="checkboxPasang"
-                                        class="form-checkbox h-5 w-5 text-yellow-500 mr-2" value="pasang">
+                                    <input type="radio" name="deliveryOption" id="radioPasang"
+                                        class="form-radio h-5 w-5 text-yellow-500 mr-2">
                                     Pasang di Tempat
                                 </label>
                             </p>
