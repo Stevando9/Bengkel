@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -170,16 +171,19 @@
         }
     </style>
 </head>
+
 <body>
     <div class="login-container">
         <div class="left-section">
             @if (session('success'))
-                <div style="color: #28a745; font-weight: bold; background-color: #d4edda; padding: 10px; border: 1px solid #c3e6cb; border-radius: 5px;">
+                <div
+                    style="color: #28a745; font-weight: bold; background-color: #d4edda; padding: 10px; border: 1px solid #c3e6cb; border-radius: 5px;">
                     {{ session('success') }}
                 </div>
             @endif
             @if ($errors->any())
-                <div style="color: #dc3545; font-weight: bold; background-color: #f8d7da; padding: 10px; border: 1px solid #c3e6cb; border-radius: 5px;">
+                <div
+                    style="color: #dc3545; font-weight: bold; background-color: #f8d7da; padding: 10px; border: 1px solid #c3e6cb; border-radius: 5px;">
                     <ul>
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -191,25 +195,26 @@
             <h1>Selamat Datang</h1>
             <p class="center-cahaya">Cahaya Gunung Licin</p>
 
-            <button class="google-login full-width">
+            {{-- <button class="google-login full-width">
                 <img src="{{ asset('img/Google.png') }}" alt="Google">
                 Lanjutkan dengan Google
-            </button>
+            </button> --}}
 
             <div class="separator">
                 <hr class="line">
-                <span>Atau</span>
+                <span>LOGIN</span>
                 <hr class="line">
             </div>
 
-            <form action="{{ route('login') }}" method="post">
+            {{-- <form action="{{ route('login') }}" method="post"> --}}
+            <form id="loginForm" action="{{ route('login') }}" method="post">
                 @csrf
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="password" name="password" placeholder="Password" required>
-                <div class="remember-me">
+                {{-- <div class="remember-me">
                     <input type="checkbox" id="remember">
                     <label for="remember">Ingat Password</label>
-                </div>
+                </div> --}}
                 <button type="submit">Masuk</button>
             </form>
 
@@ -221,5 +226,26 @@
             <img src="{{ asset('img/Cahaya Gunung Licin 2.jpeg.jpg') }}" alt="Cahaya Gunung Licin">
         </div>
     </div>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            if (!email || !password) {
+                alert('Email dan password harus diisi.');
+                event.preventDefault(); // Mencegah pengiriman form
+                return;
+            }
+
+            if (password.length < 8) {
+                alert('Password 8 karakter.');
+                event.preventDefault(); // Mencegah pengiriman form
+                return;
+            }
+            // Form akan dikirim jika semua validasi lolos
+        });
+    </script>
+
 </body>
+
 </html>

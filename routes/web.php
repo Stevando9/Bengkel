@@ -83,7 +83,10 @@ Route::get('/review_modal', function () {
     return view('review_modal', []);
 })->name('review_modal');
 
+// Route::post('/proses-pembayaran', [PembayaranController::class, 'prosesPembayaran'])->name('prosesPembayaran');
+
 Route::get('/pembayaran/{checkedValue}/{jumProdukArray}', [PembayaranController::class, 'index'])->name('pembayaran');
+// Route::get('/pembayaran/{produk}/{jumlah}/{options}', [CheckoutController::class, 'pembayaran'])->name('pembayaran');
 
 Route::get('/pembayaran/pembayaranqris', function () {
     return view('pembayaranqris');

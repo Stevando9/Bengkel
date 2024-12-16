@@ -14,7 +14,7 @@ class LoginController extends Controller
         // Validasi data login
         $credentials = $request->validate([
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required|min:8'
         ]);
 
         // Jika validasi berhasil, lakukan login

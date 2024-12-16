@@ -164,7 +164,7 @@
 
                         <!-- Checkbox -->
                         <div class="mr-4">
-                            <input type="checkbox" class="form-checkbox h-5 w-5 text-yellow-500" 
+                            <input type="checkbox" class="form-checkbox h-5 w-5 text-yellow-500"
                                 data-kode-produk="{{ $item->produk->kode_produk }}"
                                 data-harga="{{ $item->produk->harga }}" data-jumlah="{{ $item->jumlah }}"
                                 onchange="updateSubtotal()" value="{{ $item->produk->kode_produk }}">
@@ -212,14 +212,39 @@
                 @endforeach
 
                 <!-- Total -->
-                <div class="justify-end items-center bg-gray-700 text-yellow-500 p-4 rounded-b-md text-right flex">
-                    <div class="p-5">
-                        {{-- <p class="text-lg font-semibold">Total Jumlah Produk</p> --}}
-                        <p id="totalJumlahProdukDisplay" class="text-lg font-semibold">Total Jumlah Produk: 0</p>
-                        <p id="subtotalDisplay" class="text-lg font-bold text-white">Rp. {{ number_format(0) }}
-                        </p>
-                    </div>                    
-                    <button class="bg-yellow-500 px-4 py-2 rounded-md text-gray-900 font-semibold" id="CO">Checkout</button>                    
+                {{-- <div class="justify-end items-center bg-gray-700 text-yellow-500 p-4 rounded-b-md text-right flex"> --}}
+                <div class="flex justify-between items-center bg-gray-700 text-yellow-500 p-4 rounded-b-md">
+                    <!-- Checkbox Kirim dan Pasang di Tempat -->
+                    <div class="flex items-start">
+                        <div class="mr-10">
+                            <p>
+                                <label class="flex items-center text-white">
+                                    <input type="checkbox" id="checkboxKirim"
+                                        class="form-checkbox h-5 w-5 text-yellow-500 mr-2" value="kirim">
+                                    Kirim
+                                </label>
+                            </p>
+                            <p>
+                                <label class="flex items-center text-white">
+                                    <input type="checkbox" id="checkboxPasang"
+                                        class="form-checkbox h-5 w-5 text-yellow-500 mr-2" value="pasang">
+                                    Pasang di Tempat
+                                </label>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Total Jumlah Produk dan Subtotal -->
+                    <div class="flex-1 flex justify-end items-center">
+                        <div class="p-5 text-right">
+                            {{-- <p class="text-lg font-semibold">Total Jumlah Produk</p> --}}
+                            <p id="totalJumlahProdukDisplay" class="text-lg font-semibold">Total Jumlah Produk: 0
+                            </p>
+                            <p id="subtotalDisplay" class="text-lg font-bold text-white">Rp. {{ number_format(0) }}
+                            </p>
+                        </div>
+                        <button class="bg-yellow-500 px-4 py-2 rounded-md text-gray-900 font-semibold ml-4"
+                            id="CO">Checkout</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -232,40 +257,9 @@
         const checkout = document.getElementById("CO");
         let subtotal = {{ $harga }};
 
-        // Fungsi untuk memperbarui jumlah produk dan subtotal
-        // function updateJumlah(kodeProduk, delta, hargaProduk) {
-        //     const jumlahSpan = document.getElementById(`jumlahProduk-${kodeProduk}`);
-        //     const hargaSpan = document.getElementById(`hargaProduk-${kodeProduk}`);
-        //     let jumlah = jumlahProduk[kodeProduk] || 0;
-
-        //     // Update jumlah produk
-        //     jumlah += delta;
-        //     if (jumlah < 1) jumlah = 1; // Minimal 1 item
-
-        //     // Update data dan DOM
-        //     jumlahProduk[kodeProduk] = jumlah;
-        //     jumlahSpan.innerText = jumlah;
-
-        //     // Update harga per item
-        //     const hargaTotalPerItem = jumlah * hargaProduk;
-        //     hargaSpan.innerText = "Rp. " + hargaTotalPerItem.toLocaleString("id-ID");
-
-        //     // Hitung subtotal
-        //     subtotal = 0; // Reset subtotal
-
-        //     // Totalkan semua harga dengan aturan khusus
-        //     Object.keys(jumlahProduk).forEach((kode) => {
-        //         const hargaProdukLain = hargaProdukList[kode];
-        //         subtotal += jumlahProduk[kode] * hargaProdukLain;
-        //     });
-
-        //     // Tampilkan subtotal di layar
-        //     const subtotalDisplay = document.getElementById("subtotalDisplay");
-        //     subtotalDisplay.innerText = "Rp. " + subtotal.toLocaleString("id-ID");
-        // }
-
-        checkout.addEventListener("click", function(){
-            var checkedValue = Array.from(document.querySelectorAll('.form-checkbox:checked')).map(checkbox =>checkbox.value);
+        checkout.addEventListener("click", function() {
+            var checkedValue = Array.from(document.querySelectorAll('.form-checkbox:checked')).map(checkbox =>
+                checkbox.value);
 
             // Jika tidak ada checkbox yang dipilih
             if (checkedValue.length === 0) {
@@ -273,11 +267,11 @@
                 return; // Hentikan eksekusi fungsi
             }
 
-            var jumProdukArray = Array.from(document.querySelectorAll('.form-checkbox:checked')).map(checkbox => {                
+            var jumProdukArray = Array.from(document.querySelectorAll('.form-checkbox:checked')).map(checkbox => {
                 var kodeProduk = checkbox.value;
                 var jumProduk = document.getElementById(`jumlahProduk-${kodeProduk}`).innerText;
                 return jumProduk;
-            });                 
+            });
             // Serialisasi array menjadi string (JSON)
             let serializedCheckedValue = JSON.stringify(checkedValue);
             let serializedJumProdukArray = JSON.stringify(jumProdukArray);
@@ -355,6 +349,31 @@
             const totalJumlahProdukDisplay =
                 document.getElementById("totalJumlahProdukDisplay").innerText = "Total Jumlah Produk: " + totalJumlah;
         }
+
+        // document.addEventListener("DOMContentLoaded", function() {
+        //     const checkboxKirim = document.getElementById("checkboxKirim");
+        //     const checkboxPasang = document.getElementById("checkboxPasang");
+        //     const checkoutButton = document.getElementById("CO");
+
+        //     // Fungsi untuk mengelola checkbox
+        //     function manageCheckboxes(changedCheckbox) {
+        //         if (changedCheckbox === checkboxKirim && checkboxKirim.checked) {
+        //             checkboxPasang.checked = false; // Matikan checkbox "Pasang di Tempat"
+        //         } else if (changedCheckbox === checkboxPasang && checkboxPasang.checked) {
+        //             checkboxKirim.checked = false; // Matikan checkbox "Kirim"
+        //         }
+
+        //         // Periksa apakah salah satu checkbox dipilih
+        //         checkoutButton.disabled = !(checkboxKirim.checked || checkboxPasang.checked);
+        //     }
+
+        //     // Tambahkan event listener ke kedua checkbox
+        //     checkboxKirim.addEventListener("change", () => manageCheckboxes(checkboxKirim));
+        //     checkboxPasang.addEventListener("change", () => manageCheckboxes(checkboxPasang));
+
+        //     // Inisialisasi awal
+        //     manageCheckboxes();
+        // });
     </script>
     {{-- Konten Stop --}}
 
