@@ -181,14 +181,10 @@
                     {{ session('success') }}
                 </div>
             @endif
-            @if ($errors->any())
+            @if (session('error'))
                 <div
                     style="color: #dc3545; font-weight: bold; background-color: #f8d7da; padding: 10px; border: 1px solid #c3e6cb; border-radius: 5px;">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+                    {{ session('error') }}
                 </div>
             @endif
 

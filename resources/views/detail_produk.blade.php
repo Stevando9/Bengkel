@@ -338,7 +338,7 @@
                 <!-- Action Buttons -->
                 <div class="flex mt-6 space-x-2 justify-between">
                     <button class="w-32 bg-gray-300 hover:bg-gray-500 text-black font-semibold py-2 rounded-lg"><a href="{{ route('addKeranjang',[$produk['kode_produk']]) }}">+ Keranjang</a></button>
-                    <button class="w-32 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-2 rounded-lg">Beli</button>
+                    <button class="w-32 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-2 rounded-lg"><a href="{{ route('pembayaran.single', ['kode_produk'=>$produk['kode_produk'],'jumlah'=>1]) }}">Beli</a></button>
                 </div>
             </div>
         </div>

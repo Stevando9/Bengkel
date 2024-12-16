@@ -251,17 +251,15 @@
                 <div class="col-span-3">
                     <h1 class="text-2xl font-bold mb-4">Produk</h1>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        @foreach ($produk as $prod)
-                        <a href="/produk/detail_produk/{{$prod['kode_produk']}}">
-                            <div class="bg-white rounded-md shadow-md p-4 flex flex-col h-full">                            
-                                <img src="{{ asset('img/produk/'.$prod['gambar']) }}" alt="{{ $prod['nama_produk'] }}" class="w-full h-48 object-contain mb-2">
-                                <div class="mt-auto">
-                                    <h2 class="text-lg font-bold mb-2">{{ $prod['nama_produk'] }}</h2>
-                                    <p class="text-sm text-gray-600">Rp. {{ number_format($prod['harga'])}}</p>
-                                    <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md">Beli</button>
-                                </div>
-                            </div>
-                        </a>
+                        @foreach ($produk as $prod)                        
+                            <div class="bg-white rounded-md shadow-md p-4">  
+                                <a href="/produk/detail_produk/{{$prod['kode_produk']}}">                          
+                                <img src="{{ asset('img/produk/'.$prod['gambar']) }}" alt="{{$prod['nama_produk']}}" class="w-full mb-2">
+                                <h2 class="text-lg font-bold mb-2">{{ $prod['nama_produk'] }}</h2>
+                                <p class="text-sm text-gray-600">Rp. {{ number_format($prod['harga'])}}</p>
+                                </a>
+                                <a href="{{ route('pembayaran.single', ['kode_produk'=>$prod['kode_produk'],'jumlah'=>1]) }}"><button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md">Beli</button></a>
+                            </div>                        
                         @endforeach
                         <!-- Tambahkan produk lainnya di sini -->
                     </div>
