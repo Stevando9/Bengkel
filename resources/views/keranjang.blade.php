@@ -272,16 +272,26 @@
                 var jumProduk = document.getElementById(`jumlahProduk-${kodeProduk}`).innerText;
                 return jumProduk;
             });
+
+            // Ambil pilihan dari radio button (Kirim atau Pasang di Tempat)
+            const deliveryOption = document.querySelector('input[name="deliveryOption"]:checked');
+            if (!deliveryOption) {
+                alert("Silakan pilih opsi pengiriman terlebih dahulu!");
+                return; // Hentikan eksekusi fungsi
+            }
+            const deliveryMethod = deliveryOption.id; // "radioKirim" atau "radioPasang"
+
             // Serialisasi array menjadi string (JSON)
             let serializedCheckedValue = JSON.stringify(checkedValue);
-            let serializedJumProdukArray = JSON.stringify(jumProdukArray);
+            let serializedJumProdukArray = JSON.stringify(jumProdukArray);            
 
             // Encode data agar aman untuk URL
             let encodedCheckedValue = encodeURIComponent(serializedCheckedValue);
             let encodedJumProdukArray = encodeURIComponent(serializedJumProdukArray);
+            let encodedDeliveryMethod = encodeURIComponent(deliveryMethod);
 
             // Redirect ke route pembayaran dengan parameter
-            window.location.href = `/pembayaran/${encodedCheckedValue}/${encodedJumProdukArray}`;
+            window.location.href = `/pembayaran/${encodedCheckedValue}/${encodedJumProdukArray}/${encodedDeliveryMethod}`;
         });
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -349,31 +359,6 @@
             const totalJumlahProdukDisplay =
                 document.getElementById("totalJumlahProdukDisplay").innerText = "Total Jumlah Produk: " + totalJumlah;
         }
-
-        // document.addEventListener("DOMContentLoaded", function() {
-        //     const checkboxKirim = document.getElementById("checkboxKirim");
-        //     const checkboxPasang = document.getElementById("checkboxPasang");
-        //     const checkoutButton = document.getElementById("CO");
-
-        //     // Fungsi untuk mengelola checkbox
-        //     function manageCheckboxes(changedCheckbox) {
-        //         if (changedCheckbox === checkboxKirim && checkboxKirim.checked) {
-        //             checkboxPasang.checked = false; // Matikan checkbox "Pasang di Tempat"
-        //         } else if (changedCheckbox === checkboxPasang && checkboxPasang.checked) {
-        //             checkboxKirim.checked = false; // Matikan checkbox "Kirim"
-        //         }
-
-        //         // Periksa apakah salah satu checkbox dipilih
-        //         checkoutButton.disabled = !(checkboxKirim.checked || checkboxPasang.checked);
-        //     }
-
-        //     // Tambahkan event listener ke kedua checkbox
-        //     checkboxKirim.addEventListener("change", () => manageCheckboxes(checkboxKirim));
-        //     checkboxPasang.addEventListener("change", () => manageCheckboxes(checkboxPasang));
-
-        //     // Inisialisasi awal
-        //     manageCheckboxes();
-        // });
     </script>
     {{-- Konten Stop --}}
 

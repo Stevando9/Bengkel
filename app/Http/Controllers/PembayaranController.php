@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jasa;
 use App\Models\produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -9,14 +10,15 @@ use Illuminate\Support\Facades\DB;
 
 class PembayaranController extends Controller
 {
-    public function index($checkedValue, $jumProduk)
+    public function index($checkedValue, $jumProduk, $deliveryMethod)
     // public function pembayaran($produk, $jumlah, $options)
     {
         // Decode JSON menjadi array
         $checkedValueArray = json_decode($checkedValue, true);
         $jumProdukArray = json_decode($jumProduk, true);
-        // $options = json_decode(urldecode($options));
+
         $prod = produk::whereIn('kode_produk', $checkedValueArray)->get();
+        $jasa = Jasa::where('kode_jasa', 'J003')->first();
 
         // Contoh penggunaan data
         $data = $prod->map(function ($produk) use ($checkedValueArray, $jumProdukArray) {
@@ -31,8 +33,20 @@ class PembayaranController extends Controller
             ];
         });
 
+        // Tentukan biaya tambahan berdasarkan metode pengiriman
+        $additionalCost = 0;
+        if ($deliveryMethod === 'radioKirim') {
+            $additionalCost = 15000; // Biaya kirim
+        } elseif ($deliveryMethod === 'radioPasang') {
+            $additionalCost = $jasa['biaya']; // Biaya pasang di tempat
+        }
+
+        // Subtotal
+        $subtotal = $data->sum('subtotal');
+        $total = $subtotal + $additionalCost;
+
         // Tampilkan ke view
-        return view('pembayaran', compact('data'));
+        return view('pembayaran', compact('data', 'subtotal', 'additionalCost', 'total', 'deliveryMethod'));
     }
 
     public function indexSingle($checkedValue, $jumProduk)
