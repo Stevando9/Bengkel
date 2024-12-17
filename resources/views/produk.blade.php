@@ -254,7 +254,7 @@
                         @foreach ($produk as $prod)                        
                             <div class="bg-white rounded-md shadow-md p-4">  
                                 <a href="/produk/detail_produk/{{$prod['kode_produk']}}">                          
-                                <img src="{{ asset('img/produk/'.$prod['gambar']) }}" alt="{{$prod['nama_produk']}}" class="w-full mb-2">
+                                <img src="{{ asset('img/produk/'.$prod['gambar']) }}" alt="{{$prod['nama_produk']}}" class="w-full h-48 mb-2 object-contain">
                                 <h2 class="text-lg font-bold mb-2">{{ $prod['nama_produk'] }}</h2>
                                 <p class="text-sm text-gray-600">Rp. {{ number_format($prod['harga'])}}</p>
                                 </a>
