@@ -227,7 +227,9 @@
                 <div class="col-span-1 flex flex-col space-y-4 pt-12">
                     {{-- <h2 class="text-lg font-bold text-white">FILTER</h2> --}}
                     <div class="bg-white rounded-md shadow-md p-4">
-                        <h2 class="text-lg font-bold mb-2">Kategori</h2>
+                        <a href="{{ route('produk') }}"><h2 class="text-lg font-bold mb-2 cursor-pointer hover:text-blue-500" >
+                            Kategori
+                        </h2></a>                  
                         <ul>
                             @foreach($kategori as $kat)
                             <a href="{{ route('produkByKat', [$kat->kategori_id]) }}"><li class="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-1">{{$kat['nama_kategori']}}</li> </a>                           
@@ -271,6 +273,75 @@
             </div>
         </div>
     </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const applyButton = document.querySelector("button.bg-yellow-400");
+            const minPriceInput = document.querySelector('input[placeholder="Rp MIN"]');
+            const maxPriceInput = document.querySelector('input[placeholder="Rp MAKS"]');
+            const productsContainer = document.querySelector(".col-span-3 .grid"); // Container produk
+            const products = Array.from(document.querySelectorAll(".col-span-3 .bg-white"));
+    
+            // Fungsi untuk menyaring produk berdasarkan harga
+            function filterProducts(minPrice, maxPrice) {
+                products.forEach(product => {
+                    const priceText = product.querySelector("p.text-sm").textContent;
+                    const price = parseInt(priceText.replace(/\D/g, ""));
+    
+                    if (price >= minPrice && price <= maxPrice) {
+                        product.style.display = "block"; // Tampilkan produk
+                    } else {
+                        product.style.display = "none"; // Sembunyikan produk
+                    }
+                });
+            }
+    
+            // Fungsi untuk mengurutkan produk berdasarkan harga
+            function sortProductsAscending() {
+                const sortedProducts = products.sort((a, b) => {
+                    const priceA = parseInt(a.querySelector("p.text-sm").textContent.replace(/\D/g, ""));
+                    const priceB = parseInt(b.querySelector("p.text-sm").textContent.replace(/\D/g, ""));
+                    return priceA - priceB; // Urutkan harga ascending
+                });
+    
+                // Hapus produk lama dan tambahkan produk yang sudah diurutkan
+                productsContainer.innerHTML = "";
+                sortedProducts.forEach(product => productsContainer.appendChild(product));
+            }
+    
+            // Event listener saat tombol "Terapkan" diklik
+            applyButton.addEventListener("click", function () {
+                const minPrice = parseInt(minPriceInput.value.replace(/\D/g, "")) || 0;
+                const maxPrice = parseInt(maxPriceInput.value.replace(/\D/g, "")) || Infinity;
+    
+                filterProducts(minPrice, maxPrice); // Filter produk
+                sortProductsAscending(); // Urutkan produk
+            });
+    
+            // Urutkan produk saat halaman dimuat pertama kali
+            sortProductsAscending();
+        });
+    </script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const resetKategori = document.getElementById("reset-kategori"); // Ambil elemen h2
+            const products = Array.from(document.querySelectorAll(".col-span-3 .bg-white")); // Semua produk
+    
+            // Fungsi untuk mereset produk ke tampilan semula
+            function resetProducts() {
+                products.forEach(product => {
+                    product.style.display = "block"; // Tampilkan semua produk
+                });
+            }
+    
+            // Tambahkan event listener ke elemen h2
+            resetKategori.addEventListener("click", function () {
+                resetProducts(); // Panggil fungsi reset
+            });
+        });
+    </script>
+        
     {{-- produk Start --}}
 
     <!-- Footer Start -->
