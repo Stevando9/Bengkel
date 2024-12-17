@@ -104,7 +104,8 @@
                                         style="width: 50px; height: auto;">
                                     <div class="ml-4">
                                         <p class="text-sm font-medium">{{ $item['nama_produk'] }}
-                                            ({{ $item['jumlah'] }})</p>
+                                            ({{ $item['jumlah'] }})
+                                        </p>
                                         {{-- <div class="flex items-center mt-1">
                                         <button onclick="kurangiJumlah()" class="bg-gray-600 hover:bg-gray-500 text-sm font-medium px-2 py-1 rounded-md">-</button>
                                         <span id="jumlahProduk" class="mx-2 text-sm">1</span>
@@ -263,7 +264,8 @@
 
             // Redirect sesuai metode pembayaran
             if (metode === "bca" || metode === "mandiri" || metode === "bri") {
-                window.location.href = "{{ route('pembayaranbank') }}";
+                // Kirim nama bank ke server
+                window.location.href = "{{ route('pembayaranbank') }}?bank=" + encodeURIComponent(metode);
             } else if (metode === "qris") {
                 window.location.href = "{{ route('pembayaranqris') }}";
             } else if (metode === "cod") {
