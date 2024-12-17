@@ -40,6 +40,8 @@ Route::get('/Admin/jasa', [AdminController::class, 'jasa'])->name('admin_jasa');
 Route::get('/Admin/user', [AdminController::class, 'daftarUser'])->name('admin_user');
 Route::get('/Admin/montir', [AdminController::class, 'montir'])->name('admin_montir');
 Route::get('/Admin/setting', [AdminController::class, 'setting'])->name('admin_settings');
+Route::get('/Admin/penjualan', [AdminController::class, 'jual'])->name('admin_jual');
+Route::get('/Admin/pendapatan', [AdminController::class, 'trans'])->name('admin_dapat');
 
 Route::post('/Admin/setting/{id}', [AuthControler::class, 'updateAdmin'])->name('admin_update');
 
@@ -50,6 +52,8 @@ Route::post('/Admin/editProduk/{kode_produk}', [ProdukController::class, 'update
 Route::post('/Admin/tambahJasa', [JasaController::class, 'tambahJasa'])->name('tambahJasa');
 Route::get('/Admin/hapusJasa/{jasa:kode_jasa}', [JasaController::class, 'hapusJasa'])->name('hapusJasa');
 Route::post('/Admin/editJasa/{kode_jasa}', [JasaController::class, 'update'])->name('updateJasa');
+
+
 
 Route::post('/Admin/tambahMontir', [MontirController::class, 'tambahMontir'])->name('tambahMontir');
 Route::get('/Admin/hapusMontir/{montir:id}', [MontirController::class, 'hapusMontir'])->name('hapusMontir');

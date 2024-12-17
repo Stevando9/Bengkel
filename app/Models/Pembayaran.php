@@ -18,4 +18,15 @@ class Pembayaran extends Model
         'penerima',
         'jumlah'
     ];
+
+    public function produk()
+    {
+        return $this->belongsTo(produk::class, 'kode_produk', 'kode_produk');
+    }
+
+    public function jasa()
+    {
+        return $this->belongsTo(Jasa::class, 'Jasa', 'kode_jasa');
+    }
+    
 }
