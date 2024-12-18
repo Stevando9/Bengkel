@@ -169,7 +169,17 @@
                 <!-- Virtual Account Section -->
                 <div class="mb-6">
                     <h4 class="text-sm font-medium text-gray-500 mb-1">No. Virtual Account :</h4>
-                    <p class="text-xl font-bold">123 0000000xxx</p>
+                    <p class="text-xl font-bold">
+                        @if (strtolower($bank) === 'bca')
+                            {{ '3901' . rand(1000000000, 9999999999) }}
+                        @elseif (strtolower($bank) === 'mandiri')
+                            {{ '70012' . rand(1000000, 9999999) }}
+                        @elseif (strtolower($bank) === 'bri')
+                            {{ '88810' . rand(1000000000, 9999999999) }}
+                        @else
+                            {{ 'Bank tidak valid' }}
+                        @endif
+                    </p>
                 </div>
 
                 <!-- Transfer Instructions -->
@@ -251,7 +261,7 @@
                 <!-- Total Section -->
                 <div class="flex justify-between items-center text-lg font-semibold border-t border-gray-300 pt-4 mt-4">
                     <span>Total:</span>
-                    <span class="text-red-500">Rp 215.000,00</span>
+                    <span class="text-red-500">Rp {{ number_format($total) }}</span>
                 </div>
 
                 <!-- Payment Confirmation Button -->

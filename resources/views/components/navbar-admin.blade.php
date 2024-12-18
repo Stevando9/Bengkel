@@ -27,8 +27,8 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Pilih Laporan:</h6>
-                <a class="collapse-item" href="buttons.html">Laporan Penjualan</a>
-                <a class="collapse-item" href="cards.html">Laporan Pengeluaran</a>
+                <a class="collapse-item" href="{{ route('admin_jual') }}">Laporan Penjualan</a>
+                <a class="collapse-item" href="{{ route('admin_dapat') }}">Laporan Pengeluaran</a>
             </div>
         </div>
     </li>
