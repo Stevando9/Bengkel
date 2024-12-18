@@ -146,7 +146,7 @@ class PembayaranController extends Controller
 
         $transaksi = Produk::where('kode_pembayaran', $transId)->first();
         if ($transaksi) {
-            $transaksi->status = 'failed';
+            $transaksi->update(['status' => 'failed']);
             $transaksi->save(); // Jangan lupa untuk menyimpan perubahan
         }
         return view('pembayarangagal',compact('transaksi'));
@@ -167,7 +167,7 @@ class PembayaranController extends Controller
         }   
         $transaksi = Transaksi::where('kode_pembayaran', $transId)->first();
         if ($transaksi) {
-            $transaksi->status = 'success';
+            $transaksi->update(['status' => 'success']);
             $transaksi->save(); // Jangan lupa untuk menyimpan perubahan
         }
         return view('pembayaranberhasil',compact('transaksi'));       
