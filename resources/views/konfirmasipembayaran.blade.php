@@ -115,23 +115,23 @@
                 <div class="text-sm text-gray-700 mb-6 space-y-2">
                     <div class="flex justify-between">
                         <span>Nomor Transaksi</span>
-                        <span id="transaction-number" class="font-semibold"></span>                    
+                        <span class="font-semibold">{{ $trans->kode_pembayaran }}</span>                    
                     </div>
                     <div class="flex justify-between">
                         <span>Waktu Transaksi</span>
-                        <span id="transaction-time" class="font-semibold"></span>
+                        <span class="font-semibold">{{ $trans->tanggal_transaksi }}</span>
                     </div>
                     <div class="flex justify-between">
                         <span>Metode Transaksi</span>
-                        <span class="font-semibold">QRIS</span>
+                        <span class="font-semibold">{{ $trans->metode_pembayaran }}</span>
                     </div>
                     <div class="flex justify-between">
                         <span>Nama Pengirim</span>
-                        <span class="font-semibold">Yopan</span>
+                        <span class="font-semibold">{{ Auth::user()->nama_lengkap }}</span>
                     </div>
                     <div class="flex justify-between">
                         <span>Jumlah Transaksi</span>
-                        <span class="font-semibold">IDR 215,000</span>
+                        <span class="font-semibold">Rp {{number_format($trans->totalHarga) }}</span>
                     </div>
                 </div>
             </div>
@@ -144,7 +144,13 @@
     
         function startTimer() {
             const timerElement = document.querySelector('.text-red-500.text-3xl.text-center.font-bold.mb-5');
-    
+            const transactionId = "{{ $trans->kode_pembayaran }}";
+            const dataArray = @json($data)
+
+            // Generate a random threshold for failure and success
+            const randomThreshold = Math.floor(Math.random() * 10); 
+            const batasGagal = countdown % randomThreshold;
+
             const interval = setInterval(() => {
                 const minutes = Math.floor(countdown / 60);
                 const seconds = countdown % 60;
@@ -156,9 +162,33 @@
                 timerElement.textContent = formattedTime;
     
                 if (countdown <= 0) {
+                    // When the countdown reaches 0
                     clearInterval(interval);
                     timerElement.textContent = "00:00";
-                    alert("Waktu pembayaran telah habis!");
+                    alert("Waktu pembayaran telah habis! Pembayaran gagal.");
+                    const params = new URLSearchParams({
+                        trans: transactionId,
+                        data: JSON.stringify(dataArray)
+                    });
+                    window.location.href = `/pembayaran/pembayarangagal?${params.toString()}`;
+                } else if (countdown === batasGagal) {
+                    // Fail condition based on random threshold
+                    clearInterval(interval);
+                    alert("Pembayaran gagal! Anda tidak memenuhi syarat.");
+                    const params = new URLSearchParams({
+                        trans: transactionId,
+                        data: JSON.stringify(dataArray)
+                    });
+                    window.location.href = `/pembayaran/pembayarangagal?${params.toString()}`;
+                } else if (countdown === randomThreshold) {
+                    // Success condition based on random threshold
+                    clearInterval(interval);
+                    alert("Pembayaran berhasil! Terima kasih.");
+                    const params = new URLSearchParams({
+                        trans: transactionId,
+                        data: JSON.stringify(dataArray)
+                    });
+                    window.location.href = `/pembayaran/pembayaranberhasil?${params.toString()}`;
                 }
     
                 countdown--;

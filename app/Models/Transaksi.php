@@ -9,6 +9,7 @@ class Transaksi extends Model
 {
     use HasFactory;
     protected $primaryKey = 'kode_pembayaran';
+    public $timestamps = false;
     public $incrementing = false;
     protected $table = 'transaksi';
     protected $fillable = [

@@ -118,11 +118,11 @@
                 <!-- Total Payment -->
                 <div class="flex justify-between items-center text-lg font-semibold border-t border-gray-600 pt-4">
                     <span>Total:</span>
-                    <span class="text-red-500">Rp 215.000,00</span>
+                    <span class="text-red-500">Rp {{ number_format($total) }}</span>
                 </div>
 
                 <!-- Payment Confirmation Button -->
-                <a href="{{ route('konfirmasipembayaran') }}">
+                <a href="{{ route('konfirmasipembayaran', ['data'=>json_encode($data),'total'=>$total, 'metode'=>$bank]) }}">
                     <button
                         class="mt-6 w-full py-3 bg-yellow-500 text-black font-semibold rounded-lg hover:bg-yellow-400">
                         SUDAH TRANSFER
