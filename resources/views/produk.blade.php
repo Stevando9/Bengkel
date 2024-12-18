@@ -260,7 +260,7 @@
                                 <h2 class="text-lg font-bold mb-2">{{ $prod['nama_produk'] }}</h2>
                                 <p class="text-sm text-gray-600">Rp. {{ number_format($prod['harga'])}}</p>
                                 </a>
-                                <a href="{{ route('pembayaran.single', ['kode_produk'=>$prod['kode_produk'],'jumlah'=>1]) }}"><button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md">Beli</button></a>
+                                <a href="{{ route('pembayaran.single', ['kode_produk'=>$prod['kode_produk'],'jumlah'=>1,'deliveryMethod'=>'radioKirim']) }}"><button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md">Beli</button></a>
                             </div>                        
                         @endforeach
                         <!-- Tambahkan produk lainnya di sini -->

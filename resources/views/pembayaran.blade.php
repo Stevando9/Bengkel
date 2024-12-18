@@ -135,7 +135,7 @@
                         <hr class="border-gray-600 mt-2 mb-2">
                         <div class="flex justify-between text-sm font-medium mt-2">
                             <p>Total :</p>
-                            <p>Rp {{ number_format($total) }}</p>
+                            <p id="total">Rp {{ number_format($total) }}</p>
                         </div>
                     </div>
 
@@ -253,27 +253,40 @@
         function prosesPembayaran() {
             // Ambil elemen input radio
             const metodePembayaran = document.querySelector('input[name="payment-method"]:checked');
+
             // Validasi: Jika metode pembayaran belum dipilih
             if (!metodePembayaran) {
                 alert("Pilih metode pembayaran terlebih dahulu!");
                 return;
             }
-
+ 
             // Ambil nilai dari metode pembayaran yang dipilih
             const metode = metodePembayaran.nextElementSibling.innerText.toLowerCase(); // Ambil label (misalnya: "BCA")
 
-            // Redirect sesuai metode pembayaran
+            const total = @json($total);
+            
+            const data = @json($data);
+
+            // Encode data ke format JSON
+            const encodedData = encodeURIComponent(JSON.stringify(data));
+            const encodedTotal = encodeURIComponent(JSON.stringify(total));
+            
+            // Redirect ke route berdasarkan metode pembayaran
+            let routeUrl = "";
             if (metode === "bca" || metode === "mandiri" || metode === "bri") {
-                // Kirim nama bank ke server
-                window.location.href = "{{ route('pembayaranbank') }}?bank=" + encodeURIComponent(metode);
+                routeUrl = "{{ route('pembayaranbank') }}";
             } else if (metode === "qris") {
-                window.location.href = "{{ route('pembayaranqris') }}";
+                routeUrl = "{{ route('pembayaranqris') }}";
             } else if (metode === "cod") {
-                window.location.href = "{{ route('pembayaranberhasilcod') }}";
+                routeUrl = "{{ route('pembayaranberhasilcod') }}";
             } else {
                 alert("Metode pembayaran tidak valid!");
+                return;
             }
-        }
+
+            // Redirect ke route dengan query string
+            window.location.href = `${routeUrl}?data=${encodedData}&metode=${metode}&total=${encodedTotal}`;
+                }
     </script>
 
     @include('footer')

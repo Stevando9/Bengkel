@@ -167,38 +167,44 @@
 <body class="bg-black">
     <x-navbar></x-navbar>
 
-    {{-- <script>
-        // Toggle mobile menu
-        document.getElementById('hamburger').addEventListener('click', function() {
-            const menu = document.getElementById('hamburgerMenu');
-            if (menu.classList.contains('hidden')) {
-                menu.classList.remove('hidden');
-            } else {
-                menu.classList.add('hidden');
+    @if (session('success'))
+        <div class="alert alert-success" id="alertMessage">
+            {{ session('success') }}
+        </div>
+    @endif
+    <script>
+        // Menghilangkan alert setelah 3 detik
+        setTimeout(function() {
+            const alertBox = document.getElementById('alertMessage');
+            if (alertBox) {
+                alertBox.style.transition = 'opacity 0.5s ease';
+                alertBox.style.opacity = '0'; // Mengurangi opacity menjadi 0
+                setTimeout(() => alertBox.remove(), 500); // Hapus elemen setelah 0.5s
             }
-        });
+        }, 3000); // 3000ms = 3 detik
+    </script>
+    <style>
+        .alert {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+        }
 
-        // Scroll event to change header background
-        window.onscroll = function() {
-            const header = document.getElementById('header');
-            if (window.scrollY > 50) {
-                header.classList.add('header-scrolled');
-            } else {
-                header.classList.remove('header-scrolled');
-            }
-        };
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
 
-        // Ambil elemen hamburger dan menu
-        const hamburger = document.getElementById('hamburger');
-        const hamburgerMenu = document.getElementById('hamburgerMenu');
-
-        // Tutup menu saat mengklik di luar menu dan hamburger
-        document.addEventListener('click', (event) => {
-            if (!hamburger.contains(event.target) && !hamburgerMenu.contains(event.target)) {
-                hamburgerMenu.classList.add('hidden');
-            }
-        });
-    </script> --}}
     <!-- Header Stop -->
 
     <!-- Konten Start -->
@@ -425,17 +431,18 @@
                 <!-- Testimonial container diisi melalui Blade -->
                 <div id="testimonial-container">
                     @foreach ($ulasan as $index => $item)
-                    <div class="testimonial {{ $index !== 0 ? 'hidden' : '' }} text-center">
-                        <img src="{{ asset('img/user/'.$item->user->foto) }}" alt="Profile Image"
-                            class="rounded-full w-[100px] h-[100px] mx-auto">
-                        <h2 class="mt-3 text-white font-bold text-2xl">{{ $item->user->nama_lengkap ?? 'Anonymous' }}</h2>
-                        <p class="mt-3 text-lg text-white max-w-xl mx-auto">{{ $item->isiPesan }}</p>
-                        <div class="stars text-yellow-400 mt-3">
-                            @for ($i = 1; $i <= 5; $i++)
-                                {!! $i <= $item->rating ? '&#9733;' : '&#9734;' !!}
-                            @endfor
+                        <div class="testimonial {{ $index !== 0 ? 'hidden' : '' }} text-center">
+                            <img src="{{ asset('img/user/' . $item->user->foto) }}" alt="Profile Image"
+                                class="rounded-full w-[100px] h-[100px] mx-auto">
+                            <h2 class="mt-3 text-white font-bold text-2xl">
+                                {{ $item->user->nama_lengkap ?? 'Anonymous' }}</h2>
+                            <p class="mt-3 text-lg text-white max-w-xl mx-auto">{{ $item->isiPesan }}</p>
+                            <div class="stars text-yellow-400 mt-3">
+                                @for ($i = 1; $i <= 5; $i++)
+                                    {!! $i <= $item->rating ? '&#9733;' : '&#9734;' !!}
+                                @endfor
+                            </div>
                         </div>
-                    </div>
                     @endforeach
                 </div>
                 <!-- Letakkan kedua panah dalam satu div -->
@@ -450,32 +457,32 @@
 
         <script>
             let currentProductSlide = 0;
-                const products = document.querySelectorAll('.product-slide');
+            const products = document.querySelectorAll('.product-slide');
 
-                function showProductSlides(n) {
-                    currentProductSlide += n;
+            function showProductSlides(n) {
+                currentProductSlide += n;
 
-                    // Batasi slide agar tidak melebihi jumlah produk
-                    if (currentProductSlide < 0) currentProductSlide = 0;
-                    if (currentProductSlide > products.length - 3) currentProductSlide = products.length -
-                        3; // -3 karena 3 produk ditampilkan sekaligus
+                // Batasi slide agar tidak melebihi jumlah produk
+                if (currentProductSlide < 0) currentProductSlide = 0;
+                if (currentProductSlide > products.length - 3) currentProductSlide = products.length -
+                    3; // -3 karena 3 produk ditampilkan sekaligus
 
-                    products.forEach((product, index) => {
-                        // Jika index produk saat ini berada dalam rentang slide yang aktif (3 produk yang ditampilkan)
-                        if (index >= currentProductSlide && index < currentProductSlide + 3) {
-                            product.classList.remove('hidden');
-                        } else {
-                            product.classList.add('hidden');
-                        }
-                    });
-                }
+                products.forEach((product, index) => {
+                    // Jika index produk saat ini berada dalam rentang slide yang aktif (3 produk yang ditampilkan)
+                    if (index >= currentProductSlide && index < currentProductSlide + 3) {
+                        product.classList.remove('hidden');
+                    } else {
+                        product.classList.add('hidden');
+                    }
+                });
+            }
 
-                // Tampilkan slide awal
-                showProductSlides(0);
+            // Tampilkan slide awal
+            showProductSlides(0);
 
-                function plusProductSlides(n) {
-                    showProductSlides(n);
-                }
+            function plusProductSlides(n) {
+                showProductSlides(n);
+            }
 
             // Carousel Testimoni
             let testimonialIndex = 0;
