@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -184,49 +185,121 @@
             border-radius: 5px;
             margin-bottom: 20px;
         }
+
+        /* tambahan */
+        .alert {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .alert-success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .alert-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .alert-warning {
+            background-color: #ffc107;
+            color: black;
+        }
     </style>
 </head>
+
 <body>
+    {{-- @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @elseif (session('warning'))
+        <div class="alert alert-warning">
+            {{ session('warning') }}
+        </div>
+    @elseif (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif --}}
+    @if (session('success'))
+        <div class="alert alert-success"
+            style="background-color: #28a745; color: white; padding: 10px; border-radius: 4px; text-align: center;">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="alert alert-danger"
+            style="background-color: #dc3545; color: white; padding: 10px; border-radius: 4px; text-align: center;">
+            <ul style="list-style-type: none; padding: 0; margin: 0;">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                setTimeout(() => {
+                    alert.style.transition = 'opacity 0.5s ease-out';
+                    alert.style.opacity = '0';
+                    setTimeout(() => alert.remove(), 500); // Hapus setelah animasi selesai
+                }, 10000); // 3 detik
+            });
+        });
+    </script>
+
     <div class="login-container">
         <!-- Bagian Kiri -->
         <div class="left-section">
             <h1>Selamat Datang</h1>
             <p class="center-cahaya">Cahaya Gunung Licin</p>
-            <button class="google-login">
+            {{-- <button class="google-login">
                 <img src="{{ asset('img/Google.png') }}" alt="Google">
                 Lanjutkan dengan Google
-            </button>
+            </button> --}}
             <div class="separator">
                 <hr class="line">
-                <span>Atau</span>
+                <span>REGISTRASI</span>
                 <hr class="line">
             </div>
             <!-- Form Registrasi -->
             <form action="{{ route('register') }}" method="post">
-                @if (session('success'))
-                <div class="success-message">
-                    {{ session('success') }}
-                </div>
+                {{-- @if (session('success'))
+                    <div class="success-message">
+                        {{ session('success') }}
+                    </div>
                 @endif
                 @if ($errors->any())
-                <div class="error-message">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
+                    <div class="error-message">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif --}}
                 @csrf
-                <input type="text" placeholder="Nama" name="nama_lengkap">
-                <input type="email" placeholder="Email" name="email">
-                <input type="text" placeholder="No Telp" name="nomor_telp">
+                <input type="text" placeholder="Nama" name="nama_lengkap" value="{{ old('nama_lengkap') }}">
+                <input type="email" placeholder="Email" name="email" value="{{ old('email') }}">
+                <input type="text" placeholder="No Telp" name="nomor_telp" value="{{ old('nomor_telp') }}">
                 <input type="password" placeholder="Password" name="password">
                 <input type="password" placeholder="Konfirmasi Password" name="password_confirmation">
-                <div class="remember-me">
+                {{-- <div class="remember-me">
                     <input type="checkbox" id="remember">
                     <label for="remember">Ingat Akun Saya!</label>
-                </div>
+                </div> --}}
                 <button type="submit">Daftar</button>
             </form>
             <!-- Footer -->
@@ -240,4 +313,5 @@
         </div>
     </div>
 </body>
+
 </html>

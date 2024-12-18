@@ -9,20 +9,22 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthControler extends Controller
 {
-    public function showLoginForm(){        
+    public function showLoginForm()
+    {
         return view('login');
     }
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required'
         ]);
 
-        if(Auth::attempt($credentials)){
+        if (Auth::attempt($credentials)) {
             return redirect()->route('home')->with('success', 'Login berhasil. Selamat Datang.');
             $request->session()->regenerate();
-        }else{
+        } else {
             return redirect()->back()->with('error', 'Login Gagal');
         }
 
@@ -36,7 +38,8 @@ class AuthControler extends Controller
         // ])->onlyInput('email');
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         // Logout user
         Auth::logout();
 
@@ -57,10 +60,25 @@ class AuthControler extends Controller
     {
         // // Validasi input
         $request->validate([
-            'nama_lengkap' => 'required|string|max:255',
-            'nomor_telp' => 'required|string|max:15', // Tambahkan validasi untuk nomor telepon jika diperlukan
-            'email' => 'required|string|email|max:255|unique:users',
+            // 'nama_lengkap' => 'required|string|max:255',
+            // 'nomor_telp' => 'required|string|max:15', // Tambahkan validasi untuk nomor telepon jika diperlukan
+            // 'email' => 'required|string|email|max:255|unique:users',
+            // 'password' => 'required|string|min:8|confirmed',
+            'nama_lengkap' => 'required|regex:/^[\pL\s]+$/u',
+            'nomor_telp' => 'required|numeric', // Tambahkan validasi untuk nomor telepon jika diperlukan
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
+        ], [
+            'nama_lengkap.required' => 'Nama lengkap tidak boleh kosong.',
+            'nama_lengkap.regex' => 'Nama lengkap hanya boleh mengandung huruf dan spasi.',
+            'email.required' => 'Email tidak boleh kosong.',
+            'email.email' => 'Format email tidak valid.',
+            'email.unique' => 'Email ini sudah digunakan.',
+            'nomor_telp.required' => 'Nomor telepon harus diisi.',
+            'nomor_telp.numeric' => 'Nomor telepon hanya boleh berisi angka.',
+            'password.required' => 'Password tidak boleh kosong.',
+            'password.min' => 'Password harus memiliki minimal 8 karakter.',
+            'password_confirmation.same' => 'Konfirmasi password tidak sesuai.',
         ]);
 
         // Menyimpan data ke database
@@ -70,47 +88,48 @@ class AuthControler extends Controller
             'tipe' => 'member',  #Role diset ke customer
             'no_plat' => null,
             'nama_lengkap' => $request->nama_lengkap,
-            'no_telpon' => $request->nomor_telp                        
+            'no_telpon' => $request->nomor_telp
         ]);
 
         // Redirect ke halaman login setelah registrasi sukses
         return redirect()->route('login')->with('success', 'Registrasi berhasil. Silakan login.');
     }
-    
+
 
     public function updateAdmin(Request $request, $id)
-    {$request->validate([
-        'password' => 'nullable|confirmed|min:8', // memastikan password == password_confirmation
-        'nomor_telpon' => 'required|string|digits_between:10,15',
-        'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-    ]);
+    {
+        $request->validate([
+            'password' => 'nullable|confirmed|min:8', // memastikan password == password_confirmation
+            'nomor_telpon' => 'required|string|digits_between:10,15',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
 
-    $user = User::findOrFail($id);
+        $user = User::findOrFail($id);
 
-    // Jika password diisi, maka perbarui password
-    if ($request->filled('password')) {
-        $user->password = bcrypt($request->password);
-    }
+        // Jika password diisi, maka perbarui password
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password);
+        }
 
-    $user->no_telpon = $request->nomor_telpon;
+        $user->no_telpon = $request->nomor_telpon;
 
-    // Jika ada file foto yang diupload, simpan file baru
-    if ($request->hasFile('photo')) {
-        // Hapus gambar dari folder `public/img`    
-        if ($user->foto) {
-            $imagePath = public_path('img/user/' . $user['foto']);
-            if (file_exists($imagePath)) {
-                unlink($imagePath);
+        // Jika ada file foto yang diupload, simpan file baru
+        if ($request->hasFile('photo')) {
+            // Hapus gambar dari folder `public/img`    
+            if ($user->foto) {
+                $imagePath = public_path('img/user/' . $user['foto']);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
             }
-        }              
-        $usernameSlug = Str::slug($user->nama_lengkap, '-');  
-        $imageName = $usernameSlug . '.' . $request->file('photo')->getClientOriginalExtension();
-        $request->file('photo')->move(public_path('img/user'), $imageName);
-        $user->foto = $imageName;
-    }
+            $usernameSlug = Str::slug($user->nama_lengkap, '-');
+            $imageName = $usernameSlug . '.' . $request->file('photo')->getClientOriginalExtension();
+            $request->file('photo')->move(public_path('img/user'), $imageName);
+            $user->foto = $imageName;
+        }
 
-    $user->save();
+        $user->save();
 
-    return redirect()->route('admin_settings')->with('success', 'Data berhasil diperbarui!');
+        return redirect()->route('admin_settings')->with('success', 'Data berhasil diperbarui!');
     }
 }
