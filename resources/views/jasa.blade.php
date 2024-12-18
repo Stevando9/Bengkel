@@ -224,7 +224,7 @@
         <section class="pt-36 pb-16">
             <div class="container mx-auto items-center justify-center flex">
                 <!-- Tombol untuk membuka modal -->
-                <button id="open-modal" class="absolute top-2/4 left-72 top-44 bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition md:left-40 sm:left-40">
+                <button id="open-modal" class="absolute top-2/4 left-72 top-44 bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition">
                     Tambah Merek Motor
                 </button>
 
@@ -280,8 +280,11 @@
                         <div class="mb-4">
                             <label for="merk_motor" class="block mb-2 text-sm font-medium text-white">Pilih Motor</label>
                             <select id="merk_motor" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                <option value="honda">Honda</option>
-                                <option value="yamaha">Yamaha</option>
+                                @foreach ($motor as $mtr)
+                                    <option value="{{ $mtr['id_user'] }}">{{ $mtr['merk_motor'] }}</option>
+                                @endforeach
+                                    {{-- <option value="Honda">Honda</option>
+                                    <option value="Yamaha">Yamaha</option> --}}
                             </select>
                         </div>
                         {{-- <div class="mb-4">

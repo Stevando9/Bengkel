@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jasa;
+use App\Models\Motor;
 use App\Models\produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,7 @@ class JasaController extends Controller
 {
     public function index(){
       if ((Auth::check() && Auth::user()->tipe === 'member')) {
-        return view('jasa',['jasa'=>Jasa::all(),'produk'=>produk::all()]);
+        return view('jasa',['jasa'=>Jasa::all(),'produk'=>produk::all(),'motor'=>Motor::where('id_user',Auth::user()->id)->get()]);
       }
       return redirect()->route('login')->with('error', 'Harap Login.');
     }

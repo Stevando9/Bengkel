@@ -80,7 +80,7 @@
 <body class="bg-black">
     @include('components.navbar')
 
-    <section class="pt-36 pb-16">
+    <section class="pt-16 pb-16">
         <div class="container mx-auto px-4">
             <div class="text-white">
                 <div class="container mx-auto p-4 rounded-lg shadow-md bg-gray-800 w-1/2">
@@ -253,24 +253,32 @@
         function prosesPembayaran() {
             // Ambil elemen input radio
             const metodePembayaran = document.querySelector('input[name="payment-method"]:checked');
+            const deliveryMethod = @json($deliveryMethod); // Ambil nilai deliveryMethod dari server-side
+            const alamat = document.getElementById("alamatText").innerText.trim();
+
 
             // Validasi: Jika metode pembayaran belum dipilih
             if (!metodePembayaran) {
                 alert("Pilih metode pembayaran terlebih dahulu!");
                 return;
             }
- 
+            // Validasi: Jika deliveryMethod adalah radioKirim dan alamat kosong
+            if (deliveryMethod === 'radioKirim' && (!alamat || alamat === "")) {
+                alert("Alamat wajib diisi untuk metode pengiriman!");
+                return;
+            }
+
             // Ambil nilai dari metode pembayaran yang dipilih
             const metode = metodePembayaran.nextElementSibling.innerText.toLowerCase(); // Ambil label (misalnya: "BCA")
 
             const total = @json($total);
-            
+
             const data = @json($data);
 
             // Encode data ke format JSON
             const encodedData = encodeURIComponent(JSON.stringify(data));
             const encodedTotal = encodeURIComponent(JSON.stringify(total));
-            
+
             // Redirect ke route berdasarkan metode pembayaran
             let routeUrl = "";
             if (metode === "bca" || metode === "mandiri" || metode === "bri") {
@@ -286,7 +294,7 @@
 
             // Redirect ke route dengan query string
             window.location.href = `${routeUrl}?data=${encodedData}&metode=${metode}&total=${encodedTotal}`;
-                }
+        }
     </script>
 
     @include('footer')
