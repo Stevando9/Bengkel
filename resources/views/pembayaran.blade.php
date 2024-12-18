@@ -80,7 +80,7 @@
 <body class="bg-black">
     @include('components.navbar')
 
-    <section class="pt-36 pb-16">
+    <section class="pt-16 pb-16">
         <div class="container mx-auto px-4">
             <div class="text-white">
                 <div class="container mx-auto p-4 rounded-lg shadow-md bg-gray-800 w-1/2">
