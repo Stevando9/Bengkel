@@ -280,8 +280,11 @@
                         <div class="mb-4">
                             <label for="merk_motor" class="block mb-2 text-sm font-medium text-white">Pilih Motor</label>
                             <select id="merk_motor" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                <option value="honda">Honda</option>
-                                <option value="yamaha">Yamaha</option>
+                                @foreach ($motor as $mtr)
+                                    <option value="{{ $mtr['id_user'] }}">{{ $mtr['merk_motor'] }}</option>
+                                @endforeach
+                                    {{-- <option value="Honda">Honda</option>
+                                    <option value="Yamaha">Yamaha</option> --}}
                             </select>
                         </div>
                         {{-- <div class="mb-4">
