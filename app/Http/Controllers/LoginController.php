@@ -4,40 +4,40 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Session;
 
 class LoginController extends Controller
 {
-
     public function login(Request $request)
     {
-        // Validasi data login
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:8'
-        ]);
+        // Validasi input
+        $credentials = $request->validate(
+            [
+                'email' => 'required|email',
+                'password' => 'required|min:8'
+            ],
+            ['password.min' => 'Password harus minimal 8 karakter.']
+        );
 
-        // Jika validasi berhasil, lakukan login
+        // Jika login berhasil
         if (Auth::attempt($credentials)) {
-            // Pengguna berhasil login, redirect sesuai role            
             $request->session()->regenerate();
-            session()->flash('status', 'login-success');
-            return $this->authenticated($request, Auth::user())
-                ?: redirect()->intended('/fail');
+
+            // Redirect berdasarkan tipe user
+            return $this->authenticated($request, Auth::user());
         }
 
-        // Jika login gagal, kirimkan error
-        return redirect()->back()->with('error', 'Password atau email salah');
+        // Jika login gagal
+        return redirect()->back()->with('error', 'Password atau email salah.');
     }
 
     protected function authenticated(Request $request, $user)
     {
         if ($user->tipe == 'admin') {
-            return redirect('/Admin/dashboard')->with('success', 'Login berhasil. Selamat Datang.');
-        } else if ($user->tipe == 'member') {
-            return redirect('/home')->with('success', 'Login berhasil. Selamat Datang.');
+            return redirect('/Admin/dashboard')->with('success', 'Login berhasil. Selamat datang' . $user->nama_lengkap . '!');
+        } elseif ($user->tipe == 'member') {
+            return redirect('/home')->with('success', 'Login berhasil. Selamat datang ' . $user->nama_lengkap . '!');
         }
 
-        return redirect()->back()->with('error', 'Login Gagal');
+        return redirect()->back()->with('error', 'Tipe pengguna tidak valid.');
     }
 }

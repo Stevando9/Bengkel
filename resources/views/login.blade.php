@@ -169,22 +169,71 @@
             max-width: 100%;
             height: auto;
         }
+
+        /* Alert Styles */
+        .alert {
+            position: fixed;
+            top: 20px;
+            /* Jarak dari atas */
+            left: 50%;
+            /* Posisi di tengah horizontal */
+            transform: translateX(-50%);
+            /* Agar benar-benar di tengah */
+            width: 50%;
+            /* Lebar alert */
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            /* Pastikan tampil di atas elemen lain */
+        }
+
+        /* Hijau: Login Berhasil */
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        /* Merah: Login Gagal */
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Oranye: Password Pendek */
+        .alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
     </style>
 </head>
 
 <body>
     <div class="login-container">
         <div class="left-section">
+            <!-- Alert Hijau: Login Berhasil -->
             @if (session('success'))
-                <div
-                    style="color: #28a745; font-weight: bold; background-color: #d4edda; padding: 10px; border: 1px solid #c3e6cb; border-radius: 5px;">
+                <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
             @endif
+
+            <!-- Alert Merah: Login Gagal -->
             @if (session('error'))
-                <div
-                    style="color: #dc3545; font-weight: bold; background-color: #f8d7da; padding: 10px; border: 1px solid #c3e6cb; border-radius: 5px;">
+                <div class="alert alert-danger">
                     {{ session('error') }}
+                </div>
+            @endif
+
+            <!-- Alert Oranye: Password Kurang dari 8 Karakter -->
+            @if ($errors->has('password'))
+                <div class="alert alert-warning">
+                    {{ $errors->first('password') }}
                 </div>
             @endif
 
