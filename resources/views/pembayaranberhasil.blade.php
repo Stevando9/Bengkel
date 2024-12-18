@@ -310,30 +310,30 @@
                         <img src="{{ asset('img/sucess.png') }}" alt="Pembayaran Berhasil" class="object-contain">
                     </div>
                     <h2 class="text-2xl font-bold text-black">PEMBAYARAN BERHASIL</h2>
-                    <h2 class="text-xl font-bold text-black">IDR 215,000</h2>
+                    <h2 class="text-xl font-bold text-black">Rp {{ number_format($transaksi->totalHarga) }}</h2>
                 </div>
 
                 <!-- Transaction Details -->
                 <div class="text-sm text-gray-700 mb-6 space-y-2">
                     <div class="flex justify-between">
                         <span>Nomor Transaksi</span>
-                        <span class="font-semibold">000085752257</span>
+                        <span class="font-semibold">{{ $transaksi->kode_pembayaran }}</span>
                     </div>
                     <div class="flex justify-between">
                         <span>Waktu Transaksi</span>
-                        <span class="font-semibold">25-02-2023, 13:22:16</span>
+                        <span class="font-semibold">{{ $transaksi->tanggal_transaksi }}</span>
                     </div>
                     <div class="flex justify-between">
                         <span>Metode Transaksi</span>
-                        <span class="font-semibold">QRIS</span>
+                        <span class="font-semibold">{{ $transaksi->metode_pembayaran }}</span>
                     </div>
                     <div class="flex justify-between">
                         <span>Nama Pengirim</span>
-                        <span class="font-semibold">Yopan</span>
+                        <span class="font-semibold">{{ $transaksi->user->nama_lengkap }}</span>
                     </div>
                     <div class="flex justify-between">
                         <span>Jumlah Transaksi</span>
-                        <span class="font-semibold">IDR 215,000</span>
+                        <span class="font-semibold">Rp {{ number_format($transaksi->totalHarga) }}</span>
                     </div>
                 </div>
 

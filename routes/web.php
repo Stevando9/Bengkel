@@ -1,10 +1,12 @@
 <?php
 
+use App\Models\Pembayaran;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthControler;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JasaController;
+use App\Http\Controllers\pembayaranbank;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
@@ -12,10 +14,8 @@ use App\Http\Controllers\MontirController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UlasanController;
 use App\Http\Controllers\KeranjangController;
-use App\Http\Controllers\pembayaranbank;
-use App\Http\Controllers\pembayaranbankController;
 use App\Http\Controllers\PembayaranController;
-use App\Models\Pembayaran;
+use App\Http\Controllers\pembayaranbankController;
 
 // admin
 // Route::get('/admin/dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
@@ -94,28 +94,15 @@ Route::get('/review_modal', function () {
 Route::get('/pembayaran/{checkedValue}/{jumProdukArray}/{deliveryMethod}', [PembayaranController::class, 'index'])->name('pembayaran');
 Route::get('/pembayaran/single/{kode_produk}/{jumlah}/{deliveryMethod}', [PembayaranController::class, 'indexSingle'])->name('pembayaran.single');
 
-Route::get('/pembayaran/pembayaranqris', function () {
-    return view('pembayaranqris');
-})->name('pembayaranqris');
-
-Route::get('/pembayaran/konfirmasi', function () {
-    return view('konfirmasipembayaran');
-})->name('konfirmasipembayaran');
-
-Route::get('/pembayaran/pembayaranbank', function () {
-    return view('pembayaranbank');
-})->name('pembayaranbank');
-
-Route::get('/pembayaranbank', [PembayaranController::class, 'showPembayaranBank'])->name('pembayaranbank');
+Route::get('/pembayaran/konfirmasi/', [PembayaranController::class, 'konfirmasi'])->name('konfirmasipembayaran');
 
 
-Route::get('/pembayaran/pembayarangagal', function () {
-    return view('pembayarangagal');
-})->name('pembayarangagal');
+Route::get('pembayaran/pembayaranbank', [PembayaranController::class, 'showPembayaranBank'])->name('pembayaranbank');
+Route::get('pembayaran/pembayaranqris', [PembayaranController::class, 'showPembayaranQris'])->name('pembayaranqris');
 
-Route::get('/pembayaran/pembayaranberhasil', function () {
-    return view('pembayaranberhasil');
-})->name('pembayaranberhasil');
+
+Route::get('/pembayaran/pembayarangagal', [PembayaranController::class, 'gagal'])->name('pembayarangagal');
+Route::get('/pembayaran/pembayaranberhasil', [PembayaranController::class, 'berhasil'])->name('pembayaranberhasil');
 
 Route::get('/pembayaran/pembayaranberhasilcod', function () {
     return view('pembayaranberhasilcod');
