@@ -116,19 +116,6 @@
             </script>
         </div>
 
-
-
-        {{-- modal Akun --}}
-        {{-- <!-- Pesan sukses atau error -->
-        @if (session('success'))
-            <div class="bg-green-500 text-white p-4 rounded-lg mb-4">
-                {{ session('success') }}
-            </div>
-        @elseif(session('error'))
-            <div class="bg-red-500 text-white p-4 rounded-lg mb-4">
-                {{ session('error') }}
-            </div>
-        @endif --}}
         <section>
             @auth
                 <div id="detail-account-modal"
