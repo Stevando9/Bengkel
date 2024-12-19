@@ -228,28 +228,30 @@
                     Cahaya Gunung Licin!</p>
 
                 <!-- Booking Form -->
-                <div
-                    class="bg-gray-800 bg-opacity-75 mt-8 p-6 rounded-lg shadow-lg w-full max-w-7xl mx-auto z-10 justify-center items-center">
-                    <h2 class="text-yellow-400 text-2xl font-bold text-center mb-4">Pesan Sekarang</h2>
-                    <!-- Teks Pesan Sekarang -->
+                {{-- <form action="{{ route ('booking') }}"> --}}
                     <div
-                        class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4">
-                        <select class="p-3 rounded bg-gray-700 text-white w-full md:w-auto">
-                            <option>Pilih Servis</option>
-                            <option>Servis Berat</option>
-                            <option>Servis Ringan</option>
-                        </select>
-                        <input type="date" class="p-3 rounded bg-gray-700 text-white w-full md:w-auto">
-                        <input type="time" value="09:00"
+                        class="bg-gray-800 bg-opacity-75 mt-8 p-6 rounded-lg shadow-lg w-full max-w-7xl mx-auto z-10 justify-center items-center">
+                        <h2 class="text-yellow-400 text-2xl font-bold text-center mb-4">Pesan Sekarang</h2>
+                        <!-- Teks Pesan Sekarang -->
+                        <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4">
+                            <select class="p-3 rounded bg-gray-700 text-white w-full md:w-auto">
+                                @foreach ($jasa as $jas)
+                                    <option value="{{ $jas['kode_jasa'] }}">{{ $jas['nama_jasa'] }}</option>
+                                @endforeach
+                            </select>
+                            <input type="date" class="p-3 rounded bg-gray-700 text-white w-full md:w-auto">
+                            <input type="time" value="09:00"
                             class="p-3 rounded bg-gray-700 text-white w-full md:w-auto">
-                        <input type="text" placeholder="Produk (opsional)"
+                            <input type="text" placeholder="Produk (opsional)"
                             class="p-3 rounded bg-gray-700 text-white w-full md:w-auto">
-                        <input type="text" placeholder="Kode Promo (opsional)"
+                            <input type="text" placeholder="Kode Promo (opsional)"
                             class="p-3 rounded bg-gray-700 text-white w-full md:w-auto">
-                        <button
-                            class="bg-yellow-400 text-black font-bold py-3 px-6 rounded hover:bg-yellow-500 transition">Pesan</button>
+                            <a href="{{ route('jasa') }}">
+                                <button class="bg-yellow-400 text-black font-bold py-3 px-6 rounded hover:bg-yellow-500 transition">Pesan</button>
+                            </a>
+                        </div>
                     </div>
-                </div>
+                {{-- </form> --}}
             </div>
         </div>
     </section>
@@ -361,43 +363,51 @@
 
     <section id="produk pt-8 pb-2">
         <div class="bg-black text-white p-5">
+            <!-- Menu Kategori -->
             <div class="bg-black text-white p-5 w-full max-w-3xl mx-auto">
                 <!-- Bagian Header Kategori -->
                 <div class="flex items-center justify-center mb-1 space-x-8">
-                    <a href="#" class="text-xl font-bold text-yellow-400">Semua Produk</a>
+                    <a href="#" class="text-xl font-bold text-yellow-400" value="all">Semua Produk</a>
                     <div class="space-x-5">
-                        <a href="#" class="text-white hover:text-primary">Rantai</a>
-                        <a href="#" class="text-white hover:text-primary">Ban</a>
-                        <a href="#" class="text-white hover:text-primary">Oli Mesin</a>
-                        <a href="#" class="text-white hover:text-primary">Oli Gardan</a>
-                        <a href="#" class="text-white hover:text-primary">Kampas Rem</a>
+                        @foreach ($kategori->take(4) as $kat)
+                            <a href="#" class="text-white font-bold hover:text-yellow-400"
+                                onclick="filterByKategori('{{ $kat->kategori_id }}')">
+                                {{ $kat->nama_kategori }}
+                            </a>
+                        @endforeach
                     </div>
-                    <button
-                        class="text-black bg-yellow-400 px-4 py-2 rounded hover:bg-yellow-500 transition">Filter</button>
+                    <!-- Dropdown untuk kategori lainnya -->
+                    <div>
+                        <select id="kategoriFilter"
+                            class="text-black bg-yellow-400 px-4 py-2 rounded hover:bg-yellow-500 transition"
+                            onchange="filterByKategori(this.value)">
+                            <option value="all">Filter</option>
+                            @foreach ($kategori->skip(4) as $kat)
+                                <option value="{{ $kat->kategori_id }}">{{ $kat->nama_kategori }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
     </section>
 
-    <section id="Carousel Produk" class="pt-3 pb-36"> <!-- Decrease padding-top from pt-12 to pt-8 -->
+    <section id="Carousel Produk" class="pt-3 pb-36">
+        <!-- Carousel Produk -->
         <div class="relative max-w-3xl mx-auto">
-            <!-- Atur flex direction ke column agar produk berurutan ke bawah -->
             <div class="absolute inset-0 flex justify-between items-start">
                 <!-- Panah Kiri -->
                 <a class="p-4 cursor-pointer text-white bg-black bg-opacity-50 rounded-full text-2xl z-10"
                     style="top: 50%;" onclick="plusProductSlides(-1)">&#10094;</a>
-                <!-- Add top: 50% for vertical centering -->
 
-                <!-- Produk -->
-                <div class="flex space-x-6 mx-auto overflow-hidden text-white">
+                <!-- Produk List-->
+                <div id="produkCarousel" class="flex space-x-6 mx-auto overflow-hidden text-white">
                     @foreach ($produk as $prod)
-                        <!-- Produk 1 -->
                         <div class="text-center product-slide px-4 py-6">
-                            <img src="{{ asset('img/produk/' . $prod['gambar']) }}" alt="{{ $prod['nama_produk'] }}"
-                                class="w-[200px] h-[200px] mx-auto mb-2 object-cover cs">
-                            <h3 class="font-semibold text-lg">{{ $prod['nama_produk'] }}</h3>
+                            <img src="{{ asset('img/produk/' . $prod->gambar) }}" alt="{{ $prod->nama_produk }}"
+                                class="w-full h-48 object-contain mb-2 rounded">
+                            <h3 class="font-semibold text-lg">{{ $prod->nama_produk }}</h3>
                             <p class="text-sm">{{ $prod->kategori->nama_kategori ?? 'Kategori tidak ditemukan' }}</p>
-                            <p class="font-semibold">Rp. {{ number_format($prod['harga']) }}</p>
+                            <p class="font-semibold">Rp. {{ number_format($prod->harga) }}</p>
                         </div>
                     @endforeach
                 </div>
@@ -405,10 +415,77 @@
                 <!-- Panah Kanan -->
                 <a class="p-4 cursor-pointer text-white bg-black bg-opacity-50 rounded-full text-2xl z-10"
                     style="top: 50%;" onclick="plusProductSlides(1)">&#10095;</a>
-                <!-- Add top: 50% for vertical centering -->
             </div>
         </div>
     </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+        const produkCarousel = document.getElementById('produkCarousel'); // Container Carousel
+        const slidesToShow = 4; // Jumlah produk yang ditampilkan bersamaan
+        let currentSlideIndex = 0; // Indeks slide awal
+
+        function showProductSlides() {
+            const slides = document.querySelectorAll('.product-slide'); // Ambil semua slide
+            const totalSlides = slides.length;
+
+            // Pastikan indeks tetap valid
+            if (currentSlideIndex < 0) currentSlideIndex = 0;
+            if (currentSlideIndex > totalSlides - slidesToShow) currentSlideIndex = totalSlides - slidesToShow;
+
+            // Sembunyikan semua slide di luar rentang aktif
+            slides.forEach((slide, index) => {
+                if (index >= currentSlideIndex && index < currentSlideIndex + slidesToShow) {
+                    slide.classList.remove('hidden'); // Tampilkan slide
+                } else {
+                    slide.classList.add('hidden'); // Sembunyikan slide
+                }
+            });
+        }
+
+        function plusProductSlides(step) {
+            currentSlideIndex += step; // Ubah indeks slide
+            showProductSlides(); // Perbarui tampilan
+        }
+
+        // Fungsi untuk memuat produk berdasarkan kategori
+        window.filterByKategori = function (kategoriId) {
+            fetch(`/produk/kategori/${kategoriId}`, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    produkCarousel.innerHTML = ''; // Kosongkan carousel
+                    data.produk.forEach((prod) => {
+                        produkCarousel.innerHTML += `
+                            <div class="text-center product-slide px-4 py-6 hidden">
+                                <img src="/img/produk/${prod.gambar}" alt="${prod.nama_produk}" 
+                                    class="w-[200px] h-[200px] mx-auto mb-2 object-cover">
+                                <h3 class="font-semibold text-lg">${prod.nama_produk}</h3>
+                                <p class="text-sm">${prod.kategori.nama_kategori ?? 'Kategori tidak ditemukan'}</p>
+                                <p class="font-semibold">Rp. ${parseInt(prod.harga).toLocaleString()}</p>
+                            </div>
+                        `;
+                    });
+
+                    currentSlideIndex = 0; // Reset indeks ke awal
+                    showProductSlides(); // Perbarui tampilan slide
+                })
+                .catch((error) => console.error('Error:', error));
+        };
+
+        // Tampilkan slide awal saat halaman dimuat
+        showProductSlides();
+
+        // Ekspor fungsi geser slide
+        window.plusProductSlides = plusProductSlides;
+    });
+
+
+    </script>
     <!-- Produk Stop -->
 
     <!-- Carousel Testimoni Start -->

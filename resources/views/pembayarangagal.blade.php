@@ -140,11 +140,10 @@
 </head>
 
 <body class="bg-black">
-
-    @include('header')
+    @include('components.navbar')
 
     {{-- Konten Start --}}
-    <section class="pt-20 pb-16">
+    <section class="pt-36 pb-32">
         <div class="container mx-auto px-4">
             <div class="bg-white text-black p-6 rounded-lg shadow-md w-full lg:w-1/3 mx-auto">
                 <!-- Icon & Title -->
@@ -191,9 +190,6 @@
         </div>
     </section>
     {{-- Konten Stop --}}
-
     @include('footer')
-
 </body>
-
 </html>

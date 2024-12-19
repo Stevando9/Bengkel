@@ -136,81 +136,6 @@
             .social-icon:hover .icon-text {
                 opacity: 1;
             }
-
-            /* start modal edit account */
-            /* Modal Background */
-            #edit-account-modal {
-                background-color: rgba(0, 0, 0, 0.8);
-                /* Background overlay */
-            }
-
-            /* Modal Container */
-            .modal-content {
-                background-color: #1f1f1f;
-                /* Dark background for modal */
-                color: #ffffff;
-                padding: 2rem;
-                border-radius: 0.5rem;
-                max-width: 600px;
-                width: 100%;
-            }
-
-            /* Header Style */
-            .modal-content h2 {
-                font-size: 1.75rem;
-                font-weight: 700;
-                letter-spacing: 0.1rem;
-                text-align: center;
-                margin-bottom: 1.5rem;
-            }
-
-            /* Upload Photo Section */
-            .upload-photo {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-
-            /* Form Input */
-            .modal-content input[type="text"],
-            .modal-content input[type="password"] {
-                background-color: #2c2c2c;
-                border: 1px solid #444444;
-                color: #cccccc;
-                padding: 0.75rem;
-                border-radius: 0.375rem;
-                width: 100%;
-            }
-
-            /* Action Buttons */
-            .action-buttons button {
-                padding: 0.75rem 1.5rem;
-                font-weight: 600;
-                border-radius: 0.375rem;
-                transition: background-color 0.2s ease-in-out;
-            }
-
-            .action-buttons .cancel {
-                background-color: #333333;
-                color: #ffffff;
-                border: 1px solid #555555;
-            }
-
-            .action-buttons .cancel:hover {
-                background-color: #444444;
-            }
-
-            .action-buttons .submit {
-                background-color: #28a745;
-                /* Green color for submit button */
-                color: #333333;
-            }
-
-            .action-buttons .submit:hover {
-                background-color: #218838;
-            }
-
-            /* end modal edit account */
         </style>
     </head>
 
@@ -224,12 +149,14 @@
         <section class="pt-36 pb-16">
             <div class="container mx-auto items-center justify-center flex">
                 <!-- Tombol untuk membuka modal -->
-                <button id="open-modal" class="absolute top-2/4 left-72 top-44 bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition">
+                <button id="open-modal"
+                    class="absolute top-2/4 left-72 top-44 bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition">
                     Tambah Merek Motor
                 </button>
 
                 <!-- Modal -->
-                <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                <div id="modal"
+                    class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                     <div class="bg-white rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700 w-1/3">
                         <div class="p-4 sm:p-7">
                             <form action="{{ route('tambahMotor') }}" method="post">
@@ -242,7 +169,9 @@
                                 <form id="add-brand-form">
                                     <div class="grid gap-y-4">
                                         <div>
-                                            <label for="new_motor_brand" class="block text-sm font-bold ml-1 mb-2 dark:text-white">Nama Merek</label>
+                                            <label for="new_motor_brand"
+                                                class="block text-sm font-bold ml-1 mb-2 dark:text-white">Nama
+                                                Merek</label>
                                             <div class="relative">
                                                 <input type="text" id="new_motor_brand" name="merk" class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm" required placeholder="Masukkan merek motor">
                                             </div>
@@ -253,12 +182,14 @@
                                                 <input type="text" id="new_motor_brand" name="plat" class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm" required placeholder="Masukkan nomor plat">
                                             </div>
                                         </div>
-                                        <button type="submit" class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                                        <button type="submit"
+                                            class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
                                             Tambah
                                         </button>
                                     </div>
                                 </form>
-                                <button id="close-modal" class="mt-4 py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-600">Tutup</button>
+                                <button id="close-modal"
+                                    class="mt-4 py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-600">Tutup</button>
                             </div>
                         </form>
                         </div>
@@ -321,8 +252,10 @@
                             </select>
                         </div>
                         <div class="flex justify-between">
-                            <button type="reset" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md ml-2">Batal</button>
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">Pesan</button>
+                            <button type="reset"
+                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md ml-2">Batal</button>
+                            <button type="submit"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">Pesan</button>
                         </div>
                     </div>
                 </form>
@@ -343,12 +276,12 @@
             const newMotorBrandInput = document.getElementById('new_motor_brand');
             const newMotorLicenseInput = document.getElementById('new_motor_license');
             const merkMotorSelect = document.getElementById('merk_motor');
-    
+
             // Buka modal
             openModalButton.addEventListener('click', () => {
                 modal.classList.remove('hidden');
             });
-    
+
             // Tutup modal
             closeModalButton.addEventListener('click', () => {
                 modal.classList.add('hidden');
