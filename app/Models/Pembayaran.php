@@ -9,6 +9,7 @@ class Pembayaran extends Model
 {
     use HasFactory;
     protected $primaryKey = 'no_pembelian';
+    public $timestamps = false;
     protected $table = 'pembelian';
     protected $fillable = [
         'id_user',
@@ -16,7 +17,8 @@ class Pembayaran extends Model
         'alamat_tujuan',
         'no_telp',
         'penerima',
-        'jumlah'
+        'jumlah',
+        'totalHarga'
     ];
 
     public function produk()

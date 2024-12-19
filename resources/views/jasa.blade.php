@@ -232,8 +232,10 @@
                 <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                     <div class="bg-white rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700 w-1/3">
                         <div class="p-4 sm:p-7">
+                            <form action="{{ route('tambahMotor') }}" method="post">
+                                @csrf
                             <div class="text-center">
-                                <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Tambah Merek Motor</h1>
+                                <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Tambah Data Motor</h1>
                             </div>
 
                             <div class="mt-5">
@@ -242,13 +244,13 @@
                                         <div>
                                             <label for="new_motor_brand" class="block text-sm font-bold ml-1 mb-2 dark:text-white">Nama Merek</label>
                                             <div class="relative">
-                                                <input type="text" id="new_motor_brand" name="new_motor_brand" class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm" required placeholder="Masukkan merek motor">
+                                                <input type="text" id="new_motor_brand" name="merk" class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm" required placeholder="Masukkan merek motor">
                                             </div>
                                         </div>
                                         <div>
-                                            <label for="new_motor_brand" class="block text-sm font-bold ml-1 mb-2 dark:text-white">Nomor Plat</label>
+                                            <label for="new_motor_licence" class="block text-sm font-bold ml-1 mb-2 dark:text-white">Nomor Plat</label>
                                             <div class="relative">
-                                                <input type="text" id="new_motor_brand" name="new_motor_brand" class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm" required placeholder="Masukkan nomor plat">
+                                                <input type="text" id="new_motor_brand" name="plat" class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm" required placeholder="Masukkan nomor plat">
                                             </div>
                                         </div>
                                         <button type="submit" class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
@@ -258,6 +260,7 @@
                                 </form>
                                 <button id="close-modal" class="mt-4 py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-600">Tutup</button>
                             </div>
+                        </form>
                         </div>
                     </div>
                 </div>
@@ -268,10 +271,11 @@
                             LAYANAN
                         </h1>
                     </div>
+                    <form action="{{ route('tambahBook') }}" method="post">
                     <div class="p-5">
                         <div class="mb-4">
                             <label for="pilih_jasa" class="block mb-2 text-sm font-medium text-white">Pilih Jasa</label>
-                            <select id="pilih_jasa" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <select id="pilih_jasa" name="jasa" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 @foreach ($jasa as $jas)
                                     <option value="{{ $jas['kode_jasa'] }}">{{ $jas['nama_jasa'] }}</option>
                                 @endforeach
@@ -279,10 +283,15 @@
                         </div>
                         <div class="mb-4">
                             <label for="merk_motor" class="block mb-2 text-sm font-medium text-white">Pilih Motor</label>
-                            <select id="merk_motor" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                @foreach ($motor as $mtr)
-                                    <option value="{{ $mtr['id_user'] }}">{{ $mtr['merk_motor'] }}</option>
-                                @endforeach
+                            <select id="merk_motor" name="motor" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                @if ($motor)
+                                    <option value="">--Pilih Motor--</option>
+                                    @foreach ($motor as $mtr)                                        
+                                        <option value="{{ $mtr['no_plat'] }}">{{ $mtr['merk_motor'] }}</option>
+                                    @endforeach
+                                @else
+                                    <option value="">Harap Isi Data Motor</option>
+                                @endif                                
                                     {{-- <option value="Honda">Honda</option>
                                     <option value="Yamaha">Yamaha</option> --}}
                             </select>
@@ -293,19 +302,19 @@
                         </div> --}}
                         <div class="mb-4">
                             <label for="tanggal_booking" class="block mb-2 text-sm font-medium text-white">Tanggal Booking</label>
-                            <input type="date" id="tanggal_booking" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <input type="date" id="tanggal_booking" name="tanggal_booking" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         </div>
                         <div class="mb-4">
                             <label for="pilih_jam" class="block mb-2 text-sm font-medium text-white">Pilih Jam Booking</label>
-                            <input type="time" id="pilih_jam" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <input type="time" id="pilih_jam" name="jam_booking" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         </div>
                         <div class="mb-4">
                             <label for="keluhan_pelanggan" class="block mb-2 text-sm font-medium text-white">Keluhan</label>
-                            <textarea id="keluhan_pelanggan" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" rows="5" cols="30"></textarea>
+                            <textarea id="keluhan_pelanggan" name="keluhan" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" rows="5" cols="30"></textarea>
                         </div>
                         <div class="mb-4">
                             <label for="produk_tambahan" class="block mb-2 text-sm font-medium text-white">Tambah Produk</label>
-                            <select id="produk_tambahan" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <select id="produk_tambahan" name="produk" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 @foreach ($produk as $prod)
                                     <option value="{{ $prod['kode_produk'] }}">{{ $prod['nama_produk'] }}</option>
                                 @endforeach
@@ -316,6 +325,7 @@
                             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">Pesan</button>
                         </div>
                     </div>
+                </form>
                 </div>
             </div>
         </section>
@@ -331,6 +341,7 @@
             const closeModalButton = document.getElementById('close-modal');
             const addBrandForm = document.getElementById('add-brand-form');
             const newMotorBrandInput = document.getElementById('new_motor_brand');
+            const newMotorLicenseInput = document.getElementById('new_motor_license');
             const merkMotorSelect = document.getElementById('merk_motor');
     
             // Buka modal
@@ -341,23 +352,7 @@
             // Tutup modal
             closeModalButton.addEventListener('click', () => {
                 modal.classList.add('hidden');
-            });
-    
-            // Tambah merek motor baru
-            addBrandForm.addEventListener('submit', (event) => {
-                event.preventDefault();
-                const newBrand = newMotorBrandInput.value.trim();
-                if (newBrand) {
-                    const option = document.createElement('option');
-                    option.value = newBrand.toLowerCase();
-                    option.textContent = newBrand;
-                    merkMotorSelect.appendChild(option);
-                    newMotorBrandInput.value = '';
-                    alert(`Merek motor "${newBrand}" telah ditambahkan.`);
-                } else {
-                    alert('Masukkan merek motor yang valid!');
-                }
-            });
+            });            
         </script>        
     </body>
 

@@ -9,11 +9,13 @@ use App\Http\Controllers\JasaController;
 use App\Http\Controllers\pembayaranbank;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MontirController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UlasanController;
 use App\Http\Controllers\KeranjangController;
+use App\Http\Controllers\MotorController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\pembayaranbankController;
 
@@ -83,7 +85,8 @@ Route::get('/produk/kategori/{kategori_id}', [ProdukController::class, 'byKatego
 Route::get('/produk/detail_produk/{kode_produk}', [ProdukController::class, 'detail'])->name('detailProduk');
 //jasa
 Route::get('/jasa', [JasaController::class, 'index'])->name('jasa');
-
+Route::post('/motor/tambahMotor', [MotorController::class, 'tambah'])->name('tambahMotor');
+Route::post('/jasa/booking', [BookingController::class, 'tambah'])->name('tambahBook');
 
 Route::get('/review_modal', function () {
     return view('review_modal', []);
@@ -104,9 +107,7 @@ Route::get('pembayaran/pembayaranqris', [PembayaranController::class, 'showPemba
 Route::get('/pembayaran/pembayarangagal', [PembayaranController::class, 'gagal'])->name('pembayarangagal');
 Route::get('/pembayaran/pembayaranberhasil', [PembayaranController::class, 'berhasil'])->name('pembayaranberhasil');
 
-Route::get('/pembayaran/pembayaranberhasilcod', function () {
-    return view('pembayaranberhasilcod');
-})->name('pembayaranberhasilcod');
+Route::get('/pembayaran/pembayaranberhasilcod', [PembayaranController::class, 'cod'])->name('pembayaranberhasilcod');
 
 // Route::get('/update', function () {
 //     return view('pembayaran');

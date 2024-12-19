@@ -9,6 +9,7 @@ class Motor extends Model
 {
     protected $primaryKey = 'no_plat';
     public $incrementing = false;
+    public $timestamps = false;
     protected $table = 'motor';
     protected $fillable = [
         'no_plat',
