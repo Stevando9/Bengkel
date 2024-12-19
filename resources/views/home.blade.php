@@ -403,11 +403,12 @@
                 <div id="produkCarousel" class="flex space-x-6 mx-auto overflow-hidden text-white">
                     @foreach ($produk as $prod)
                         <div class="text-center product-slide px-4 py-6">
-                            <img src="{{ asset('img/produk/' . $prod->gambar) }}" alt="{{ $prod->nama_produk }}"
-                                class="w-full h-48 object-contain mb-2 rounded">
-                            <h3 class="font-semibold text-lg">{{ $prod->nama_produk }}</h3>
-                            <p class="text-sm">{{ $prod->kategori->nama_kategori ?? 'Kategori tidak ditemukan' }}</p>
-                            <p class="font-semibold">Rp. {{ number_format($prod->harga) }}</p>
+                            <a href="/produk/detail_produk/{{$prod['kode_produk']}}">                          
+                                <img src="{{ asset('img/produk/' . $prod->gambar) }}" alt="{{ $prod->nama_produk }}"                                        class="w-full h-48 object-contain mb-2 rounded">
+                                <h3 class="font-semibold text-lg">{{ $prod->nama_produk }}</h3>
+                                <p class="text-sm">{{ $prod->kategori->nama_kategori ?? 'Kategori tidak ditemukan' }}</p>
+                                <p class="font-semibold">Rp. {{ number_format($prod->harga) }}</p>
+                            </a>
                         </div>
                     @endforeach
                 </div>
@@ -462,15 +463,16 @@
                     data.produk.forEach((prod) => {
                         produkCarousel.innerHTML += `
                             <div class="text-center product-slide px-4 py-6 hidden">
-                                <img src="/img/produk/${prod.gambar}" alt="${prod.nama_produk}" 
-                                    class="w-[200px] h-[200px] mx-auto mb-2 object-cover">
-                                <h3 class="font-semibold text-lg">${prod.nama_produk}</h3>
-                                <p class="text-sm">${prod.kategori.nama_kategori ?? 'Kategori tidak ditemukan'}</p>
-                                <p class="font-semibold">Rp. ${parseInt(prod.harga).toLocaleString()}</p>
+                                <a href="/produk/detail_produk/{{$prod['kode_produk']}}"> 
+                                    <img src="/img/produk/${prod.gambar}" alt="${prod.nama_produk}" 
+                                        class="w-[200px] h-[200px] mx-auto mb-2 object-cover">
+                                    <h3 class="font-semibold text-lg">${prod.nama_produk}</h3>
+                                    <p class="text-sm">${prod.kategori.nama_kategori ?? 'Kategori tidak ditemukan'}</p>
+                                    <p class="font-semibold">Rp. ${parseInt(prod.harga).toLocaleString()}</p>
+                                </a>
                             </div>
                         `;
                     });
-
                     currentSlideIndex = 0; // Reset indeks ke awal
                     showProductSlides(); // Perbarui tampilan slide
                 })

@@ -137,6 +137,24 @@
         .social-icon:hover .icon-text {
             opacity: 1;
         }
+
+        html, body {
+            height: 100%; /* Pastikan mencakup seluruh tinggi layar */
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        section {
+            flex: 1; /* Memastikan konten utama mengambil sisa ruang */
+        }
+
+        footer {
+            background-color: #1f2937; /* Warna latar belakang footer */
+            color: #fff; /* Warna teks */
+            padding: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -363,7 +381,9 @@
     {{-- Konten Stop --}}
 
     <!-- Footer Start -->
-    <x-footer></x-footer>
+    <footer>
+        <x-footer></x-footer>
+    </footer>
     <!-- Footer Stop -->
 </body>
 

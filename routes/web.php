@@ -109,6 +109,9 @@ Route::get('/pembayaran/pembayaranberhasil', [PembayaranController::class, 'berh
 
 Route::get('/pembayaran/pembayaranberhasilcod', [PembayaranController::class, 'cod'])->name('pembayaranberhasilcod');
 
+Route::get('/pembayaranjasa', function () {
+    return view('pembayaranjasa', []);
+})->name('pembayaranjasa');
 // Route::get('/update', function () {
 //     return view('pembayaran');
 // })->name('pembayaran');
