@@ -228,28 +228,30 @@
                     Cahaya Gunung Licin!</p>
 
                 <!-- Booking Form -->
-                <div
-                    class="bg-gray-800 bg-opacity-75 mt-8 p-6 rounded-lg shadow-lg w-full max-w-7xl mx-auto z-10 justify-center items-center">
-                    <h2 class="text-yellow-400 text-2xl font-bold text-center mb-4">Pesan Sekarang</h2>
-                    <!-- Teks Pesan Sekarang -->
+                {{-- <form action="{{ route ('booking') }}"> --}}
                     <div
-                        class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4">
-                        <select class="p-3 rounded bg-gray-700 text-white w-full md:w-auto">
-                            <option>Pilih Servis</option>
-                            <option>Servis Berat</option>
-                            <option>Servis Ringan</option>
-                        </select>
-                        <input type="date" class="p-3 rounded bg-gray-700 text-white w-full md:w-auto">
-                        <input type="time" value="09:00"
+                        class="bg-gray-800 bg-opacity-75 mt-8 p-6 rounded-lg shadow-lg w-full max-w-7xl mx-auto z-10 justify-center items-center">
+                        <h2 class="text-yellow-400 text-2xl font-bold text-center mb-4">Pesan Sekarang</h2>
+                        <!-- Teks Pesan Sekarang -->
+                        <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4">
+                            <select class="p-3 rounded bg-gray-700 text-white w-full md:w-auto">
+                                @foreach ($jasa as $jas)
+                                    <option value="{{ $jas['kode_jasa'] }}">{{ $jas['nama_jasa'] }}</option>
+                                @endforeach
+                            </select>
+                            <input type="date" class="p-3 rounded bg-gray-700 text-white w-full md:w-auto">
+                            <input type="time" value="09:00"
                             class="p-3 rounded bg-gray-700 text-white w-full md:w-auto">
-                        <input type="text" placeholder="Produk (opsional)"
+                            <input type="text" placeholder="Produk (opsional)"
                             class="p-3 rounded bg-gray-700 text-white w-full md:w-auto">
-                        <input type="text" placeholder="Kode Promo (opsional)"
+                            <input type="text" placeholder="Kode Promo (opsional)"
                             class="p-3 rounded bg-gray-700 text-white w-full md:w-auto">
-                        <button
-                            class="bg-yellow-400 text-black font-bold py-3 px-6 rounded hover:bg-yellow-500 transition">Pesan</button>
+                            <a href="{{ route('jasa') }}">
+                                <button class="bg-yellow-400 text-black font-bold py-3 px-6 rounded hover:bg-yellow-500 transition">Pesan</button>
+                            </a>
+                        </div>
                     </div>
-                </div>
+                {{-- </form> --}}
             </div>
         </div>
     </section>
