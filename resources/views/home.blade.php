@@ -363,43 +363,51 @@
 
     <section id="produk pt-8 pb-2">
         <div class="bg-black text-white p-5">
+            <!-- Menu Kategori -->
             <div class="bg-black text-white p-5 w-full max-w-3xl mx-auto">
                 <!-- Bagian Header Kategori -->
                 <div class="flex items-center justify-center mb-1 space-x-8">
-                    <a href="#" class="text-xl font-bold text-yellow-400">Semua Produk</a>
+                    <a href="#" class="text-xl font-bold text-yellow-400" value="all">Semua Produk</a>
                     <div class="space-x-5">
-                        <a href="#" class="text-white hover:text-primary">Rantai</a>
-                        <a href="#" class="text-white hover:text-primary">Ban</a>
-                        <a href="#" class="text-white hover:text-primary">Oli Mesin</a>
-                        <a href="#" class="text-white hover:text-primary">Oli Gardan</a>
-                        <a href="#" class="text-white hover:text-primary">Kampas Rem</a>
+                        @foreach ($kategori->take(4) as $kat)
+                            <a href="#" class="text-white font-bold hover:text-yellow-400"
+                                onclick="filterByKategori('{{ $kat->kategori_id }}')">
+                                {{ $kat->nama_kategori }}
+                            </a>
+                        @endforeach
                     </div>
-                    <button
-                        class="text-black bg-yellow-400 px-4 py-2 rounded hover:bg-yellow-500 transition">Filter</button>
+                    <!-- Dropdown untuk kategori lainnya -->
+                    <div>
+                        <select id="kategoriFilter"
+                            class="text-black bg-yellow-400 px-4 py-2 rounded hover:bg-yellow-500 transition"
+                            onchange="filterByKategori(this.value)">
+                            <option value="all">Filter</option>
+                            @foreach ($kategori->skip(4) as $kat)
+                                <option value="{{ $kat->kategori_id }}">{{ $kat->nama_kategori }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
     </section>
 
-    <section id="Carousel Produk" class="pt-3 pb-36"> <!-- Decrease padding-top from pt-12 to pt-8 -->
+    <section id="Carousel Produk" class="pt-3 pb-36">
+        <!-- Carousel Produk -->
         <div class="relative max-w-3xl mx-auto">
-            <!-- Atur flex direction ke column agar produk berurutan ke bawah -->
             <div class="absolute inset-0 flex justify-between items-start">
                 <!-- Panah Kiri -->
                 <a class="p-4 cursor-pointer text-white bg-black bg-opacity-50 rounded-full text-2xl z-10"
                     style="top: 50%;" onclick="plusProductSlides(-1)">&#10094;</a>
-                <!-- Add top: 50% for vertical centering -->
 
-                <!-- Produk -->
-                <div class="flex space-x-6 mx-auto overflow-hidden text-white">
+                <!-- Produk List-->
+                <div id="produkCarousel" class="flex space-x-6 mx-auto overflow-hidden text-white">
                     @foreach ($produk as $prod)
-                        <!-- Produk 1 -->
                         <div class="text-center product-slide px-4 py-6">
-                            <img src="{{ asset('img/produk/' . $prod['gambar']) }}" alt="{{ $prod['nama_produk'] }}"
-                                class="w-[200px] h-[200px] mx-auto mb-2 object-cover cs">
-                            <h3 class="font-semibold text-lg">{{ $prod['nama_produk'] }}</h3>
+                            <img src="{{ asset('img/produk/' . $prod->gambar) }}" alt="{{ $prod->nama_produk }}"
+                                class="w-full h-48 object-cover mb-2 rounded">
+                            <h3 class="font-semibold text-lg">{{ $prod->nama_produk }}</h3>
                             <p class="text-sm">{{ $prod->kategori->nama_kategori ?? 'Kategori tidak ditemukan' }}</p>
-                            <p class="font-semibold">Rp. {{ number_format($prod['harga']) }}</p>
+                            <p class="font-semibold">Rp. {{ number_format($prod->harga) }}</p>
                         </div>
                     @endforeach
                 </div>
@@ -407,10 +415,59 @@
                 <!-- Panah Kanan -->
                 <a class="p-4 cursor-pointer text-white bg-black bg-opacity-50 rounded-full text-2xl z-10"
                     style="top: 50%;" onclick="plusProductSlides(1)">&#10095;</a>
-                <!-- Add top: 50% for vertical centering -->
             </div>
         </div>
     </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const produkCarousel = document.getElementById('produkCarousel');
+            const slidesToShow = 4;
+            let currentSlideIndex = 0;
+
+            function plusProductSlides(step) {
+                const slides = document.querySelectorAll('.product-slide');
+                const totalSlides = slides.length;
+
+                currentSlideIndex += step;
+
+                if (currentSlideIndex < 0) currentSlideIndex = totalSlides - slidesToShow;
+                if (currentSlideIndex >= totalSlides - slidesToShow + 1) currentSlideIndex = 0;
+
+                const translateX = -currentSlideIndex * (100 / slidesToShow);
+                produkCarousel.style.transform = `translateX(${translateX}%)`;
+            }
+
+            window.filterByKategori = function(kategoriId) {
+                fetch(`/produk/kategori/${kategoriId}`, {
+                        method: 'GET',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        produkCarousel.innerHTML = '';
+                        data.produk.forEach(prod => {
+                            produkCarousel.innerHTML += `
+                        <div class="text-center product-slide px-4 py-6">
+                            <img src="/img/produk/${prod.gambar}" alt="${prod.nama_produk}" 
+                                class="w-[200px] h-[200px] mx-auto mb-2 object-cover">
+                            <h3 class="font-semibold text-lg">${prod.nama_produk}</h3>
+                            <p class="text-sm">${prod.kategori.nama_kategori ?? 'Kategori tidak ditemukan'}</p>
+                            <p class="font-semibold">Rp. ${parseInt(prod.harga).toLocaleString()}</p>
+                        </div>
+                    `;
+                        });
+                        currentSlideIndex = 0;
+                        produkCarousel.style.transform = 'translateX(0%)';
+                    })
+                    .catch(error => console.error('Error:', error));
+            };
+
+            window.plusProductSlides = plusProductSlides;
+        });
+    </script>
     <!-- Produk Stop -->
 
     <!-- Carousel Testimoni Start -->

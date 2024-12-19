@@ -136,81 +136,6 @@
             .social-icon:hover .icon-text {
                 opacity: 1;
             }
-
-            /* start modal edit account */
-            /* Modal Background */
-            #edit-account-modal {
-                background-color: rgba(0, 0, 0, 0.8);
-                /* Background overlay */
-            }
-
-            /* Modal Container */
-            .modal-content {
-                background-color: #1f1f1f;
-                /* Dark background for modal */
-                color: #ffffff;
-                padding: 2rem;
-                border-radius: 0.5rem;
-                max-width: 600px;
-                width: 100%;
-            }
-
-            /* Header Style */
-            .modal-content h2 {
-                font-size: 1.75rem;
-                font-weight: 700;
-                letter-spacing: 0.1rem;
-                text-align: center;
-                margin-bottom: 1.5rem;
-            }
-
-            /* Upload Photo Section */
-            .upload-photo {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-
-            /* Form Input */
-            .modal-content input[type="text"],
-            .modal-content input[type="password"] {
-                background-color: #2c2c2c;
-                border: 1px solid #444444;
-                color: #cccccc;
-                padding: 0.75rem;
-                border-radius: 0.375rem;
-                width: 100%;
-            }
-
-            /* Action Buttons */
-            .action-buttons button {
-                padding: 0.75rem 1.5rem;
-                font-weight: 600;
-                border-radius: 0.375rem;
-                transition: background-color 0.2s ease-in-out;
-            }
-
-            .action-buttons .cancel {
-                background-color: #333333;
-                color: #ffffff;
-                border: 1px solid #555555;
-            }
-
-            .action-buttons .cancel:hover {
-                background-color: #444444;
-            }
-
-            .action-buttons .submit {
-                background-color: #28a745;
-                /* Green color for submit button */
-                color: #333333;
-            }
-
-            .action-buttons .submit:hover {
-                background-color: #218838;
-            }
-
-            /* end modal edit account */
         </style>
     </head>
 
@@ -224,39 +149,52 @@
         <section class="pt-36 pb-16">
             <div class="container mx-auto items-center justify-center flex">
                 <!-- Tombol untuk membuka modal -->
-                <button id="open-modal" class="absolute top-2/4 left-72 top-44 bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition">
+                <button id="open-modal"
+                    class="absolute top-2/4 left-72 top-44 bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition">
                     Tambah Merek Motor
                 </button>
 
                 <!-- Modal -->
-                <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                <div id="modal"
+                    class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                     <div class="bg-white rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700 w-1/3">
                         <div class="p-4 sm:p-7">
                             <div class="text-center">
-                                <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Tambah Merek Motor</h1>
+                                <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Tambah Merek Motor
+                                </h1>
                             </div>
 
                             <div class="mt-5">
                                 <form id="add-brand-form">
                                     <div class="grid gap-y-4">
                                         <div>
-                                            <label for="new_motor_brand" class="block text-sm font-bold ml-1 mb-2 dark:text-white">Nama Merek</label>
+                                            <label for="new_motor_brand"
+                                                class="block text-sm font-bold ml-1 mb-2 dark:text-white">Nama
+                                                Merek</label>
                                             <div class="relative">
-                                                <input type="text" id="new_motor_brand" name="new_motor_brand" class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm" required placeholder="Masukkan merek motor">
+                                                <input type="text" id="new_motor_brand" name="new_motor_brand"
+                                                    class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                                                    required placeholder="Masukkan merek motor">
                                             </div>
                                         </div>
                                         <div>
-                                            <label for="new_motor_brand" class="block text-sm font-bold ml-1 mb-2 dark:text-white">Nomor Plat</label>
+                                            <label for="new_motor_brand"
+                                                class="block text-sm font-bold ml-1 mb-2 dark:text-white">Nomor
+                                                Plat</label>
                                             <div class="relative">
-                                                <input type="text" id="new_motor_brand" name="new_motor_brand" class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm" required placeholder="Masukkan nomor plat">
+                                                <input type="text" id="new_motor_brand" name="new_motor_brand"
+                                                    class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                                                    required placeholder="Masukkan nomor plat">
                                             </div>
                                         </div>
-                                        <button type="submit" class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                                        <button type="submit"
+                                            class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
                                             Tambah
                                         </button>
                                     </div>
                                 </form>
-                                <button id="close-modal" class="mt-4 py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-600">Tutup</button>
+                                <button id="close-modal"
+                                    class="mt-4 py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-600">Tutup</button>
                             </div>
                         </div>
                     </div>
@@ -271,19 +209,22 @@
                     <div class="p-5">
                         <div class="mb-4">
                             <label for="pilih_jasa" class="block mb-2 text-sm font-medium text-white">Pilih Jasa</label>
-                            <select id="pilih_jasa" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <select id="pilih_jasa"
+                                class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 @foreach ($jasa as $jas)
                                     <option value="{{ $jas['kode_jasa'] }}">{{ $jas['nama_jasa'] }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="mb-4">
-                            <label for="merk_motor" class="block mb-2 text-sm font-medium text-white">Pilih Motor</label>
-                            <select id="merk_motor" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <label for="merk_motor" class="block mb-2 text-sm font-medium text-white">Pilih
+                                Motor</label>
+                            <select id="merk_motor"
+                                class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 @foreach ($motor as $mtr)
                                     <option value="{{ $mtr['id_user'] }}">{{ $mtr['merk_motor'] }}</option>
                                 @endforeach
-                                    {{-- <option value="Honda">Honda</option>
+                                {{-- <option value="Honda">Honda</option>
                                     <option value="Yamaha">Yamaha</option> --}}
                             </select>
                         </div>
@@ -292,28 +233,39 @@
                             <input type="text" id="nomor_plat" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         </div> --}}
                         <div class="mb-4">
-                            <label for="tanggal_booking" class="block mb-2 text-sm font-medium text-white">Tanggal Booking</label>
-                            <input type="date" id="tanggal_booking" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <label for="tanggal_booking" class="block mb-2 text-sm font-medium text-white">Tanggal
+                                Booking</label>
+                            <input type="date" id="tanggal_booking"
+                                class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         </div>
                         <div class="mb-4">
-                            <label for="pilih_jam" class="block mb-2 text-sm font-medium text-white">Pilih Jam Booking</label>
-                            <input type="time" id="pilih_jam" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <label for="pilih_jam" class="block mb-2 text-sm font-medium text-white">Pilih Jam
+                                Booking</label>
+                            <input type="time" id="pilih_jam"
+                                class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         </div>
                         <div class="mb-4">
-                            <label for="keluhan_pelanggan" class="block mb-2 text-sm font-medium text-white">Keluhan</label>
-                            <textarea id="keluhan_pelanggan" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" rows="5" cols="30"></textarea>
+                            <label for="keluhan_pelanggan"
+                                class="block mb-2 text-sm font-medium text-white">Keluhan</label>
+                            <textarea id="keluhan_pelanggan"
+                                class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                rows="5" cols="30"></textarea>
                         </div>
                         <div class="mb-4">
-                            <label for="produk_tambahan" class="block mb-2 text-sm font-medium text-white">Tambah Produk</label>
-                            <select id="produk_tambahan" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <label for="produk_tambahan" class="block mb-2 text-sm font-medium text-white">Tambah
+                                Produk</label>
+                            <select id="produk_tambahan"
+                                class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 @foreach ($produk as $prod)
                                     <option value="{{ $prod['kode_produk'] }}">{{ $prod['nama_produk'] }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="flex justify-between">
-                            <button type="reset" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md ml-2">Batal</button>
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">Pesan</button>
+                            <button type="reset"
+                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md ml-2">Batal</button>
+                            <button type="submit"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">Pesan</button>
                         </div>
                     </div>
                 </div>
@@ -332,17 +284,17 @@
             const addBrandForm = document.getElementById('add-brand-form');
             const newMotorBrandInput = document.getElementById('new_motor_brand');
             const merkMotorSelect = document.getElementById('merk_motor');
-    
+
             // Buka modal
             openModalButton.addEventListener('click', () => {
                 modal.classList.remove('hidden');
             });
-    
+
             // Tutup modal
             closeModalButton.addEventListener('click', () => {
                 modal.classList.add('hidden');
             });
-    
+
             // Tambah merek motor baru
             addBrandForm.addEventListener('submit', (event) => {
                 event.preventDefault();
@@ -358,7 +310,7 @@
                     alert('Masukkan merek motor yang valid!');
                 }
             });
-        </script>        
+        </script>
     </body>
 
     </html>

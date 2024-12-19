@@ -265,7 +265,7 @@
                 </div>
 
                 <!-- Payment Confirmation Button -->
-                <a href="{{ route('pembayaranberhasil') }}">
+                <a href="{{ route('konfirmasipembayaran',['data'=>json_encode($data),'total'=>$total,'metode'=>$bank]) }}">
                     <button
                         class="mt-6 w-full py-3 bg-yellow-500 text-black font-semibold rounded-lg hover:bg-yellow-400">
                         SUDAH TRANSFER
