@@ -203,10 +203,12 @@
                         </h1>
                     </div>
                     <form action="{{ route('tambahBook') }}" method="post">
+                        @csrf
                     <div class="p-5">
                         <div class="mb-4">
                             <label for="pilih_jasa" class="block mb-2 text-sm font-medium text-white">Pilih Jasa</label>
                             <select id="pilih_jasa" name="jasa" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                <option value="">Pilih Jasa</option>
                                 @foreach ($jasa as $jas)
                                     <option value="{{ $jas['kode_jasa'] }}">{{ $jas['nama_jasa'] }}</option>
                                 @endforeach
@@ -246,6 +248,7 @@
                         <div class="mb-4">
                             <label for="produk_tambahan" class="block mb-2 text-sm font-medium text-white">Tambah Produk</label>
                             <select id="produk_tambahan" name="produk" class="bg-gray-700 border border-gray-600 text-gray-400 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                    <option value="">Pilih Produk Tambahan</option>
                                 @foreach ($produk as $prod)
                                     <option value="{{ $prod['kode_produk'] }}">{{ $prod['nama_produk'] }}</option>
                                 @endforeach
