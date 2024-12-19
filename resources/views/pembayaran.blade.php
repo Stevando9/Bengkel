@@ -251,10 +251,24 @@
         }
 
         function prosesPembayaran() {
+            // Ambil nilai input dari form
+            const namaInput = document.getElementById("namaInput").value.trim();
+            const telpInput = document.getElementById("telpInput").value.trim();
+            const alamatInput = document.getElementById("alamatInput").value.trim();
+            // Ambil elemen untuk menampilkan data
+            const namaDisplay = document.getElementById("namaDisplay");
+            const telpDisplay = document.getElementById("telpDisplay");
+            const alamatText = document.getElementById("alamatText");
+
+            // Validasi: Jika input kosong, tetap gunakan nilai lama
+            const nama = namaInput || namaDisplay.innerText;
+            const telp = telpInput || telpDisplay.innerText;
+            const alamat = alamatInput || alamatText.innerText;
+            
             // Ambil elemen input radio
             const metodePembayaran = document.querySelector('input[name="payment-method"]:checked');
             const deliveryMethod = @json($deliveryMethod); // Ambil nilai deliveryMethod dari server-side
-            const alamat = document.getElementById("alamatText").innerText.trim();
+            const alamatTeks = document.getElementById("alamatText").innerText.trim();
 
 
             // Validasi: Jika metode pembayaran belum dipilih
@@ -263,7 +277,7 @@
                 return;
             }
             // Validasi: Jika deliveryMethod adalah radioKirim dan alamat kosong
-            if (deliveryMethod === 'radioKirim' && (!alamat || alamat === "")) {
+            if (deliveryMethod === 'radioKirim' && (!alamatTeks || alamatTeks === "")) {
                 alert("Alamat wajib diisi untuk metode pengiriman!");
                 return;
             }
@@ -272,12 +286,14 @@
             const metode = metodePembayaran.nextElementSibling.innerText.toLowerCase(); // Ambil label (misalnya: "BCA")
 
             const total = @json($total);
-
+            const method = @json($deliveryMethod);
             const data = @json($data);
+            const dataCust = [nama,telp,alamat];
 
             // Encode data ke format JSON
             const encodedData = encodeURIComponent(JSON.stringify(data));
             const encodedTotal = encodeURIComponent(JSON.stringify(total));
+            const encodedMethod = encodeURIComponent(JSON.stringify(method));
 
             // Redirect ke route berdasarkan metode pembayaran
             let routeUrl = "";
@@ -293,7 +309,7 @@
             }
 
             // Redirect ke route dengan query string
-            window.location.href = `${routeUrl}?data=${encodedData}&metode=${metode}&total=${encodedTotal}`;
+            window.location.href = `${routeUrl}?data=${encodedData}&metode=${metode}&total=${encodedTotal}&method=${encodedMethod}&dataCust=${dataCust}`;
         }
     </script>
 

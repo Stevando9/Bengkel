@@ -145,7 +145,9 @@
         function startTimer() {
             const timerElement = document.querySelector('.text-red-500.text-3xl.text-center.font-bold.mb-5');
             const transactionId = "{{ $trans->kode_pembayaran }}";
-            const dataArray = @json($data)
+            const dataArray = @json($data);
+            const methodTrans = "{{ $method }}";
+            const dataCust = @json($cust);
 
             // Generate a random threshold for failure and success
             const randomThreshold = Math.floor(Math.random() * 10); 
@@ -168,7 +170,7 @@
                     alert("Waktu pembayaran telah habis! Pembayaran gagal.");
                     const params = new URLSearchParams({
                         trans: transactionId,
-                        data: JSON.stringify(dataArray)
+                        data: JSON.stringify(dataArray),                        
                     });
                     window.location.href = `/pembayaran/pembayarangagal?${params.toString()}`;
                 } else if (countdown === batasGagal) {
@@ -186,7 +188,9 @@
                     alert("Pembayaran berhasil! Terima kasih.");
                     const params = new URLSearchParams({
                         trans: transactionId,
-                        data: JSON.stringify(dataArray)
+                        data: JSON.stringify(dataArray),
+                        method: methodTrans,
+                        customer:JSON.stringify(dataCust)
                     });
                     window.location.href = `/pembayaran/pembayaranberhasil?${params.toString()}`;
                 }
