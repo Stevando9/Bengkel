@@ -404,7 +404,7 @@
                     @foreach ($produk as $prod)
                         <div class="text-center product-slide px-4 py-6">
                             <img src="{{ asset('img/produk/' . $prod->gambar) }}" alt="{{ $prod->nama_produk }}"
-                                class="w-full h-48 object-cover mb-2 rounded">
+                                class="w-full h-48 object-contain mb-2 rounded">
                             <h3 class="font-semibold text-lg">{{ $prod->nama_produk }}</h3>
                             <p class="text-sm">{{ $prod->kategori->nama_kategori ?? 'Kategori tidak ditemukan' }}</p>
                             <p class="font-semibold">Rp. {{ number_format($prod->harga) }}</p>
@@ -421,52 +421,70 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const produkCarousel = document.getElementById('produkCarousel');
-            const slidesToShow = 4;
-            let currentSlideIndex = 0;
+        const produkCarousel = document.getElementById('produkCarousel'); // Container Carousel
+        const slidesToShow = 4; // Jumlah produk yang ditampilkan bersamaan
+        let currentSlideIndex = 0; // Indeks slide awal
 
-            function plusProductSlides(step) {
-                const slides = document.querySelectorAll('.product-slide');
-                const totalSlides = slides.length;
+        function showProductSlides() {
+            const slides = document.querySelectorAll('.product-slide'); // Ambil semua slide
+            const totalSlides = slides.length;
 
-                currentSlideIndex += step;
+            // Pastikan indeks tetap valid
+            if (currentSlideIndex < 0) currentSlideIndex = 0;
+            if (currentSlideIndex > totalSlides - slidesToShow) currentSlideIndex = totalSlides - slidesToShow;
 
-                if (currentSlideIndex < 0) currentSlideIndex = totalSlides - slidesToShow;
-                if (currentSlideIndex >= totalSlides - slidesToShow + 1) currentSlideIndex = 0;
+            // Sembunyikan semua slide di luar rentang aktif
+            slides.forEach((slide, index) => {
+                if (index >= currentSlideIndex && index < currentSlideIndex + slidesToShow) {
+                    slide.classList.remove('hidden'); // Tampilkan slide
+                } else {
+                    slide.classList.add('hidden'); // Sembunyikan slide
+                }
+            });
+        }
 
-                const translateX = -currentSlideIndex * (100 / slidesToShow);
-                produkCarousel.style.transform = `translateX(${translateX}%)`;
-            }
+        function plusProductSlides(step) {
+            currentSlideIndex += step; // Ubah indeks slide
+            showProductSlides(); // Perbarui tampilan
+        }
 
-            window.filterByKategori = function(kategoriId) {
-                fetch(`/produk/kategori/${kategoriId}`, {
-                        method: 'GET',
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        produkCarousel.innerHTML = '';
-                        data.produk.forEach(prod => {
-                            produkCarousel.innerHTML += `
-                        <div class="text-center product-slide px-4 py-6">
-                            <img src="/img/produk/${prod.gambar}" alt="${prod.nama_produk}" 
-                                class="w-[200px] h-[200px] mx-auto mb-2 object-cover">
-                            <h3 class="font-semibold text-lg">${prod.nama_produk}</h3>
-                            <p class="text-sm">${prod.kategori.nama_kategori ?? 'Kategori tidak ditemukan'}</p>
-                            <p class="font-semibold">Rp. ${parseInt(prod.harga).toLocaleString()}</p>
-                        </div>
-                    `;
-                        });
-                        currentSlideIndex = 0;
-                        produkCarousel.style.transform = 'translateX(0%)';
-                    })
-                    .catch(error => console.error('Error:', error));
-            };
+        // Fungsi untuk memuat produk berdasarkan kategori
+        window.filterByKategori = function (kategoriId) {
+            fetch(`/produk/kategori/${kategoriId}`, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    produkCarousel.innerHTML = ''; // Kosongkan carousel
+                    data.produk.forEach((prod) => {
+                        produkCarousel.innerHTML += `
+                            <div class="text-center product-slide px-4 py-6 hidden">
+                                <img src="/img/produk/${prod.gambar}" alt="${prod.nama_produk}" 
+                                    class="w-[200px] h-[200px] mx-auto mb-2 object-cover">
+                                <h3 class="font-semibold text-lg">${prod.nama_produk}</h3>
+                                <p class="text-sm">${prod.kategori.nama_kategori ?? 'Kategori tidak ditemukan'}</p>
+                                <p class="font-semibold">Rp. ${parseInt(prod.harga).toLocaleString()}</p>
+                            </div>
+                        `;
+                    });
 
-            window.plusProductSlides = plusProductSlides;
-        });
+                    currentSlideIndex = 0; // Reset indeks ke awal
+                    showProductSlides(); // Perbarui tampilan slide
+                })
+                .catch((error) => console.error('Error:', error));
+        };
+
+        // Tampilkan slide awal saat halaman dimuat
+        showProductSlides();
+
+        // Ekspor fungsi geser slide
+        window.plusProductSlides = plusProductSlides;
+    });
+
+
     </script>
     <!-- Produk Stop -->
 
